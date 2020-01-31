@@ -39,5 +39,5 @@
     "react-native-kill-packager": "^1.0.0"
   },
   "private": true,
-  "proxy": "http://falafel-server-i7ofjayka.now.sh/api/"
+  "proxy": "http://falafel-server-ja04bwwpj.now.sh/api/"
 }
