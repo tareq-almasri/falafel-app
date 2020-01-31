@@ -28,7 +28,7 @@ export default class Signup extends Component {
 
   handleNext=()=>{
     if(this.state.username && this.state.password.length>5){
-    fetch("http://localhost:5000/sign-up", {
+    fetch("/signup", {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify({

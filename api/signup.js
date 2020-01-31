@@ -29,15 +29,15 @@ mongoose.connect(
 //   console.log("start listening on port 5000");
 // });
 
-app.use((req, res, next) => {
-  res.set("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
-  res.set("ACCESS-CONTROL-ALLOW-HEADERS", "*");
-  res.set("ACCESS-CONTROL-ALLOW-METHODS", "*");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.set("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
+//   res.set("ACCESS-CONTROL-ALLOW-HEADERS", "*");
+//   res.set("ACCESS-CONTROL-ALLOW-METHODS", "*");
+//   next();
+// });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 
 module.exports= (req, res) => {
