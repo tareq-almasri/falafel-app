@@ -36,7 +36,7 @@ export default class Signup extends Component {
         password: this.state.password
       })
     }).then(response => response.json())
-    .then(data => console.log({ errMsg: data.error }));
+    .then(data => this.setState({ errMsg: data.error }));
 
     if(!this.state.errMsg){
     this.props.navigation.navigate("Info");

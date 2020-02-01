@@ -8,7 +8,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  Model
+  Modal
 } from "react-native";
 
 class Main extends Component {
