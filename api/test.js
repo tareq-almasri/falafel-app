@@ -19,6 +19,6 @@ mongoose.connect(
 
 module.exports = (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
-  const name  = req.query;
+  const name  = req.query.name;
   res.status(200).send({greeting: `Hello ${name}!`});
 };
