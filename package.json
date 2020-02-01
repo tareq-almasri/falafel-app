@@ -38,6 +38,5 @@
     "babel-preset-expo": "~8.0.0",
     "react-native-kill-packager": "^1.0.0"
   },
-  "private": true,
-  "proxy": "http://falafel-server-16az6fq0t.now.sh/api/"
+  "private": true
 }

@@ -15,34 +15,29 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default class Signup extends Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
     hidden: true,
-    errMsg: ''
+    errMsg: ""
   };
 
   onInputLabelPressed = () => {
     this.setState({ hidden: !this.state.hidden });
   };
 
+  handleNext = () => {
+    if (this.state.username && this.state.password.length > 5) {
+      fetch(
+        `http://localhost:5000/signup/?username=${this.state.username}&password=${this.state.password}`
+      )
+        .then(response => response.json())
+        .then(data => this.setState({ errMsg: data.error }));
 
-  handleNext=()=>{
-    if(this.state.username && this.state.password.length>5){
-    fetch("/signup", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
-      })
-    }).then(response => response.json())
-    .then(data => this.setState({ errMsg: data.error }));
-
-    if(!this.state.errMsg){
-    this.props.navigation.navigate("Info");
-  }
-}
-}
+      if (!this.state.errMsg) {
+        this.props.navigation.navigate("Info");
+      }
+    }
+  };
 
   render() {
     return (
@@ -70,7 +65,9 @@ export default class Signup extends Component {
           />
 
           <Text style={{ color: "#5b5b5b" }}>
-            {this.state.errMsg?this.state.errMsg:'* you will need it to login later'}
+            {this.state.errMsg
+              ? this.state.errMsg
+              : "* you will need it to login later"}
           </Text>
           <View style={style.password}>
             <TextInput
@@ -99,10 +96,7 @@ export default class Signup extends Component {
           </Text>
           <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text>
         </View>
-        <Button
-          title="Next"
-          onPress={this.handleNext}
-        />
+        <Button title="Next" onPress={this.handleNext} />
       </ScrollView>
     );
   }
@@ -117,20 +111,18 @@ const style = StyleSheet.create({
     width: "80%"
   },
   container: {
-    
     padding: 20,
     alignItems: "center",
     backgroundColor: "#222"
   },
   password: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: "#333",
     padding: 10,
     borderRadius: 8,
     margin: 10,
-    width: "80%",
-    
+    width: "80%"
   }
 });

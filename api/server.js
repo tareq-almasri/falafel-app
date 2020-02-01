@@ -1,6 +1,6 @@
-// const express = require("express");
-// const { body, validationResult } = require("express-validator");
-// const app = express();
+const express = require("express");
+const { body, validationResult } = require("express-validator");
+const app = express();
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
@@ -9,7 +9,7 @@ const User=require('./Models/user.model');
 
 // CONNECT TO MONGODB
 mongoose.connect(
-  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
+  "mongodb://localhost/falafel_users",
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -25,25 +25,24 @@ mongoose.connect(
   }
 );
 
-// app.listen(5000, () => {
-//   console.log("start listening on port 5000");
-// });
+app.listen(5000, () => {
+  console.log("start listening on port 5000");
+});
 
-// app.use((req, res, next) => {
-//   res.set("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
-//   res.set("ACCESS-CONTROL-ALLOW-HEADERS", "*");
-//   res.set("ACCESS-CONTROL-ALLOW-METHODS", "*");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.set("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
+  res.set("ACCESS-CONTROL-ALLOW-HEADERS", "*");
+  res.set("ACCESS-CONTROL-ALLOW-METHODS", "*");
+  next();
+});
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
-module.exports= (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  let newUser = req.query.username;
-  let pwd = bcrypt.hashSync(req.query.password, 10);
+app.post("/sign-up", (req, res) => {
+  let newUser = req.body.username;
+  let pwd = bcrypt.hashSync(req.body.password, 10);
 
   User.findOne({username: newUser}).then(user=>{
     if(!user){
@@ -65,4 +64,4 @@ module.exports= (req, res) => {
     .catch(err => next(err));
     
   
-};
+});
