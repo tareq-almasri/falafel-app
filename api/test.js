@@ -18,9 +18,10 @@ mongoose.connect(
 );
 
 module.exports = (req, res) => {
-   res.set("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
-   res.set("ACCESS-CONTROL-ALLOW-HEADERS", "*");
-   res.set("ACCESS-CONTROL-ALLOW-METHODS", "*");
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
+  res.setHeader("ACCESS-CONTROL-ALLOW-HEADERS", "*");
+  res.setHeader("ACCESS-CONTROL-ALLOW-METHODS", "*");
   
   res.status(200).send({ greeting: `Hello ${req.body.name}!` });
 };;
