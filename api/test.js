@@ -19,9 +19,9 @@ mongoose.connect(
 
 module.exports = (req, res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("ACCESS-CONTROL-ALLOW-ORIGIN", "*");
-  res.setHeader("ACCESS-CONTROL-ALLOW-HEADERS", "*");
-  res.setHeader("ACCESS-CONTROL-ALLOW-METHODS", "*");
-  
-  res.status(200).send({ greeting: `Hello ${req.body.name}!` });
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+   const name = req.body.name;
+  res.status(200).send({ greeting: `Hello ${name}!` });
 };;
