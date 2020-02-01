@@ -18,6 +18,6 @@ mongoose.connect(
 );
 
 module.exports = (req, res) => {
-  const name  = req.body.name;
+  const name  = req.query;
   res.status(200).send({greeting: `Hello ${name}!`});
 };
