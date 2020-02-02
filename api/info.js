@@ -1,0 +1,37 @@
+const mongoose = require("mongoose");
+const User = require("./Models/user.model");
+
+// CONNECT TO MONGODB
+mongoose.connect(
+  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+  },
+  err => {
+    if (!err) {
+      console.log("MongoDB Connection Succeeded.");
+    } else {
+      console.log("Error in DB connection: " + err);
+    }
+  }
+);
+
+module.exports = (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  let infoArrStrings=req.query.infoArrStrings;
+  let infoArrNumbers=req.query.infoArrNumbers;
+  User.findOne({ username: infoArrStrings[0] })
+    .then(user => {
+      user.tdee = infoArrNumbers[0];
+      user.goalCal = infoArrNumbers[1];
+      user.diet = infoArrStrings[1];
+      user.proteinDL = infoArrNumbers[2];
+      user.carbsDL = infoArrNumbers[3];
+      user.fatDL = infoArrNumbers[4];
+      user.save();
+    })
+    .catch(err => res.status(400).json("Error: " + err));
+};

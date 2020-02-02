@@ -2,9 +2,7 @@
 // const { body, validationResult } = require("express-validator");
 // const app = express();
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const User=require('./Models/user.model');
 
 // CONNECT TO MONGODB

@@ -8,45 +8,93 @@ import {
   TextInput,
   Button,
   ScrollView,
-  Picker
+  Picker,
+  TouchableOpacity
 } from "react-native";
 import CheckBox from "react-native-check-box";
-
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import ChooseDietHelp from "./ChooseDietHelp";
 
 class Info extends Component {
   state = {
-    weight: '',
-    height: '',
-    age: '',
+    weight: "",
+    height: "",
+    age: "",
     checkMale: false,
     checkFemale: false,
     checkEcto: false,
     checkMeso: false,
     checkEndo: false,
-    numberOfWorkout: '',
-    durationOfWorkout: '',
+    numberOfWorkout: "",
+    durationOfWorkout: "",
     gain: false,
     lose: false,
     maintain: false,
     lowCarbs: false,
     moderateCarbs: false,
-    highCarbs: false
+    highCarbs: false,
+    sex: "",
+    NEAT: 0,
+    goal: 0,
+    index: 0,
+    helpIndex: 0,
+    visible: false,
+    diet: ''
   };
 
-  getInfo=(object, value)=>{
-     return Object.keys(object).find(key => object[key] === value);
-  }
-
   handleNext = () => {
-    fetch("/info", {
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      body: JSON.stringify({
-        info: this.getInfo(this.state, true),
-      })
-    }).then(response => response.json());
+    let result =
+      9.99 * Number(this.state.weight) +
+      6.25 * Number(this.state.height) -
+      4.92 * Number(this.state.age);
 
-    this.props.navigation.navigate("Info");
+    let BMR = Math.floor(this.state.sex == "male" ? result + 5 : result - 161);
+
+    let percentOfBMR = Math.floor((7 * BMR) / 100);
+    let EPOC = Number(this.state.numberOfWorkouts) * percentOfBMR;
+
+    let TEA = Math.floor(
+      (Number(this.state.numberOfWorkouts) *
+        Number(this.state.durationOfWorkout) *
+        9 +
+        EPOC) /
+        7
+    );
+
+    let total = BMR + TEA + this.state.NEAT;
+
+    let TEF = Math.floor(total / 10);
+
+    let TDEE = total + TEF;
+
+    let goal = TDEE + this.state.goal;
+
+    let protein = Math.floor(
+      (TDEE * ratios[this.state.index].protein) / 100 / 4
+    );
+    let carbs = Math.floor((TDEE * ratios[this.state.index].carbs) / 100 / 4);
+    let fat = Math.floor((TDEE * ratios[this.state.index].fat) / 100 / 9);
+
+    let infoArrStrings=[this.props.navigation.getParam('username'), this.state.diet]
+     
+    let infoArrNumbers = [TDEE, goal, protein, carbs, fat];
+    console.log(infoArrStrings);
+    console.log(infoArrNumbers);
+    fetch(
+      `http://falafel-server-cjgrgw4h6.now.sh/api/info/?infoArrStrings=${infoArrStrings}&infoArrNumbers=${infoArrNumbers}`
+    ).then(response => response.json());
+
+    this.props.navigation.navigate("SetPlan", {
+      username: this.props.navigation.getParam("username"), password: this.props.navigation.getParam('password')
+    });
+  };
+
+  onHelpPressed = (x) => {
+    this.setState({ visible: true, helpIndex: x });
+  };
+
+  handleOk = () => {
+    this.setState({ visible: false });
   };
 
   render() {
@@ -83,7 +131,8 @@ class Info extends Component {
                 onClick={() =>
                   this.setState({
                     checkMale: !this.state.checkMale,
-                    checkFemale: false
+                    checkFemale: false,
+                    sex: "male"
                   })
                 }
                 isChecked={this.state.checkMale}
@@ -96,7 +145,8 @@ class Info extends Component {
                 onClick={() =>
                   this.setState({
                     checkFemale: !this.state.checkFemale,
-                    checkMale: false
+                    checkMale: false,
+                    sex: "female"
                   })
                 }
                 isChecked={this.state.checkFemale}
@@ -113,7 +163,8 @@ class Info extends Component {
                 this.setState({
                   checkEcto: !this.state.checkEcto,
                   checkMeso: false,
-                  checkEndo: false
+                  checkEndo: false,
+                  NEAT: 900
                 })
               }
               isChecked={this.state.checkEcto}
@@ -130,7 +181,8 @@ class Info extends Component {
                 this.setState({
                   checkMeso: !this.state.checkMeso,
                   checkEcto: false,
-                  checkEndo: false
+                  checkEndo: false,
+                  NEAT: 500
                 })
               }
               isChecked={this.state.checkMeso}
@@ -147,7 +199,8 @@ class Info extends Component {
                 this.setState({
                   checkEndo: !this.state.checkEndo,
                   checkMeso: false,
-                  checkEcto: false
+                  checkEcto: false,
+                  NEAT: 400
                 })
               }
               isChecked={this.state.checkEndo}
@@ -198,7 +251,9 @@ class Info extends Component {
             <TextInput
               placeholderTextColor="#5b5b5b"
               placeholder="0"
-              onChange={(e)=>this.setState({durationOfWorkout: e.target.valueOf})}
+              onChange={e =>
+                this.setState({ durationOfWorkout: e.target.valueOf })
+              }
               value={this.state.durationOfWorkout}
               style={style.duration}
             />
@@ -215,7 +270,8 @@ class Info extends Component {
                 this.setState({
                   gain: !this.state.gain,
                   lose: false,
-                  maintain: false
+                  maintain: false,
+                  goal: 500
                 })
               }
               isChecked={this.state.gain}
@@ -229,7 +285,8 @@ class Info extends Component {
                 this.setState({
                   lose: !this.state.lose,
                   gain: false,
-                  maintain: false
+                  maintain: false,
+                  goal: -500
                 })
               }
               isChecked={this.state.lose}
@@ -257,13 +314,20 @@ class Info extends Component {
           <Text style={{ color: "white", marginTop: 14, marginBottom: 13 }}>
             choose a diet:
           </Text>
+          <ChooseDietHelp
+            visible={this.state.visible}
+            ok={this.handleOk}
+            index={this.state.helpIndex}
+          />
           <View style={style.check2}>
             <CheckBox
               onClick={() =>
                 this.setState({
                   lowCarbs: !this.state.lowCarbs,
                   moderateCarbs: false,
-                  highCarbs: false
+                  highCarbs: false,
+                  index: 2,
+                  diet: 'low-carbs'
                 })
               }
               isChecked={this.state.lowCarbs}
@@ -271,9 +335,16 @@ class Info extends Component {
               rightTextStyle={{ color: "#fff" }}
             />
           </View>
-          <Text style={{ color: "#5b5b5b", margin: 3 }}>
-            {this.state.lose ? "* recommended for you" : ""}
-          </Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ color: "#5b5b5b", margin: 3 }}>
+              {this.state.lose ? "* recommended for you" : ""}
+            </Text>
+            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 2)}>
+              <FontAwesome5 name={"question-circle"} size={15} />
+            </TouchableOpacity>
+          </View>
 
           <View style={style.check2}>
             <CheckBox
@@ -281,7 +352,9 @@ class Info extends Component {
                 this.setState({
                   moderateCarbs: !this.state.moderateCarbs,
                   lowCarbs: false,
-                  highCarbs: false
+                  highCarbs: false,
+                  index: 1,
+                  diet: 'moderate-carbs'
                 })
               }
               isChecked={this.state.moderateCarbs}
@@ -289,17 +362,25 @@ class Info extends Component {
               rightTextStyle={{ color: "#fff" }}
             />
           </View>
-          <Text style={{ color: "#5b5b5b", margin: 3 }}>
-            {this.state.maintain ? "* recommended for you" : ""}
-          </Text>
-
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ color: "#5b5b5b", margin: 3 }}>
+              {this.state.maintain ? "* recommended for you" : ""}
+            </Text>
+            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 1)}>
+              <FontAwesome5 name={"question-circle"} size={15} />
+            </TouchableOpacity>
+          </View>
           <View style={style.check2}>
             <CheckBox
               onClick={() =>
                 this.setState({
                   highCarbs: !this.state.highCarbs,
                   lowCarbs: false,
-                  moderateCarbs: false
+                  moderateCarbs: false,
+                  index: 0,
+                  diet: 'high-carbs'
                 })
               }
               isChecked={this.state.highCarbs}
@@ -307,9 +388,16 @@ class Info extends Component {
               rightTextStyle={{ color: "#fff" }}
             />
           </View>
-          <Text style={{ color: "#5b5b5b", margin: 3 }}>
-            {this.state.gain ? "* recommended for you" : ""}
-          </Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text style={{ color: "#5b5b5b", margin: 3 }}>
+              {this.state.gain ? "* recommended for you" : ""}
+            </Text>
+            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 0)}>
+              <FontAwesome5 name={"question-circle"} size={15} />
+            </TouchableOpacity>
+          </View>
           <Button
             title="Next"
             onPress={() => this.props.navigation.navigate("SetPlan")}
@@ -319,6 +407,27 @@ class Info extends Component {
     );
   }
 }
+
+const ratios = [
+  {
+    name: "high-carbs for bodybuilding",
+    carbs: 50, // 40-60
+    protein: 30, // 25-35
+    fat: 20 // 15-25
+  },
+  {
+    name: "moderate-carbs for maintenance",
+    carbs: 40, // 30-50
+    protein: 30, // 25-35
+    fat: 30 // 25-35
+  },
+  {
+    name: "low-carbs for reduction",
+    carbs: 20, // 10-20
+    protein: 50, // 40-50
+    fat: 30 // 30-40
+  }
+];
 
 const style = StyleSheet.create({
   input: {
@@ -334,13 +443,13 @@ const style = StyleSheet.create({
     padding: 10,
     margin: 10,
     width: 50,
-    textAlign: 'center'
+    textAlign: "center"
   },
   container: {
     flex: 1,
     padding: 20,
     alignItems: "center",
-    backgroundColor: "#222"
+    backgroundColor: "#000"
   },
   check: {
     backgroundColor: "#333",
@@ -350,7 +459,7 @@ const style = StyleSheet.create({
     width: "37%"
   },
   check2: {
-    width: '80%',
+    width: "80%",
     backgroundColor: "#333",
     borderRadius: 8,
     padding: 7,

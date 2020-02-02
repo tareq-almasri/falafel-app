@@ -21,20 +21,20 @@ export default class Signup extends Component {
     errMsg: ""
   };
 
-  onInputLabelPressed = () => {
+  onEyePressed = () => {
     this.setState({ hidden: !this.state.hidden });
   };
 
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
       fetch(
-        `http://localhost:5000/signup/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-cjgrgw4h6.now.sh/api/signup/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(response => response.json())
         .then(data => this.setState({ errMsg: data.error }));
 
       if (!this.state.errMsg) {
-        this.props.navigation.navigate("Info");
+        this.props.navigation.navigate("Info", {username: this.state.username, password: this.state.password});
       }
     }
   };
@@ -45,7 +45,7 @@ export default class Signup extends Component {
         contentContainerStyle={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: "#222"
+          backgroundColor: "#000"
         }}
       >
         <View style={style.container}>
@@ -82,7 +82,7 @@ export default class Signup extends Component {
               onChangeText={password => this.setState({ password })}
             />
 
-            <TouchableOpacity onPress={this.onInputLabelPressed}>
+            <TouchableOpacity onPress={this.onEyePressed}>
               {this.state.hidden ? (
                 <FontAwesome5 name={"eye-slash"} size={15} />
               ) : (
@@ -113,7 +113,7 @@ const style = StyleSheet.create({
   container: {
     padding: 20,
     alignItems: "center",
-    backgroundColor: "#222"
+    backgroundColor: "#000"
   },
   password: {
     flexDirection: "row",

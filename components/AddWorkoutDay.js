@@ -18,7 +18,9 @@ class AddWorkoutDay extends Component {
   state = {
     day: "choose a day",
     from: { selectedHours: 0, selectedMinutes: 0 },
-    to: { selectedHours: 0, selectedMinutes: 0 }
+    to: { selectedHours: 0, selectedMinutes: 0 },
+    finalFrom: "00:00",
+    finalTo: "00:00"
   };
 
   render() {
@@ -50,15 +52,7 @@ class AddWorkoutDay extends Component {
           </View>
           <View style={style.container}>
             <Text style={style.textStyle}>from</Text>
-            <Text style={style.textStyle}>
-              {this.state.from.selectedHours < 10
-                ? "0" + this.state.from.selectedHours
-                : this.state.from.selectedHours}
-              :
-              {this.state.from.selectedMinutes < 10
-                ? "0" + this.state.from.selectedMinutes
-                : this.state.from.selectedMinutes}
-            </Text>
+            <Text style={style.textStyle}>{this.state.finalFrom}</Text>
             <TimePicker
               selectedHours={this.state.from.selectedHours}
               selectedMinutes={this.state.from.selectedMinutes}
@@ -67,22 +61,18 @@ class AddWorkoutDay extends Component {
                   from: {
                     selectedHours: hours,
                     selectedMinutes: minutes
-                  }
+                  },
+                  finalFrom:
+                    (hours < 10 ? "0" + hours : hours) +
+                    ":" +
+                    (minutes < 10 ? "0" + minutes : minutes)
                 })
               }
             />
           </View>
           <View style={style.container}>
             <Text style={style.textStyle}>to</Text>
-            <Text style={style.textStyle}>
-              {this.state.to.selectedHours < 10
-                ? "0" + this.state.to.selectedHours
-                : this.state.to.selectedHours}
-              :
-              {this.state.to.selectedMinutes < 10
-                ? "0" + this.state.to.selectedMinutes
-                : this.state.to.selectedMinutes}
-            </Text>
+            <Text style={style.textStyle}>{this.state.finalTo}</Text>
             <TimePicker
               selectedHours={this.state.to.selectedHours}
               selectedMinutes={this.state.to.selectedMinutes}
@@ -91,12 +81,16 @@ class AddWorkoutDay extends Component {
                   to: {
                     selectedHours: hours,
                     selectedMinutes: minutes
-                  }
+                  },
+                  finalTo:
+                    (hours < 10 ? "0" + hours : hours) +
+                    ":" +
+                    (minutes < 10 ? "0" + minutes : minutes)
                 })
               }
             />
           </View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: "row" }}>
             <View style={{ margin: 30 }}>
               <Button
                 title="Add"
@@ -104,10 +98,7 @@ class AddWorkoutDay extends Component {
               />
             </View>
             <View style={{ margin: 30 }}>
-              <Button
-                title="Cancel"
-                onPress={this.props.cancel}
-              />
+              <Button title="Cancel" onPress={this.props.cancel} />
             </View>
           </View>
         </ScrollView>
