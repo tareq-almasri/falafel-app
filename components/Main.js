@@ -20,25 +20,11 @@ class Main extends Component {
         style={{
           flex: 1,
           justifyContent: "center",
-          backgroundColor: "#222",
+          backgroundColor: "#000",
           color: "white"
         }}
       >
-        <View style={{marginBottom: 30}}>
-          
-          <Button
-            title="Sign Up"
-            onPress={() => this.props.navigation.navigate("SignUp")}
-          />
-        </View>
-
-        <View>
-          
-          <Button
-            title="Log In"
-            onPress={() => this.props.navigation.navigate("Login")}
-          />
-        </View>
+        <Text>welcome to hell!</Text>
       </View>
     );
   }

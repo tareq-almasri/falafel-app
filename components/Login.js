@@ -8,7 +8,7 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  Model
+  AsyncStorage
 } from "react-native";
 
 class Login extends Component {
@@ -19,24 +19,73 @@ class Login extends Component {
     errMsg: ""
   };
 
-  
+  async storeToken(user) {
+    try {
+      await AsyncStorage.setItem("userData", JSON.stringify(user));
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  async getToken() {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      console.log(data);
+      if (data) {
+        this.props.navigation.navigate("FALAFEL", { user: data.username });
+      }
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+
+  componentDidMount() {
+    if (
+      this.props.navigation.getParam("username") &&
+      this.props.navigation.getParam("password")
+    ) {
+      this.setState({
+        username: this.props.navigation.getParam("username"),
+        password: this.props.navigation.getParam("password")
+      });
+    }
+    this.getToken();
+  }
 
   onEyePressed = () => {
     this.setState({ hidden: !this.state.hidden });
   };
 
+  handleDone = () => {
+    if (this.state.username && this.state.password) {
+      fetch(
+        `http://falafel-server-cjgrgw4h6.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+      )
+        .then(res => res.json())
+        .then(data => {
+          this.storeToken(data.token);
+          this.setState({ errMsg: data.err });
+        });
+
+      if (!this.state.errMsg) {
+        this.getToken();
+      }
+
+    }
+  };
+
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          backgroundColor: "#000"
-        }}
-      >
+      
         <View style={style.container}>
           <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
-            Account Setup
+            Welcome to Falafel!
+          </Text>
+
+          <Text
+            style={{ backgroundColor: "#5b5b5b", color: "red", padding: 2 }}
+          >
+            {this.state.errMsg ? this.state.errMsg : ""}
           </Text>
 
           <TextInput
@@ -50,11 +99,6 @@ class Login extends Component {
             style={style.input}
           />
 
-          <Text style={{ color: "#5b5b5b" }}>
-            {this.state.errMsg
-              ? this.state.errMsg
-              : "* you will need it to login later"}
-          </Text>
           <View style={style.password}>
             <TextInput
               style={{ width: "80%" }}
@@ -77,13 +121,22 @@ class Login extends Component {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ color: "#5b5b5b" }}>
+          {/* <Text style={{ color: "#5b5b5b" }}>
             * you will need it to login later
           </Text>
-          <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text>
+          <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text> */}
+          <Button title="Done" onPress={this.handleDone} />
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ color: "#5b5b5b" }}>
+              you don't have an account? sign up
+            </Text>
+            <Button
+              title="Here!"
+              onPress={() => this.props.navigation.navigate("SignUp")}
+            />
+          </View>
         </View>
-        <Button title="Next" onPress={this.handleNext} />
-      </ScrollView>
+      
     );
   }
 }
@@ -97,6 +150,8 @@ const style = StyleSheet.create({
     width: "80%"
   },
   container: {
+    flex: 1,
+    justifyContent: "center",
     padding: 20,
     alignItems: "center",
     backgroundColor: "#000"
