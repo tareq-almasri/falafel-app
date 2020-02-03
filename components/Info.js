@@ -88,10 +88,11 @@ console.log(total);
     
     if (TDEE && this.state.diet) {
       fetch(
-        `http://falafel-server-fmuo35b4u.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
-      ).then(response => response.json())
-        .then(data => console.log(data));
-
+        `http://falafel-server-2q1r6jq2c.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
+      )
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
       this.props.navigation.navigate("SetPlan", {
         username: this.props.navigation.getParam("username"),
         password: this.props.navigation.getParam("password")

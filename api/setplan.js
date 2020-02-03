@@ -34,6 +34,7 @@ module.exports = (req, res) => {
       };
       user.sport = workoutArr;
       user.save();
+      res.json('plan saved')
     })
     .catch(err => res.status(400).json("Error: " + err));
 };
