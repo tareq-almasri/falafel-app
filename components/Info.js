@@ -39,30 +39,34 @@ class Info extends Component {
     index: 0,
     helpIndex: 0,
     visible: false,
-    diet: ''
+    diet: ""
   };
 
   handleNext = () => {
+    console.log(parseFloat(this.state.numberOfWorkout));
     let result =
-      9.99 * Number(this.state.weight) +
-      6.25 * Number(this.state.height) -
-      4.92 * Number(this.state.age);
+      9.99 * parseFloat(this.state.weight) +
+      6.25 * parseFloat(this.state.height) -
+      4.92 * parseFloat(this.state.age);
+
+      console.log(result)
 
     let BMR = Math.floor(this.state.sex == "male" ? result + 5 : result - 161);
-
+console.log(BMR);
     let percentOfBMR = Math.floor((7 * BMR) / 100);
-    let EPOC = Number(this.state.numberOfWorkouts) * percentOfBMR;
-
+    
+    let EPOC = parseFloat(this.state.numberOfWorkout) * percentOfBMR;
+console.log(EPOC);
     let TEA = Math.floor(
-      (Number(this.state.numberOfWorkouts) *
-        Number(this.state.durationOfWorkout) *
+      (parseFloat(this.state.numberOfWorkout) *
+        parseFloat(this.state.durationOfWorkout) *
         9 +
         EPOC) /
         7
     );
-
+console.log(TEA);
     let total = BMR + TEA + this.state.NEAT;
-
+console.log(total);
     let TEF = Math.floor(total / 10);
 
     let TDEE = total + TEF;
@@ -75,21 +79,27 @@ class Info extends Component {
     let carbs = Math.floor((TDEE * ratios[this.state.index].carbs) / 100 / 4);
     let fat = Math.floor((TDEE * ratios[this.state.index].fat) / 100 / 9);
 
-    let infoArrStrings=[this.props.navigation.getParam('username'), this.state.diet]
-     
+    let infoArrStrings = [
+      this.props.navigation.getParam("username"),
+      this.state.diet
+    ];
+
     let infoArrNumbers = [TDEE, goal, protein, carbs, fat];
     console.log(infoArrStrings);
     console.log(infoArrNumbers);
-    fetch(
-      `http://falafel-server-cjgrgw4h6.now.sh/api/info/?infoArrStrings=${infoArrStrings}&infoArrNumbers=${infoArrNumbers}`
-    ).then(response => response.json());
+    if (TDEE && this.state.diet) {
+      fetch(
+        `http://falafel-server-om147p0x6.now.sh/api/info/?infoArrStrings=${infoArrStrings}&infoArrNumbers=${infoArrNumbers}`
+      ).then(response => response.json());
 
-    this.props.navigation.navigate("SetPlan", {
-      username: this.props.navigation.getParam("username"), password: this.props.navigation.getParam('password')
-    });
+      this.props.navigation.navigate("SetPlan", {
+        username: this.props.navigation.getParam("username"),
+        password: this.props.navigation.getParam("password")
+      });
+    }
   };
 
-  onHelpPressed = (x) => {
+  onHelpPressed = x => {
     this.setState({ visible: true, helpIndex: x });
   };
 
@@ -101,27 +111,56 @@ class Info extends Component {
     return (
       <ScrollView>
         <View style={style.container}>
-          <Text style={{ color: "white", marginTop: 14 }}>
+          <Text style={{ color: "white", marginTop: 14, marginBottom: 10 }}>
             Body Type and Measurements
+          </Text>
+          <Text
+            style={{
+              color: "#5b5b5b",
+              alignSelf: "flex-start",
+              marginLeft: 40
+            }}
+          >
+            weight:
           </Text>
           <TextInput
             placeholderTextColor="#5b5b5b"
             placeholder="weight (kg)"
-            onChange={e => this.setState({ weight: e.target.valueOf })}
+            onChangeText={text => this.setState({ weight: text })}
             value={this.state.weight}
             style={style.input}
           />
+          <Text
+            style={{
+              color: "#5b5b5b",
+              alignSelf: "flex-start",
+              marginLeft: 40
+            }}
+          >
+            height:
+          </Text>
+
           <TextInput
             placeholderTextColor="#5b5b5b"
             placeholder="height (cm)"
-            onChange={e => this.setState({ height: e.target.valueOf })}
+            onChangeText={text => this.setState({ height: text })}
             value={this.state.height}
             style={style.input}
           />
+          <Text
+            style={{
+              color: "#5b5b5b",
+              alignSelf: "flex-start",
+              marginLeft: 40
+            }}
+          >
+            age:
+          </Text>
+
           <TextInput
             placeholderTextColor="#5b5b5b"
             placeholder="age (year)"
-            onChange={e => this.setState({ age: e.target.valueOf })}
+            onChangeText={text => this.setState({ age: text })}
             value={this.state.age}
             style={style.input}
           />
@@ -221,6 +260,7 @@ class Info extends Component {
               days of Workout per week:{" "}
             </Text>
             <Picker
+              itemStyle={{ color: "#fff" }}
               selectedValue={this.state.numberOfWorkout}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ numberOfWorkout: itemValue })
@@ -251,8 +291,8 @@ class Info extends Component {
             <TextInput
               placeholderTextColor="#5b5b5b"
               placeholder="0"
-              onChange={e =>
-                this.setState({ durationOfWorkout: e.target.valueOf })
+              onChangeText={text =>
+                this.setState({ durationOfWorkout: text })
               }
               value={this.state.durationOfWorkout}
               style={style.duration}
@@ -327,7 +367,7 @@ class Info extends Component {
                   moderateCarbs: false,
                   highCarbs: false,
                   index: 2,
-                  diet: 'low-carbs'
+                  diet: "low-carbs"
                 })
               }
               isChecked={this.state.lowCarbs}
@@ -354,7 +394,7 @@ class Info extends Component {
                   lowCarbs: false,
                   highCarbs: false,
                   index: 1,
-                  diet: 'moderate-carbs'
+                  diet: "moderate-carbs"
                 })
               }
               isChecked={this.state.moderateCarbs}
@@ -380,7 +420,7 @@ class Info extends Component {
                   lowCarbs: false,
                   moderateCarbs: false,
                   index: 0,
-                  diet: 'high-carbs'
+                  diet: "high-carbs"
                 })
               }
               isChecked={this.state.highCarbs}
@@ -400,7 +440,7 @@ class Info extends Component {
           </View>
           <Button
             title="Next"
-            onPress={() => this.props.navigation.navigate("SetPlan")}
+            onPress={this.handleNext}
           />
         </View>
       </ScrollView>

@@ -8,8 +8,10 @@ import {
   TextInput,
   ScrollView,
   FlatList,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
   state = {
@@ -59,7 +61,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-cjgrgw4h6.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-om147p0x6.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => {
@@ -81,9 +83,10 @@ class Login extends Component {
           <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
             Welcome to Falafel!
           </Text>
+          <Text style={{color: '#fff'}}>Log into your Falafel Account</Text>
 
           <Text
-            style={{ backgroundColor: "#5b5b5b", color: "red", padding: 2 }}
+            style={{ color: "red" }}
           >
             {this.state.errMsg ? this.state.errMsg : ""}
           </Text>
@@ -126,7 +129,7 @@ class Login extends Component {
           </Text>
           <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text> */}
           <Button title="Done" onPress={this.handleDone} />
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", alignItems: 'center' }}>
             <Text style={{ color: "#5b5b5b" }}>
               you don't have an account? sign up
             </Text>

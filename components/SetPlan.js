@@ -59,7 +59,7 @@ class SetPlan extends Component {
 
   handleFinish = () => {
     let planArr = [
-      this.props.navigation.getParams('username'),
+      this.props.navigation.getParams("username"),
       this.state.finalWakeUp.time,
       this.state.finalBreakfast.time,
       this.state.finalLunch.time,
@@ -68,7 +68,7 @@ class SetPlan extends Component {
     ];
     let workoutArr = this.state.workoutDays;
     fetch(
-      `http://falafel-server-cjgrgw4h6.now.sh/api/setplan/?planArr=${planArr}&workoutArr=${workoutArr}`
+      `http://falafel-server-om147p0x6.now.sh/api/setplan/?planArr=${planArr}&workoutArr=${workoutArr}`
     ).then(response => response.json());
 
     this.props.navigation.navigate("Login", {
@@ -83,7 +83,7 @@ class SetPlan extends Component {
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#222"
+          backgroundColor: "#000"
         }}
       >
         <View>
@@ -111,26 +111,33 @@ class SetPlan extends Component {
               <Text style={style.textStyle}>wake up time:</Text>
               <Text style={style.textStyle}>{this.state.finalWakeUp.time}</Text>
             </View>
-            <TimePicker
-              selectedHours={this.state.wakeUp.selectedHours}
-              selectedMinutes={this.state.wakeUp.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  wakeUp: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalWakeUp: {
-                    time:
-                      (hours < 10 ? "0" + hours : hours) +
-                      ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
-                  }
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                selectedHours={this.state.wakeUp.selectedHours}
+                selectedMinutes={this.state.wakeUp.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    wakeUp: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalWakeUp: {
+                      time:
+                        (hours < 10 ? "0" + hours : hours) +
+                        ":" +
+                        (minutes < 10 ? "0" + minutes : minutes)
+                    }
+                  })
+                }
+              />
+            </View>
           </View>
-
           <View style={style.container}>
             <View
               style={{
@@ -143,26 +150,34 @@ class SetPlan extends Component {
                 {this.state.finalBreakfast.time}
               </Text>
             </View>
-            <TimePicker
-              selectedHours={this.state.breakfast.selectedHours}
-              selectedMinutes={this.state.breakfast.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  breakfast: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalBreakfast: {
-                    time:
-                      (hours < 10 ? "0" + hours : hours) +
-                      ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
-                  }
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                itemStyle={{ color: "#fff" }}
+                selectedHours={this.state.breakfast.selectedHours}
+                selectedMinutes={this.state.breakfast.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    breakfast: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalBreakfast: {
+                      time:
+                        (hours < 10 ? "0" + hours : hours) +
+                        ":" +
+                        (minutes < 10 ? "0" + minutes : minutes)
+                    }
+                  })
+                }
+              />
+            </View>
           </View>
-
           <View style={style.container}>
             <View
               style={{
@@ -173,26 +188,34 @@ class SetPlan extends Component {
               <Text style={style.textStyle}>lunch time:</Text>
               <Text style={style.textStyle}>{this.state.finalLunch.time}</Text>
             </View>
-            <TimePicker
-              selectedHours={this.state.lunch.selectedHours}
-              selectedMinutes={this.state.lunch.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  lunch: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalLunch: {
-                    time:
-                      (hours < 10 ? "0" + hours : hours) +
-                      ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
-                  }
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                itemStyle={{ color: "#fff" }}
+                selectedHours={this.state.lunch.selectedHours}
+                selectedMinutes={this.state.lunch.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    lunch: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalLunch: {
+                      time:
+                        (hours < 10 ? "0" + hours : hours) +
+                        ":" +
+                        (minutes < 10 ? "0" + minutes : minutes)
+                    }
+                  })
+                }
+              />
+            </View>
           </View>
-
           <View style={style.container}>
             <View
               style={{
@@ -203,26 +226,34 @@ class SetPlan extends Component {
               <Text style={style.textStyle}>dinner time:</Text>
               <Text style={style.textStyle}>{this.state.finalDinner.time}</Text>
             </View>
-            <TimePicker
-              selectedHours={this.state.dinner.selectedHours}
-              selectedMinutes={this.state.dinner.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  dinner: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalDinner: {
-                    time:
-                      (hours < 10 ? "0" + hours : hours) +
-                      ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
-                  }
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                itemStyle={{ color: "#fff" }}
+                selectedHours={this.state.dinner.selectedHours}
+                selectedMinutes={this.state.dinner.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    dinner: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalDinner: {
+                      time:
+                        (hours < 10 ? "0" + hours : hours) +
+                        ":" +
+                        (minutes < 10 ? "0" + minutes : minutes)
+                    }
+                  })
+                }
+              />
+            </View>
           </View>
-
           <View style={style.container}>
             <View
               style={{
@@ -233,24 +264,32 @@ class SetPlan extends Component {
               <Text style={style.textStyle}>sleep time:</Text>
               <Text style={style.textStyle}>{this.state.finalSleep.time}</Text>
             </View>
-            <TimePicker
-              selectedHours={this.state.sleep.selectedHours}
-              selectedMinutes={this.state.sleep.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  sleep: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalSleep: {
-                    time:
-                      (hours < 10 ? "0" + hours : hours) +
-                      ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
-                  }
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                selectedHours={this.state.sleep.selectedHours}
+                selectedMinutes={this.state.sleep.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    sleep: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalSleep: {
+                      time:
+                        (hours < 10 ? "0" + hours : hours) +
+                        ":" +
+                        (minutes < 10 ? "0" + minutes : minutes)
+                    }
+                  })
+                }
+              />
+            </View>
           </View>
         </View>
         <AddWorkoutDay
@@ -322,16 +361,17 @@ class SetPlan extends Component {
 
 const style = StyleSheet.create({
   container: {
+    color: "#fff",
     width: 300,
-    backgroundColor: "#222",
+    backgroundColor: "#000",
     padding: 20,
     borderRadius: 10,
     margin: 10,
-    shadowColor: "#111",
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 0.9,
-    shadowRadius: 5,
-    elevation: 1
+    shadowColor: "#fff",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 3
+    //elevation: 1
   },
   textStyle: {
     color: "#5b5b5b",

@@ -35,6 +35,7 @@ class AddWorkoutDay extends Component {
         >
           <View style={style.container}>
             <Picker
+              itemStyle={{ color: "#fff" }}
               selectedValue={this.state.day}
               onValueChange={(itemValue, itemIndex) =>
                 this.setState({ day: itemValue })
@@ -53,42 +54,58 @@ class AddWorkoutDay extends Component {
           <View style={style.container}>
             <Text style={style.textStyle}>from</Text>
             <Text style={style.textStyle}>{this.state.finalFrom}</Text>
-            <TimePicker
-              selectedHours={this.state.from.selectedHours}
-              selectedMinutes={this.state.from.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  from: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalFrom:
-                    (hours < 10 ? "0" + hours : hours) +
-                    ":" +
-                    (minutes < 10 ? "0" + minutes : minutes)
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                selectedHours={this.state.from.selectedHours}
+                selectedMinutes={this.state.from.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    from: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalFrom:
+                      (hours < 10 ? "0" + hours : hours) +
+                      ":" +
+                      (minutes < 10 ? "0" + minutes : minutes)
+                  })
+                }
+              />
+            </View>
           </View>
           <View style={style.container}>
             <Text style={style.textStyle}>to</Text>
             <Text style={style.textStyle}>{this.state.finalTo}</Text>
-            <TimePicker
-              selectedHours={this.state.to.selectedHours}
-              selectedMinutes={this.state.to.selectedMinutes}
-              onChange={(hours, minutes) =>
-                this.setState({
-                  to: {
-                    selectedHours: hours,
-                    selectedMinutes: minutes
-                  },
-                  finalTo:
-                    (hours < 10 ? "0" + hours : hours) +
-                    ":" +
-                    (minutes < 10 ? "0" + minutes : minutes)
-                })
-              }
-            />
+            <View
+              style={{
+                backgroundColor: "#5b5b5b",
+                borderRadius: 10,
+                marginTop: 7
+              }}
+            >
+              <TimePicker
+                selectedHours={this.state.to.selectedHours}
+                selectedMinutes={this.state.to.selectedMinutes}
+                onChange={(hours, minutes) =>
+                  this.setState({
+                    to: {
+                      selectedHours: hours,
+                      selectedMinutes: minutes
+                    },
+                    finalTo:
+                      (hours < 10 ? "0" + hours : hours) +
+                      ":" +
+                      (minutes < 10 ? "0" + minutes : minutes)
+                  })
+                }
+              />
+            </View>
           </View>
           <View style={{ flexDirection: "row" }}>
             <View style={{ margin: 30 }}>
@@ -109,16 +126,17 @@ class AddWorkoutDay extends Component {
 
 const style = StyleSheet.create({
   container: {
+    color: "#fff",
     width: 300,
-    backgroundColor: "#222",
-    padding: 40,
+    backgroundColor: "#000",
+    padding: 20,
     borderRadius: 10,
     margin: 10,
-    shadowColor: "#111",
-    shadowOffset: { width: 6, height: 6 },
-    shadowOpacity: 0.9,
-    shadowRadius: 5,
-    elevation: 1
+    shadowColor: "#fff",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 3
+    //elevation: 1
   },
   textStyle: {
     color: "#5b5b5b",

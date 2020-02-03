@@ -25,13 +25,14 @@ module.exports = (req, res) => {
   let infoArrNumbers=req.query.infoArrNumbers;
   User.findOne({ username: infoArrStrings[0] })
     .then(user => {
-      user.tdee = infoArrNumbers[0];
+      user.tdee = 1000;
       user.goalCal = infoArrNumbers[1];
       user.diet = infoArrStrings[1];
       user.proteinDL = infoArrNumbers[2];
       user.carbsDL = infoArrNumbers[3];
       user.fatDL = infoArrNumbers[4];
       user.save();
+      res.send('info saved')
     })
     .catch(err => res.status(400).json("Error: " + err));
 };

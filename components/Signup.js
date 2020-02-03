@@ -28,16 +28,20 @@ export default class Signup extends Component {
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
       fetch(
-        `http://falafel-server-cjgrgw4h6.now.sh/api/signup/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-om147p0x6.now.sh/api/signup/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(response => response.json())
-        .then(data => this.setState({ errMsg: data.error }));
-
-      if (!this.state.errMsg) {
-        this.props.navigation.navigate("Info", {username: this.state.username, password: this.state.password});
-      }
+        .then(data => {
+          data.error
+            ? this.setState({ errMsg: data.error })
+            : this.props.navigation.navigate("Info", {
+                username: this.state.username,
+                password: this.state.password
+              });
+        });
     }
   };
+
 
   render() {
     return (

@@ -12,7 +12,7 @@ const AppNavigator = createStackNavigator(
   {
     Login: { screen: Login, navigationOptions: { title: "Log in" } },
     SignUp: { screen: Signup, navigationOptions: { title: "Sign up" } },
-    Info: { screen: Info, navigationOptions: { title: "Required Info" } },
+    Info: { screen: Info, navigationOptions: { title: "Info" } },
     SetPlan: { screen: SetPlan, navigationOptions: { title: "Set a Plan" } },
     FALAFEL: {
       screen: Main,
@@ -21,7 +21,7 @@ const AppNavigator = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      backgroundColor: "#000",
+      headerStyle: {backgroundColor: "#000", height: 80},
       headerTintColor: "#fff"
     }
   }
