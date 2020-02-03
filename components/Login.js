@@ -23,7 +23,7 @@ class Login extends Component {
 
   async storeToken(user) {
     try {
-      await AsyncStorage.setItem("userData", JSON.stringify(user));
+      await AsyncStorage.setItem("userData", user);
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -31,10 +31,10 @@ class Login extends Component {
   async getToken() {
     try {
       let userData = await AsyncStorage.getItem("userData");
-      let data = JSON.parse(userData);
-      console.log(data);
+      // let data = JSON.parse(userData);
+      console.log(userData);
       if (data) {
-        this.props.navigation.navigate("FALAFEL", { user: data.username });
+        this.props.navigation.navigate("FALAFEL", { user: userData.username });
       }
     } catch (error) {
       console.log("Something went wrong", error);
@@ -61,14 +61,15 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-cutjyy2ry.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-njvhnj0o9.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
-        .then(data => {
-          data.err
-            ? console.log({ errMsg: data.error })
-            : this.storeToken(data.token);
-        });
+        .then(data => console.log(data));
+        //   {
+        //   data.err
+        //     ? console.log({ errMsg: data.error })
+        //     : this.storeToken(data.token);
+        // });
       //   this.storeToken(data.token);
       //   this.setState({ errMsg: data.err });
       // });
