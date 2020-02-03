@@ -21,8 +21,8 @@ mongoose.connect(
 
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  let planArr = req.query.planArr;
-  let workoutArr = req.query.workoutArr;
+  let planArr = req.query.planStr.split(',');
+  let workoutArr = req.query.workoutStr.split('-');
   User.findOne({ username: planArr[0] })
     .then(user => {
       user.dailyPlan = {

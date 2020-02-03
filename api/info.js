@@ -21,11 +21,11 @@ mongoose.connect(
 
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  let infoArrStrings=req.query.infoArrStrings;
-  let infoArrNumbers=req.query.infoArrNumbers;
+  let infoArrStrings=req.query.infoStrStrings.split(',');
+  let infoArrNumbers=req.query.infoStrNumbers.split(',');
   User.findOne({ username: infoArrStrings[0] })
     .then(user => {
-      user.tdee = 1000;
+      user.tdee = infoArrNumbers[0];
       user.goalCal = infoArrNumbers[1];
       user.diet = infoArrStrings[1];
       user.proteinDL = infoArrNumbers[2];

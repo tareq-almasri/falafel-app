@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       dinner: String,
       sleep: String
     },
-    sport: [{ day: String, finalFrom: String, finalTo: String }],
+    sport: [{ day: String, from: String, to: String }],
     udi: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "udi"

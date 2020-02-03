@@ -79,18 +79,17 @@ console.log(total);
     let carbs = Math.floor((TDEE * ratios[this.state.index].carbs) / 100 / 4);
     let fat = Math.floor((TDEE * ratios[this.state.index].fat) / 100 / 9);
 
-    let infoArrStrings = [
+    let infoStrStrings = [
       this.props.navigation.getParam("username"),
       this.state.diet
-    ];
+    ].join();
 
-    let infoArrNumbers = [TDEE, goal, protein, carbs, fat];
-    console.log(infoArrStrings);
-    console.log(infoArrNumbers);
+    let infoStrNumbers = [TDEE, goal, protein, carbs, fat].join();
+    
     if (TDEE && this.state.diet) {
       fetch(
-        `http://falafel-server-om147p0x6.now.sh/api/info/?infoArrStrings=${infoArrStrings}&infoArrNumbers=${infoArrNumbers}`
-      ).then(response => response.json());
+        `http://falafel-server-1zjdoqedd.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
+      ).then(response => response.json()).then(data=>console.log(data))
 
       this.props.navigation.navigate("SetPlan", {
         username: this.props.navigation.getParam("username"),

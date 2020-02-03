@@ -20,15 +20,15 @@ class SetPlan extends Component {
   state = {
     visible: false,
     wakeUp: { selectedHours: 0, selectedMinutes: 0 },
-    finalWakeUp: { time: "00:00" },
+    finalWakeUp: "00:00",
     breakfast: { selectedHours: 0, selectedMinutes: 0 },
-    finalBreakfast: { time: "00:00" },
+    finalBreakfast: "00:00",
     lunch: { selectedHours: 0, selectedMinutes: 0 },
-    finalLunch: { time: "00:00" },
+    finalLunch: "00:00",
     dinner: { selectedHours: 0, selectedMinutes: 0 },
-    finalDinner: { time: "00:00" },
+    finalDinner: "00:00",
     sleep: { selectedHours: 0, selectedMinutes: 0 },
-    finalSleep: { time: "00:00" },
+    finalSleep: "00:00",
     workoutDays: []
   };
 
@@ -38,11 +38,13 @@ class SetPlan extends Component {
       this.setState(prev => {
         prev.workoutDays = [
           ...prev.workoutDays.filter(x => x.day !== day.day),
-          day
+          {day: day.day, from: day.finalFrom, to: day.finalTo}
         ];
       });
     } else {
-      this.setState({ workoutDays: [day] });
+      this.setState({
+        workoutDays: [{ day: day.day, from: day.finalFrom, to: day.finalTo }]
+      });
     }
 
     this.setState({ visible: false });
@@ -58,17 +60,17 @@ class SetPlan extends Component {
   };
 
   handleFinish = () => {
-    let planArr = [
+    let planStr = [
       this.props.navigation.getParams("username"),
-      this.state.finalWakeUp.time,
-      this.state.finalBreakfast.time,
-      this.state.finalLunch.time,
-      this.state.finalDinner.time,
-      this.state.finalSleep.time
-    ];
-    let workoutArr = this.state.workoutDays;
+      this.state.finalWakeUp,
+      this.state.finalBreakfast,
+      this.state.finalLunch,
+      this.state.finalDinner,
+      this.state.finalSleep
+    ].join();
+    let workoutStr = this.state.workoutDays.join('-');
     fetch(
-      `http://falafel-server-om147p0x6.now.sh/api/setplan/?planArr=${planArr}&workoutArr=${workoutArr}`
+      `http://falafel-server-1zjdoqedd.now.sh/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
     ).then(response => response.json());
 
     this.props.navigation.navigate("Login", {
@@ -109,7 +111,7 @@ class SetPlan extends Component {
               }}
             >
               <Text style={style.textStyle}>wake up time:</Text>
-              <Text style={style.textStyle}>{this.state.finalWakeUp.time}</Text>
+              <Text style={style.textStyle}>{this.state.finalWakeUp}</Text>
             </View>
             <View
               style={{
@@ -127,12 +129,12 @@ class SetPlan extends Component {
                       selectedHours: hours,
                       selectedMinutes: minutes
                     },
-                    finalWakeUp: {
-                      time:
+                    finalWakeUp: 
+                      
                         (hours < 10 ? "0" + hours : hours) +
                         ":" +
                         (minutes < 10 ? "0" + minutes : minutes)
-                    }
+                    
                   })
                 }
               />
@@ -147,7 +149,7 @@ class SetPlan extends Component {
             >
               <Text style={style.textStyle}>breakfast time:</Text>
               <Text style={style.textStyle}>
-                {this.state.finalBreakfast.time}
+                {this.state.finalBreakfast}
               </Text>
             </View>
             <View
@@ -167,12 +169,12 @@ class SetPlan extends Component {
                       selectedHours: hours,
                       selectedMinutes: minutes
                     },
-                    finalBreakfast: {
-                      time:
+                    finalBreakfast: 
+                     
                         (hours < 10 ? "0" + hours : hours) +
                         ":" +
                         (minutes < 10 ? "0" + minutes : minutes)
-                    }
+                    
                   })
                 }
               />
@@ -186,7 +188,7 @@ class SetPlan extends Component {
               }}
             >
               <Text style={style.textStyle}>lunch time:</Text>
-              <Text style={style.textStyle}>{this.state.finalLunch.time}</Text>
+              <Text style={style.textStyle}>{this.state.finalLunch}</Text>
             </View>
             <View
               style={{
@@ -205,12 +207,12 @@ class SetPlan extends Component {
                       selectedHours: hours,
                       selectedMinutes: minutes
                     },
-                    finalLunch: {
-                      time:
+                    finalLunch: 
+                      
                         (hours < 10 ? "0" + hours : hours) +
                         ":" +
                         (minutes < 10 ? "0" + minutes : minutes)
-                    }
+                    
                   })
                 }
               />
@@ -224,7 +226,7 @@ class SetPlan extends Component {
               }}
             >
               <Text style={style.textStyle}>dinner time:</Text>
-              <Text style={style.textStyle}>{this.state.finalDinner.time}</Text>
+              <Text style={style.textStyle}>{this.state.finalDinner}</Text>
             </View>
             <View
               style={{
@@ -243,12 +245,12 @@ class SetPlan extends Component {
                       selectedHours: hours,
                       selectedMinutes: minutes
                     },
-                    finalDinner: {
-                      time:
+                    finalDinner: 
+                      
                         (hours < 10 ? "0" + hours : hours) +
                         ":" +
                         (minutes < 10 ? "0" + minutes : minutes)
-                    }
+                    
                   })
                 }
               />
@@ -262,7 +264,7 @@ class SetPlan extends Component {
               }}
             >
               <Text style={style.textStyle}>sleep time:</Text>
-              <Text style={style.textStyle}>{this.state.finalSleep.time}</Text>
+              <Text style={style.textStyle}>{this.state.finalSleep}</Text>
             </View>
             <View
               style={{
@@ -280,12 +282,12 @@ class SetPlan extends Component {
                       selectedHours: hours,
                       selectedMinutes: minutes
                     },
-                    finalSleep: {
-                      time:
+                    finalSleep: 
+                      
                         (hours < 10 ? "0" + hours : hours) +
                         ":" +
                         (minutes < 10 ? "0" + minutes : minutes)
-                    }
+                    
                   })
                 }
               />
@@ -318,11 +320,11 @@ class SetPlan extends Component {
                   <Text style={{ width: 30 }}>{x.day}</Text>
                   <View>
                     <Text style={style.textStyle}>from</Text>
-                    <Text style={style.textStyle}>{x.finalFrom.time}</Text>
+                    <Text style={style.textStyle}>{x.finalFrom}</Text>
                   </View>
                   <View>
                     <Text style={style.textStyle}>to</Text>
-                    <Text style={style.textStyle}>{x.finalTo.time}</Text>
+                    <Text style={style.textStyle}>{x.finalTo}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => this.setState({ visible: true })}
