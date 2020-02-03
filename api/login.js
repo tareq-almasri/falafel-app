@@ -27,14 +27,14 @@ module.exports = (req, res) => {
     .then(user => {
       // user with this email not found? => error
       if (!user) {
-        res.status(400).send({ err: "invalid username or password" });
+        res.status(400).json( "invalid username or password" );
       }
 
       // compare passwords using bcrypt.compare() function
       bcrypt.compare(req.query.password, user.password).then(success => {
         // user password does not match password from login form? => error
         if (!success) {
-          res.status(400).send({ err: "invalid username or password" });
+          res.status(400).json({ err: "invalid username or password" });
         }
         // create JWT token by signing
         let secret = "top-secret";
@@ -45,7 +45,7 @@ module.exports = (req, res) => {
         );
 
         // return token
-        res.send({ token }); // => same as: { "token": token }
+        res.json(token); // => same as: { "token": token }
       });
     })
     .catch(err => res.status(400).json("err: " + err));
