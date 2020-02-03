@@ -32,7 +32,7 @@ module.exports = (req, res) => {
       user.carbsDL = infoArrNumbers[3];
       user.fatDL = infoArrNumbers[4];
       user.save();
-      res.send('info saved')
+      res.json('info saved')
     })
     .catch(err => res.status(400).json("Error: " + err));
 };

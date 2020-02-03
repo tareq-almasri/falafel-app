@@ -70,7 +70,7 @@ class SetPlan extends Component {
     ].join();
     let workoutStr = this.state.workoutDays.join('-');
     fetch(
-      `http://falafel-server-1zjdoqedd.now.sh/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
+      `http://falafel-server-fmuo35b4u.now.sh/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
     ).then(response => response.json());
 
     this.props.navigation.navigate("Login", {
