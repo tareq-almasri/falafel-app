@@ -38,7 +38,7 @@ module.exports = (req, res) => {
         // create JWT token by signing
         let secret = "top-secret";
         let token = jwt.sign(
-          { aud: "iPhone-App", username: user.username, id: user._id }, // WHAT data to sign
+          {  username: user.username, id: user._id }, // WHAT data to sign
           secret //, // signing key
           // { expiresIn: "1h" } // expiry time
         );

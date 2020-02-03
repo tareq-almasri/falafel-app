@@ -61,7 +61,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-52xg8gztj.now.sh/api/login/?username=catjjjnl&password=helloo`
+        `http://falafel-server-mke9ssftk.now.sh/api/login/?username=catjjjnl&password=helloo`
       )
         .then(res => res.json())
         .then(data => console.log(data));
