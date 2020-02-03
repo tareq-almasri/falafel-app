@@ -45,7 +45,7 @@ module.exports = (req, res) => {
         );
 
         // return token
-        res.json(token); // => same as: { "token": token }
+        res.json({token}); // => same as: { "token": token }
       });
     })
     .catch(err => res.status(400).json("err: " + err));
