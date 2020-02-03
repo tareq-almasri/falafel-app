@@ -61,11 +61,13 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-phe1m84as.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-cutjyy2ry.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => {
-          data.err ? this.setState({ errMsg: data.error }) : this.getToken();
+          data.err
+            ? console.log({ errMsg: data.error })
+            : this.storeToken(data.token);
         });
       //   this.storeToken(data.token);
       //   this.setState({ errMsg: data.err });
@@ -76,7 +78,7 @@ class Login extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
         <View style={style.container}>
           <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
             Welcome to Falafel!
