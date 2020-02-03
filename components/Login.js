@@ -65,81 +65,75 @@ class Login extends Component {
       )
         .then(res => res.json())
         .then(data => {
-          this.storeToken(data.token);
-          this.setState({ errMsg: data.err });
+          data.err ? this.setState({ errMsg: data.error }) : this.getToken();
         });
-
-      if (!this.state.errMsg) {
-        this.getToken();
-      }
+      //   this.storeToken(data.token);
+      //   this.setState({ errMsg: data.err });
+      // });
 
     }
   };
 
   render() {
     return (
-      
-        <View style={style.container}>
-          <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
-            Welcome to Falafel!
-          </Text>
-          <Text style={{color: '#fff'}}>Log into your Falafel Account</Text>
+      <View style={style.container}>
+        <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
+          Welcome to Falafel!
+        </Text>
+        <Text style={{ color: "#fff" }}>Log into your Falafel Account</Text>
 
-          <Text
-            style={{ color: "red" }}
-          >
-            {this.state.errMsg ? this.state.errMsg : ""}
-          </Text>
+        <Text style={{ color: "red" }}>
+          {this.state.errMsg ? this.state.errMsg : ""}
+        </Text>
 
+        <TextInput
+          placeholderTextColor="#5b5b5b"
+          textContentType="name"
+          autoCapitalize="none"
+          autoCorrect={false}
+          placeholder="choose a username"
+          value={this.state.username}
+          onChangeText={username => this.setState({ username })}
+          style={style.input}
+        />
+
+        <View style={style.password}>
           <TextInput
-            placeholderTextColor="#5b5b5b"
-            textContentType="name"
+            style={{ width: "80%" }}
             autoCapitalize="none"
             autoCorrect={false}
-            placeholder="choose a username"
-            value={this.state.username}
-            onChangeText={username => this.setState({ username })}
-            style={style.input}
+            placeholderTextColor="#5b5b5b"
+            placeholder="choose a password"
+            underlineColorAndroid="transparent"
+            secureTextEntry={this.state.hidden}
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
           />
 
-          <View style={style.password}>
-            <TextInput
-              style={{ width: "80%" }}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholderTextColor="#5b5b5b"
-              placeholder="choose a password"
-              underlineColorAndroid="transparent"
-              secureTextEntry={this.state.hidden}
-              value={this.state.password}
-              onChangeText={password => this.setState({ password })}
-            />
+          <TouchableOpacity onPress={this.onEyePressed}>
+            {this.state.hidden ? (
+              <FontAwesome5 name={"eye-slash"} size={15} />
+            ) : (
+              <FontAwesome5 name={"eye"} size={15} />
+            )}
+          </TouchableOpacity>
+        </View>
 
-            <TouchableOpacity onPress={this.onEyePressed}>
-              {this.state.hidden ? (
-                <FontAwesome5 name={"eye-slash"} size={15} />
-              ) : (
-                <FontAwesome5 name={"eye"} size={15} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          {/* <Text style={{ color: "#5b5b5b" }}>
+        {/* <Text style={{ color: "#5b5b5b" }}>
             * you will need it to login later
           </Text>
           <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text> */}
-          <Button title="Done" onPress={this.handleDone} />
-          <View style={{ flexDirection: "row", alignItems: 'center' }}>
-            <Text style={{ color: "#5b5b5b" }}>
-              you don't have an account? sign up
-            </Text>
-            <Button
-              title="Here!"
-              onPress={() => this.props.navigation.navigate("SignUp")}
-            />
-          </View>
+        <Button title="Done" onPress={this.handleDone} />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ color: "#5b5b5b" }}>
+            you don't have an account? sign up
+          </Text>
+          <Button
+            title="Here!"
+            onPress={() => this.props.navigation.navigate("SignUp")}
+          />
         </View>
-      
+      </View>
     );
   }
 }
