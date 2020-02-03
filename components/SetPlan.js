@@ -37,13 +37,13 @@ class SetPlan extends Component {
     if (this.state.workoutDays.length > 0) {
       this.setState(prev => {
         prev.workoutDays = [
-          ...prev.workoutDays.filter(x => x.day !== day.day),
-          { day: day.day, from: day.finalFrom, to: day.finalTo }
+          ...prev.workoutDays.filter(x => x[0] !== day.day),
+           [day.day, day.finalFrom, day.finalTo] 
         ];
       });
     } else {
       this.setState({
-        workoutDays: [{ day: day.day, from: day.finalFrom, to: day.finalTo }]
+        workoutDays: [[day.day, day.finalFrom, day.finalTo]]
       });
     }
 
@@ -68,13 +68,15 @@ class SetPlan extends Component {
       this.state.finalDinner,
       this.state.finalSleep
     ].join();
-    let workoutStr = this.state.workoutDays.join("-");
+    console.log(planStr)
+    let workoutStr = this.state.workoutDays.flat(1).join();
+    console.log(workoutStr)
     fetch(
-      `http://falafel-server-25nw1yf1v.now.sh/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
+      `http://falafel-server-phe1m84as.now.sh/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
     )
       .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(err => console.log(err.error));
+      .then(data => console.log(data));
+      
 
     this.props.navigation.navigate("Login", {
       username: this.props.navigation.getParam("username"),
@@ -307,16 +309,16 @@ class SetPlan extends Component {
                     paddingBottom: 3,
                     marginTop: 6
                   }}
-                  key={x.day}
+                  key={x[0]}
                 >
-                  <Text style={{ width: 30, color: "#fff" }}>{x.day}</Text>
+                  <Text style={{ width: 30, color: "#fff" }}>{x[0]}</Text>
                   <View>
                     <Text style={style.textStyle}>from</Text>
-                    <Text style={style.textStyle}>{x.from}</Text>
+                    <Text style={style.textStyle}>{x[1]}</Text>
                   </View>
                   <View>
                     <Text style={style.textStyle}>to</Text>
-                    <Text style={style.textStyle}>{x.to}</Text>
+                    <Text style={style.textStyle}>{x[2]}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => this.setState({ visible: true })}

@@ -61,7 +61,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-25nw1yf1v.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-phe1m84as.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => {
@@ -76,64 +76,66 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={style.container}>
-        <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
-          Welcome to Falafel!
-        </Text>
-        <Text style={{ color: "#fff" }}>Log into your Falafel Account</Text>
+      <ScrollView>
+        <View style={style.container}>
+          <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
+            Welcome to Falafel!
+          </Text>
+          <Text style={{ color: "#fff" }}>Log into your Falafel Account</Text>
 
-        <Text style={{ color: "red" }}>
-          {this.state.errMsg ? this.state.errMsg : ""}
-        </Text>
+          <Text style={{ color: "red" }}>
+            {this.state.errMsg ? this.state.errMsg : ""}
+          </Text>
 
-        <TextInput
-          placeholderTextColor="#5b5b5b"
-          textContentType="name"
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="choose a username"
-          value={this.state.username}
-          onChangeText={username => this.setState({ username })}
-          style={style.input}
-        />
-
-        <View style={style.password}>
           <TextInput
-            style={{ width: "80%" }}
+            placeholderTextColor="#5b5b5b"
+            textContentType="name"
             autoCapitalize="none"
             autoCorrect={false}
-            placeholderTextColor="#5b5b5b"
-            placeholder="choose a password"
-            underlineColorAndroid="transparent"
-            secureTextEntry={this.state.hidden}
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
+            placeholder="choose a username"
+            value={this.state.username}
+            onChangeText={username => this.setState({ username })}
+            style={style.input}
           />
 
-          <TouchableOpacity onPress={this.onEyePressed}>
-            {this.state.hidden ? (
-              <FontAwesome5 name={"eye-slash"} size={15} />
-            ) : (
-              <FontAwesome5 name={"eye"} size={15} />
-            )}
-          </TouchableOpacity>
-        </View>
+          <View style={style.password}>
+            <TextInput
+              style={{ width: "80%" }}
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor="#5b5b5b"
+              placeholder="choose a password"
+              underlineColorAndroid="transparent"
+              secureTextEntry={this.state.hidden}
+              value={this.state.password}
+              onChangeText={password => this.setState({ password })}
+            />
 
-        {/* <Text style={{ color: "#5b5b5b" }}>
+            <TouchableOpacity onPress={this.onEyePressed}>
+              {this.state.hidden ? (
+                <FontAwesome5 name={"eye-slash"} size={15} />
+              ) : (
+                <FontAwesome5 name={"eye"} size={15} />
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {/* <Text style={{ color: "#5b5b5b" }}>
             * you will need it to login later
           </Text>
           <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text> */}
-        <Button title="Done" onPress={this.handleDone} />
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ color: "#5b5b5b" }}>
-            you don't have an account? sign up
-          </Text>
-          <Button
-            title="Here!"
-            onPress={() => this.props.navigation.navigate("SignUp")}
-          />
+          <Button title="Done" onPress={this.handleDone} />
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={{ color: "#5b5b5b" }}>
+              you don't have an account? sign up
+            </Text>
+            <Button
+              title="Here!"
+              onPress={() => this.props.navigation.navigate("SignUp")}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

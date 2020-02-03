@@ -21,8 +21,17 @@ mongoose.connect(
 
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  let planArr = req.query.planStr.split(',');
-  let workoutArr = req.query.workoutStr.split('-');
+  let planArr = req.query.planStr.split(",");
+  let workoutArr = req.query.workoutStr.split(",");
+  let i, j, temp;
+
+  let arr2 = [];
+
+  for (i = 0, j = workoutArr.length; i < j; i += 3) {
+    temp = workoutArr.slice(i, i + 3);
+    arr2.push(temp);
+  }
+
   User.findOne({ username: planArr[0] })
     .then(user => {
       user.dailyPlan = {
@@ -32,13 +41,9 @@ module.exports = (req, res) => {
         dinner: planArr[4],
         sleep: planArr[5]
       };
-      user.sport = workoutArr;
+      user.sport = arr2;
       user.save();
       res.json("plan saved");
     })
-    .catch(err =>
-      res.status(400).send({
-        error: "plan did not save"+err
-      })
-    );
+    .catch(err => res.status(400).json("Error: " + err));
 };
