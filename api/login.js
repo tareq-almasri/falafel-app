@@ -22,7 +22,7 @@ mongoose.connect(
 
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  User.findOne({ username: req.query.username })
+  User.findOne({ username: 'ion' })
 
     .then(user => {
       // user with this email not found? => error
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
       }
 
       // compare passwords using bcrypt.compare() function
-      bcrypt.compare(req.query.password, user.password).then(success => {
+      bcrypt.compare('123456789', user.password).then(success => {
         // user password does not match password from login form? => error
         if (!success) {
           res.status(400).json({ err: "invalid username or password" });
