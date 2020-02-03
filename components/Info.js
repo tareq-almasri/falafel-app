@@ -88,7 +88,7 @@ console.log(total);
     
     if (TDEE && this.state.diet) {
       fetch(
-        `http://falafel-server-2q1r6jq2c.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
+        `http://falafel-server-25nw1yf1v.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
       )
         .then(response => response.json())
         .then(data => console.log(data))
@@ -292,9 +292,7 @@ console.log(total);
             <TextInput
               placeholderTextColor="#5b5b5b"
               placeholder="0"
-              onChangeText={text =>
-                this.setState({ durationOfWorkout: text })
-              }
+              onChangeText={text => this.setState({ durationOfWorkout: text })}
               value={this.state.durationOfWorkout}
               style={style.duration}
             />
@@ -377,13 +375,20 @@ console.log(total);
             />
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "70%"
+            }}
           >
             <Text style={{ color: "#5b5b5b", margin: 3 }}>
               {this.state.lose ? "* recommended for you" : ""}
             </Text>
-            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 2)}>
-              <FontAwesome5 name={"question-circle"} size={15} />
+            <TouchableOpacity
+              style={{ paddingTop: 4 }}
+              onPress={this.onHelpPressed.bind(this, 2)}
+            >
+              <FontAwesome5 name={"question-circle"} color="white" size={15} />
             </TouchableOpacity>
           </View>
 
@@ -404,13 +409,20 @@ console.log(total);
             />
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "70%"
+            }}
           >
             <Text style={{ color: "#5b5b5b", margin: 3 }}>
               {this.state.maintain ? "* recommended for you" : ""}
             </Text>
-            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 1)}>
-              <FontAwesome5 name={"question-circle"} size={15} />
+            <TouchableOpacity
+              style={{ paddingTop: 4 }}
+              onPress={this.onHelpPressed.bind(this, 1)}
+            >
+              <FontAwesome5 name={"question-circle"} color="white" size={15} />
             </TouchableOpacity>
           </View>
           <View style={style.check2}>
@@ -430,19 +442,23 @@ console.log(total);
             />
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "70%"
+            }}
           >
             <Text style={{ color: "#5b5b5b", margin: 3 }}>
               {this.state.gain ? "* recommended for you" : ""}
             </Text>
-            <TouchableOpacity onPress={this.onHelpPressed.bind(this, 0)}>
-              <FontAwesome5 name={"question-circle"} size={15} />
+            <TouchableOpacity
+              style={{ paddingTop: 4 }}
+              onPress={this.onHelpPressed.bind(this, 0)}
+            >
+              <FontAwesome5 name={"question-circle"} color="white" size={15} />
             </TouchableOpacity>
           </View>
-          <Button
-            title="Next"
-            onPress={this.handleNext}
-          />
+          <Button title="Next" onPress={this.handleNext} />
         </View>
       </ScrollView>
     );
