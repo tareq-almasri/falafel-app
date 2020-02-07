@@ -45,21 +45,9 @@ class Login extends Component {
     }
   }
 
-  UNSAFE_componentWillMount() {
-    if (
-      this.props.navigation.getParam("username") &&
-      this.props.navigation.getParam("password")
-    ) {
-      this.setState({
-        username: this.props.navigation.getParam("username"),
-        password: this.props.navigation.getParam("password")
-      });
-    }
-  }
-
-  componentDidMount() {
-    this.getToken();
-  }
+  // componentDidMount() {
+  //   this.getToken();
+  // }
 
   onEyePressed = () => {
     this.setState({ hidden: !this.state.hidden });
@@ -67,6 +55,7 @@ class Login extends Component {
 
   handleDone = () => {
     if (this.state.username && this.state.password) {
+      AsyncStorage.removeItem("userData");
       fetch(
         `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
@@ -74,7 +63,7 @@ class Login extends Component {
         .then(data => {
           data.err
             ? this.setState({ errMsg: data.err })
-            : this.storeToken(data);
+            : console.log(data);
         });
     }
   };
