@@ -14,12 +14,14 @@ import {
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
-  state = {
+  constructor(props){
+    super(props)
+  this.state= {
     username: "",
     password: "",
     hidden: true,
     errMsg: ""
-  };
+  }};
 
   // async storeToken(user) {
   //   try {
@@ -41,7 +43,7 @@ class Login extends Component {
   //   }
   // }
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     if (
       this.props.navigation.getParam("username") &&
       this.props.navigation.getParam("password")
@@ -61,7 +63,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-7nb1b0ih2.now.sh/api/login/?username=catjjjnl&password=helloo`
+        `http://falafel-server-7nb1b0ih2.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => console.log(data));}

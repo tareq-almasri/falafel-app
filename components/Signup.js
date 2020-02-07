@@ -28,7 +28,7 @@ export default class Signup extends Component {
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
       fetch(
-        `http://falafel-server-7nb1b0ih2.now.sh/signup/?username=${this.state.username}&password=${this.state.password}`
+        `http://falafel-server-hp7gmpn3r.now.sh/api/signup/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(response => response.json())
         .then(data => {
@@ -41,7 +41,6 @@ export default class Signup extends Component {
         });
     }
   };
-
 
   render() {
     return (
