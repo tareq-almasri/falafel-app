@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("./Models/user.model");
 
 // CONNECT TO MONGODB
@@ -35,15 +36,15 @@ module.exports = (req, res) => {
             res.status(400).send({ err: "invalid username or password" });
           } else {
             // create JWT token by signing
-            // let secret = "top-secret";
-            // let token = jwt.sign(
-            //   { username: user.username, id: user._id, aud: "iPhone-App" }, // WHAT data to sign
-            //   secret //, // signing key
-            //   // { expiresIn: "1h" } // expiry time
-            // );
+            let secret = "top-secret";
+            let token = jwt.sign(
+              { username: user.username, id: user._id, aud: "iPhone-App" }, // WHAT data to sign
+              secret //, // signing key
+              // { expiresIn: "1h" } // expiry time
+            );
 
             // return token
-            res.json(user); // => same as: { "token": token }
+            res.json(token); // => same as: { "token": token }
           }
         });
       }
