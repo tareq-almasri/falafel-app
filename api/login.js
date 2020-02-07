@@ -25,8 +25,8 @@ module.exports = (req, res) => {
   User.findOne({ username: req.query.username })
     .then(user => {
       // user with this email not found? => error
-      if (!user) {
-        res.status(400).send({err: "invalid username or password"});
+      if (user==null) {
+        res.status(400).json({err: "invalid username or password"});
       }
 
       // compare passwords using bcrypt.compare() function
