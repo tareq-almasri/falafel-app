@@ -26,7 +26,7 @@ module.exports = (req, res) => {
     .then(user => {
       // user with this email not found? => error
       if (!user) {
-        res.status(400).json({err: "invalid username or password"});
+        res.status(400).send({err: "invalid username or password"});
       }
 
       // compare passwords using bcrypt.compare() function
