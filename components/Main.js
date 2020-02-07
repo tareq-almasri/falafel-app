@@ -20,7 +20,7 @@ class Main extends Component {
       `http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam("token")}`
     )
       .then(res => res.json())
-      .then(data => this.setState(data));
+      .then(data => console.log(data));
   }
 
   render() {
@@ -29,13 +29,14 @@ class Main extends Component {
         style={{
           flex: 1,
           justifyContent: "center",
-          alignItems: 'center',
+          alignItems: "center",
           backgroundColor: "#000",
           color: "white"
         }}
       >
-        <Text style={{ color: "#fff" }}>welcome to hell! {this.state.username},{this.state.tdee},{this.state.udi.calCount}</Text>
-        
+        <Text style={{ color: "#fff" }}>
+          welcome to hell! {this.props.navigation.getParam("token")}
+        </Text>
       </View>
     );
   }

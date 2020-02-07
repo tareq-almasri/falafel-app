@@ -18,8 +18,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      username: this.props.navigation.getParam("username") || "",
+      password: this.props.navigation.getParam("password") || "",
       hidden: true,
       errMsg: ""
     };
@@ -35,7 +35,7 @@ class Login extends Component {
   async getToken() {
     try {
       let userData = await AsyncStorage.getItem("userData");
-      
+
       console.log(userData);
       if (userData) {
         this.props.navigation.navigate("FALAFEL", { token: userData });
@@ -57,7 +57,7 @@ class Login extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getToken();
   }
 
@@ -73,10 +73,9 @@ class Login extends Component {
         .then(res => res.json())
         .then(data => {
           data.err
-            ? console.log({ errMsg: data.error })
+            ? this.setState({ errMsg: data.err })
             : this.storeToken(data);
         });
-     
     }
   };
 

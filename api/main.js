@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./Models/user.model");
 
-
 // CONNECT TO MONGODB
 mongoose.connect(
   "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
@@ -28,8 +27,11 @@ module.exports = (req, res) => {
 
   User.findOne({ username: user.username })
     .then(userFound => {
-      
-      res.send(userFound);
+      if (!userFound) {
+        res.send({ err: "eeeeerrrrooooorrrr" });
+      } else {
+        res.send({ userFound });
+      }
     })
     .catch(err => res.status(400).json("err: " + err));
 };
