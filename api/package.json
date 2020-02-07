@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "rn": "cd ../ && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run rn\""
+    "start": "nodemon .",
+    "now-start": "node ."
   },
   "author": "",
   "license": "ISC",

@@ -20,6 +20,9 @@ mongoose.connect(
   }
 );
 
+
+
+
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   let newUser = req.query.username;
