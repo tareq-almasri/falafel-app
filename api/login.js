@@ -32,18 +32,18 @@ module.exports = (req, res) => {
         bcrypt.compare(req.query.password, user.password).then(success => {
           // user password does not match password from login form? => error
           if (!success) {
-            res.status(400).json("invalid username or password");
-          }
-          // create JWT token by signing
-          // let secret = "top-secret";
-          // let token = jwt.sign(
-          //   {  username: user.username, id: user._id }, // WHAT data to sign
-          //   secret //, // signing key
-          // { expiresIn: "1h" } // expiry time
-          // );
-          else {
+            res.status(400).send({ err: "invalid username or password" });
+          } else {
+            // create JWT token by signing
+            let secret = "top-secret";
+            let token = jwt.sign(
+              { username: user.username, id: user._id, aud: "iPhone-App" }, // WHAT data to sign
+              secret //, // signing key
+              // { expiresIn: "1h" } // expiry time
+            );
+
             // return token
-            res.json(user); // => same as: { "token": token }
+            res.json(token); // => same as: { "token": token }
           }
         });
       }
