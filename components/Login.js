@@ -18,8 +18,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username:  "",
-      password:  "",
+      username: "",
+      password: "",
       hidden: true,
       errMsg: ""
     };
@@ -60,12 +60,10 @@ class Login extends Component {
         `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
-        .then(data => { 
-          // data.err
-          //   ? this.setState({ errMsg: data.err })
-          //   :
-             console.log(data);
-        });
+        .then(data => 
+          // data.err ? this.setState({ errMsg: data.err }) :
+           console.log(data)
+        );
     }
   };
 
