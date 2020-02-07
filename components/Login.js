@@ -11,6 +11,7 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from "react-native";
+import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
@@ -37,7 +38,7 @@ class Login extends Component {
       
       console.log(userData);
       if (userData) {
-        this.props.navigation.navigate("FALAFEL", { user: userData });
+        this.props.navigation.navigate("FALAFEL", { token: userData });
       }
     } catch (error) {
       console.log("Something went wrong", error);
@@ -67,7 +68,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://${process.env.ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => {

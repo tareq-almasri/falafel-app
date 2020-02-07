@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Input,
-  TextInputProps,
   View,
   Text,
   TextInput,
@@ -10,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-
+import {ACCESS_SERVER_URL} from 'react-native-dotenv';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default class Signup extends Component {
@@ -28,7 +26,7 @@ export default class Signup extends Component {
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
       fetch(
-        `http://${process.env.ACCESS_SERVER_URL}/api/signup/?username=${this.state.username}&password=${this.state.password}`
+        `http://${ACCESS_SERVER_URL}/api/signup/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(response => response.json())
         .then(data => {
@@ -40,6 +38,7 @@ export default class Signup extends Component {
               });
         });
     }
+    
   };
 
   render() {

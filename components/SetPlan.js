@@ -11,7 +11,7 @@ import {
   Picker,
   TouchableOpacity
 } from "react-native";
-
+import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import TimePicker from "react-native-simple-time-picker";
 import AddWorkoutDay from "./AddWorkoutDay";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -72,7 +72,7 @@ class SetPlan extends Component {
     let workoutStr = this.state.workoutDays.flat(1).join();
     console.log(workoutStr)
     fetch(
-      `http://${process.env.ACCESS_SERVER_URL}/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
+      `http://${ACCESS_SERVER_URL}/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
     )
       .then(response => response.json())
       .then(data => console.log(data));

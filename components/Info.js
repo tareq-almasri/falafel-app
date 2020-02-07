@@ -11,6 +11,7 @@ import {
   Picker,
   TouchableOpacity
 } from "react-native";
+import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import CheckBox from "react-native-check-box";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import ChooseDietHelp from "./ChooseDietHelp";
@@ -88,7 +89,7 @@ console.log(total);
     
     if (TDEE && this.state.diet) {
       fetch(
-        `http://${process.env.ACCESS_SERVER_URL}/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
+        `http://${ACCESS_SERVER_URL}/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
       )
         .then(response => response.json())
         .then(data => console.log(data));
