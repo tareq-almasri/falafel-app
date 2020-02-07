@@ -25,28 +25,28 @@ module.exports = (req, res) => {
   User.findOne({ username: req.query.username })
     .then(user => {
       // user with this email not found? => error
-      if (user==null) {
-        res.status(400).json({err: "invalid username or password"});
-      }
-
-      // compare passwords using bcrypt.compare() function
-      bcrypt.compare(req.query.password, user.password).then(success => {
-        // user password does not match password from login form? => error
-        if (!success) {
-          res.status(400).json( "invalid username or password" );
-        }
-        // create JWT token by signing
-        // let secret = "top-secret";
-        // let token = jwt.sign(
-        //   {  username: user.username, id: user._id }, // WHAT data to sign
-        //   secret //, // signing key
+      if (!user) {
+        res.status(400).send({ err: "invalid username or password" });
+      } else {
+        // compare passwords using bcrypt.compare() function
+        bcrypt.compare(req.query.password, user.password).then(success => {
+          // user password does not match password from login form? => error
+          if (!success) {
+            res.status(400).json("invalid username or password");
+          }
+          // create JWT token by signing
+          // let secret = "top-secret";
+          // let token = jwt.sign(
+          //   {  username: user.username, id: user._id }, // WHAT data to sign
+          //   secret //, // signing key
           // { expiresIn: "1h" } // expiry time
-        // );
- 
-
-        // return token
-        res.json( user ); // => same as: { "token": token }
-      });
+          // );
+          else {
+            // return token
+            res.json(user); // => same as: { "token": token }
+          }
+        });
+      }
     })
     .catch(err => res.status(400).json("err: " + err));
 };
