@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -45,7 +45,7 @@ module.exports = (req, res) => {
             // );
 
             // return token
-            res.json({user}); // => same as: { "token": token }
+            res.send(user); // => same as: { "token": token }
           }
         });
       }
