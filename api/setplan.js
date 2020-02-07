@@ -42,6 +42,15 @@ module.exports = (req, res) => {
         sleep: planArr[5]
       };
       user.sport = arr2;
+      user.udi = {
+        calCount: 0,
+        proteinCount: 0,
+        fatCount: 0,
+        carbsCount: 0,
+        waterCount: 0,
+        caffCount: 0,
+        sugarCount: 0
+      };
       user.save();
       res.json("plan saved");
     })

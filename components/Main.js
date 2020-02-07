@@ -13,6 +13,10 @@ import {
 
 class Main extends Component {
   state = {};
+   
+componentDidMount(){
+  
+}
 
   render() {
     return (
@@ -24,7 +28,7 @@ class Main extends Component {
           color: "white"
         }}
       >
-        <Text>welcome to hell!</Text>
+        <Text style={{color: '#fff'}}>welcome to hell!</Text>
       </View>
     );
   }

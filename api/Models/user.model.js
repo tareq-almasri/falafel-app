@@ -19,8 +19,13 @@ const userSchema = new mongoose.Schema(
     },
     sport: [[String]],
     udi: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "udi"
+      calCount: Number,
+      proteinCount: Number,
+      fatCount: Number,
+      carbsCount: Number,
+      waterCount: Number,
+      caffCount: Number,
+      sugarCount: Number
     }
   },
 

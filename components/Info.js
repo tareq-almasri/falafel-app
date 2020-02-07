@@ -88,7 +88,7 @@ console.log(total);
     
     if (TDEE && this.state.diet) {
       fetch(
-        `http://falafel-server-njvhnj0o9.now.sh/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
+        `http://${process.env.ACCESS_SERVER_URL}/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
       )
         .then(response => response.json())
         .then(data => console.log(data));

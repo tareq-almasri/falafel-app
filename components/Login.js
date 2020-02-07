@@ -14,34 +14,35 @@ import {
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
-  constructor(props){
-    super(props)
-  this.state= {
-    username: "",
-    password: "",
-    hidden: true,
-    errMsg: ""
-  }};
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      hidden: true,
+      errMsg: ""
+    };
+  }
 
-  // async storeToken(user) {
-  //   try {
-  //     await AsyncStorage.setItem("userData", user);
-  //   } catch (error) {
-  //     console.log("Something went wrong", error);
-  //   }
-  // }
-  // async getToken() {
-  //   try {
-  //     let userData = await AsyncStorage.getItem("userData");
-  //     // let data = JSON.parse(userData);
-  //     console.log(userData);
-  //     if (userData) {
-  //       this.props.navigation.navigate("FALAFEL", { user: userData.username });
-  //     }
-  //   } catch (error) {
-  //     console.log("Something went wrong", error);
-  //   }
-  // }
+  async storeToken(user) {
+    try {
+      await AsyncStorage.setItem("userData", user);
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  async getToken() {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      
+      console.log(userData);
+      if (userData) {
+        this.props.navigation.navigate("FALAFEL", { user: userData });
+      }
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
 
   UNSAFE_componentWillMount() {
     if (
@@ -53,7 +54,10 @@ class Login extends Component {
         password: this.props.navigation.getParam("password")
       });
     }
-    // this.getToken();
+  }
+
+  componentDidMount(){
+    this.getToken();
   }
 
   onEyePressed = () => {
@@ -63,20 +67,16 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       fetch(
-        `http://falafel-server-j5s3sd1oo.now.sh/api/login/?username=${this.state.username}&password=${this.state.password}`
+        `http://${process.env.ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
-        .then(data => console.log(data));}
-        //   {
-        //   data.err
-        //     ? console.log({ errMsg: data.error })
-        //     : this.storeToken(data.token);
-        // });
-      //   this.storeToken(data.token);
-      //   this.setState({ errMsg: data.err });
-      // });
-
-    
+        .then(data => {
+          data.err
+            ? console.log({ errMsg: data.error })
+            : this.storeToken(data);
+        });
+     
+    }
   };
 
   render() {

@@ -36,7 +36,7 @@ module.exports = (req, res) => {
             res.status(400).send({ err: "invalid username or password" });
           } else {
             // create JWT token by signing
-            let secret = "top-secret";
+            let secret = process.env.ACCESS_TOKEN_SECRET;
             let token = jwt.sign(
               { username: user.username, id: user._id, aud: "iPhone-App" }, // WHAT data to sign
               secret //, // signing key

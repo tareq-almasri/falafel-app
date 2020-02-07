@@ -110,6 +110,7 @@ class AddWorkoutDay extends Component {
           <View style={{ flexDirection: "row" }}>
             <View style={{ margin: 30 }}>
               <Button
+                disabled={this.state.day=='choose a day' ? true : false}
                 title="Add"
                 onPress={this.props.addDay.bind(this, this.state)}
               />
