@@ -45,7 +45,7 @@ module.exports = (req, res) => {
             // );
 
             // return token
-            res.json(user); // => same as: { "token": token }
+            res.json({user}); // => same as: { "token": token }
           }
         });
       }
