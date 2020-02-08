@@ -30,7 +30,7 @@ module.exports = (req, res) => {
     res.send({ err: "eeeeerrrrooooorrrr" });
   } else {
    
-    User.findOne({ username: user.username })
+    User.find({ username: user.username })
       .then(userFound => {
         res.send({ userFound });
       })
