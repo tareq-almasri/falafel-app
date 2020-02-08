@@ -32,7 +32,7 @@ module.exports = (req, res) => {
         if (!userFound) {
           res.send({ err: "user not found" });
         } else {
-          res.json(userFound);
+          res.send({found: userFound});
         }
       })
       .catch(err => res.status(400).json("err: " + err));
