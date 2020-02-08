@@ -16,14 +16,13 @@ class Main extends Component {
   state = {};
 
   componentDidMount() {
+    let token=this.props.navigation.getParam("token");
     fetch(
-      `http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam(
-        "token"
-      )}`
+      `http://${ACCESS_SERVER_URL}/api/main/?token=${token}`
     )
       .then(res => res.json())
       .then(data => {
-        data.err ? console.log(data.err) : console.log(data)
+        console.log(data)
       });
   }
 
