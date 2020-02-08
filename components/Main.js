@@ -41,14 +41,14 @@ class Main extends Component {
   //   }
   // };
 
-  gimme=()=> {
-    let token=this.props.navigation.getParam("token");
-    fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${token}`)
+  gimme = () => {
+    let token = this.props.navigation.getParam("token");
+    fetch(`http://${ACCESS_SERVER_URL}/api/main`)
       .then(res => res.json())
       .then(data => {
         console.log(data);
       });
-  }
+  };
 
   render() {
     return (
@@ -64,7 +64,7 @@ class Main extends Component {
         <Text style={{ color: "#fff" }}>
           welcome to hell! {this.props.navigation.getParam("token")}
         </Text>
-        <Button title='click' onPress={this.gimme}/>
+        <Button title="click" onPress={this.gimme} />
       </View>
     );
   }

@@ -26,7 +26,7 @@ module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   let user = jwt.verify(req.query.token, process.env.ACCESS_TOKEN_SECRET);
 
-  res.send({wtf: 'fuuuuuuuck'})
+   res.json('fuuuuuuuck')
 
   // User.find({ username: user.username })
   //   .then(userFound => {
