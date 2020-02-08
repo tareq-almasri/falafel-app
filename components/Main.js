@@ -16,10 +16,8 @@ class Main extends Component {
   state = {};
 
   componentDidMount() {
-    let token=this.props.navigation.getParam("token");
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/main/?token=${token}`
-    )
+    let token = this.props.navigation.getParam("token");
+    fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${token}`)
       .then(res => res.json())
       .then(data => {
         console.log(data)
