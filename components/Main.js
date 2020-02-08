@@ -13,14 +13,40 @@ import {
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
 
 class Main extends Component {
-  state = {};
+  state = {
+    username: '',
+    password: '',
+    tdee: 0,
+    goalCal: 0,
+    diet: '',
+    proteinDL: 0,
+    carbsDL: 0,
+    fatDL: 0,
+    dailyPlan: {
+      wakeUp: '',
+      breakfast: '',
+      lunch: '',
+      dinner: '',
+      sleep: ''
+    },
+    sport: [],
+    udi: {
+      calCount: 0,
+      proteinCount: 0,
+      fatCount: 0,
+      carbsCount: 0,
+      waterCount: 0,
+      caffCount: 0,
+      sugarCount: 0
+    }
+  };
 
   componentDidMount() {
     let token = this.props.navigation.getParam("token");
     fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${token}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        console.log(data);
       });
   }
 
