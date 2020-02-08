@@ -34,7 +34,7 @@ module.exports = (req, res) => {
         if (!userFound) {
           res.send({ err: "user not found" });
         } else {
-          res.send({ userFound });
+          res.send({ lololol: userFound });
         }
       })
       .catch(err => res.status(400).json("err: " + err));
