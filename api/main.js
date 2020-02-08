@@ -29,10 +29,13 @@ module.exports = (req, res) => {
   if (!user) {
     res.send({ err: "eeeeerrrrooooorrrr" });
   } else {
-   
     User.find({ username: user.username })
       .then(userFound => {
-        res.send({ userFound });
+        if (!userFound) {
+          res.send({ err: "user not found" });
+        } else {
+          res.send({ userFound });
+        }
       })
       .catch(err => res.status(400).json("err: " + err));
   }
