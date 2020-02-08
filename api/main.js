@@ -22,20 +22,20 @@ mongoose.connect(
   }
 );
 
-// module.exports = (req, res) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-// //   let user = jwt.verify(req.query.token, process.env.ACCESS_TOKEN_SECRET);
+module.exports = (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  let user = jwt.verify(req.query.token, process.env.ACCESS_TOKEN_SECRET);
 
 
-// //     User.find({ username: user.username })
-// //       .then(userFound => {
-// //         if (!userFound) {
-// //           res.send({ err: "user not found" });
-// //         } else {
-// //           res.json(userFound);
-// //         }
-// //       })
-// //       .catch(err => res.status(400).json("err: " + err));
-//   res.send({wtf: 'what the faaaaaak'})
+    User.find({ username: user.username })
+      .then(userFound => {
+        if (!userFound) {
+          res.send({ err: "user not found" });
+        } else {
+          res.json(userFound);
+        }
+      })
+      .catch(err => res.status(400).json("err: " + err));
+  // res.send({wtf: 'what the faaaaaak'})
   
-// };
+};
