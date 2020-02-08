@@ -25,7 +25,7 @@ mongoose.connect(
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   let user = jwt.verify(req.query.token, process.env.ACCESS_TOKEN_SECRET);
-
+console.log(user)
   if (!user) {
     res.send({ err: "eeeeerrrrooooorrrr" });
   } else {

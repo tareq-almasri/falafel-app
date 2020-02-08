@@ -37,7 +37,7 @@ class Login extends Component {
     try {
       let userData = await AsyncStorage.getItem("userData");
 
-      //console.log(userData);
+      console.log(userData);
       if (userData) {
         this.props.navigation.navigate("FALAFEL", { token: userData });
       }
