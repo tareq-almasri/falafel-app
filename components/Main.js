@@ -17,10 +17,14 @@ class Main extends Component {
 
   componentDidMount() {
     fetch(
-      `http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam("token")}`
+      `http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam(
+        "token"
+      )}`
     )
       .then(res => res.json())
-      .then(data => console.log(data));
+      .then(data => {
+        data.err ? console.log(data.err) : console.log(data)
+      });
   }
 
   render() {

@@ -28,6 +28,7 @@ class Login extends Component {
   async storeToken(user) {
     try {
       await AsyncStorage.setItem("userData", user);
+      this.getToken()
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -36,7 +37,7 @@ class Login extends Component {
     try {
       let userData = await AsyncStorage.getItem("userData");
 
-      console.log(userData);
+      //console.log(userData);
       if (userData) {
         this.props.navigation.navigate("FALAFEL", { token: userData });
       }
@@ -45,9 +46,9 @@ class Login extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.getToken();
-  // }
+  componentDidMount() {
+    this.getToken();
+  }
 
   onEyePressed = () => {
     this.setState({ hidden: !this.state.hidden });
@@ -60,10 +61,9 @@ class Login extends Component {
         `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
-        .then(data => 
-          // data.err ? this.setState({ errMsg: data.err }) :
-           console.log(data)
-        );
+        .then(data => {
+          data.err ? this.setState({ errMsg: data.err }) : this.storeToken(data.token)
+        });
     }
   };
 
