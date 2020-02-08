@@ -25,15 +25,16 @@ mongoose.connect(
 module.exports = (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
   let user = jwt.verify(req.query.token, process.env.ACCESS_TOKEN_SECRET);
+
   if (!user) {
     res.send({ err: "eeeeerrrrooooorrrr" });
   } else {
-    //   res.send({user})
-    User.findOne({ username: user.username })
-      .then(userFound => {
-        res.send({ userFound });
-      })
-      .catch(err => res.status(400).json("err: " + err));
+      res.send({user})
+    // User.findOne({ username: user.username })
+    //   .then(userFound => {
+    //     res.send({ userFound });
+    //   })
+    //   .catch(err => res.status(400).json("err: " + err));
   }
 };
 
