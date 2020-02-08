@@ -41,7 +41,7 @@ class Main extends Component {
     }
   };
 
-  componentDidMount() {
+  gimme=()=> {
     let token=this.props.navigation.getParam("token");
     fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${token}`)
       .then(res => res.json())
@@ -64,6 +64,7 @@ class Main extends Component {
         <Text style={{ color: "#fff" }}>
           welcome to hell! {this.props.navigation.getParam("token")}
         </Text>
+        <Button title='click' onPress={this.gimme}/>
       </View>
     );
   }
