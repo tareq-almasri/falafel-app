@@ -65,7 +65,7 @@ class Login extends Component {
       )
         .then(res => res.json())
         .then(data => {
-          data.err ? this.setState({ errMsg: data.err }) : this.storeToken(data.token)
+          data.err ? this.setState({ errMsg: data.err }) : console.log(data.token)
         });
     }
   };
