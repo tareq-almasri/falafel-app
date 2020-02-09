@@ -57,15 +57,15 @@ class Login extends Component {
   };
 
   handleDone = () => {
-    AsyncStorage.removeItem("userData");
+    
     if (this.state.username && this.state.password) {
-      
+      AsyncStorage.removeItem("userData");
       fetch(
         `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )
         .then(res => res.json())
         .then(data => {
-          data.err ? this.setState({ errMsg: data.err }) : console.log(data.token)
+          data.err ? this.setState({ errMsg: data.err }) : this.storeToken(data.token)
         });
     }
   };
