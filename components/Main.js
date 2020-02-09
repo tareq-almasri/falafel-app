@@ -10,7 +10,8 @@ import {
   FlatList,
   Modal
 } from "react-native";
-import { Permissions, Notifications } from "expo";
+import * as Permissions from "expo-permissions";
+import { Notifications } from "expo";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import Speedometer from "react-native-speedometer-chart";
 import * as Progress from "react-native-progress";
@@ -133,9 +134,9 @@ class Main extends Component {
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
-          <View style={styles.borderStyleTop}>
-            <View style={styles.caloriesContainer}>
-              <View style={styles.remainingCaloriesContainer}>
+          <View style={style.borderStyleTop}>
+            <View style={style.caloriesContainer}>
+              <View style={style.remainingCaloriesContainer}>
                 <Speedometer
                   value={this.state.calories}
                   totalValue={
@@ -154,7 +155,7 @@ class Main extends Component {
                     width: 50,
                     textAlign: "center"
                   }}
-                  text={this.state.udi.calCount}
+                  text={''+this.state.udi.calCount}
                   internalColor="#0d7cff"
                   outerColor="#5b5b5b"
                   innerColor="black"
@@ -165,8 +166,8 @@ class Main extends Component {
             </View>
           </View>
 
-          <View style={styles.borderStyleButtom}>
-            <View style={styles.remainingCaloriesContainer}>
+          <View style={style.borderStyleButtom}>
+            <View style={style.remainingCaloriesContainer}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Text style={{ color: "white", marginRight: 5, width: 55 }}>
                   Carbs
