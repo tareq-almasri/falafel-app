@@ -102,9 +102,7 @@ class Main extends Component {
   resetUdi = () => {
     if (this.state.udi.date !== Date().substring(0, 15)) {
       fetch(
-        `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam(
-          "token"
-        )}`
+        `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}`
       )
         .then(res => res.json())
         .then(data => {
@@ -113,19 +111,17 @@ class Main extends Component {
     }
   };
 
-  componentDidMount() {
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam(
-        "token"
-      )}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState(data.found);
-      });
-    this.resetUdi();
-    this.reminder();
-  }
+  // componentDidMount() {
+  //   fetch(
+  //     `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
+  //   )
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       this.setState(data.found);
+  //     });
+  //   this.resetUdi();
+  //   this.reminder();
+  // }
 
   render() {
     return (
@@ -134,11 +130,12 @@ class Main extends Component {
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
+          <Button title='Log out' onPress={()=>this.props.navigation.navigate('Login')} />
           <View style={style.borderStyleTop}>
             <View style={style.caloriesContainer}>
               <View style={style.remainingCaloriesContainer}>
                 <Speedometer
-                  value={this.state.calories}
+                  value={this.state.udi.calCount}
                   totalValue={
                     this.state.goalCal > this.state.tdee
                       ? this.state.goalCal
