@@ -106,7 +106,19 @@ class Main extends Component {
       )
         .then(res => res.json())
         .then(data => {
-          this.setState(data.user);
+          console.log(data);
+        });
+        this.setState({
+          udi: {
+            date: Date().substring(0, 15),
+            calCount: 0,
+            proteinCount: 0,
+            fatCount: 0,
+            carbsCount: 0,
+            waterCount: 0,
+            caffCount: 0,
+            sugarCount: 0
+          }
         });
     }
   };
@@ -119,7 +131,7 @@ class Main extends Component {
       .then(data => {
         this.setState(data.found);
       });
-    this.resetUdi();
+    // this.resetUdi();
    this.reminder();
   }
 

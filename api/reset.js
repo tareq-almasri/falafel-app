@@ -38,7 +38,7 @@ module.exports = (req, res) => {
         sugarCount: 0
       };
       user.save();
-      res.send({user: user});
+      res.json('usi reset Succeeded');
     })
     .catch(err => res.status(400).json("Error: " + err));
 
