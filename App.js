@@ -5,7 +5,8 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Main from "./components/Main";
 import Info from "./components/Info";
-import SetPlan from "./components/SetPlan"
+import SetPlan from "./components/SetPlan";
+import AddFood from "./components/AddFood";
 
 
 const AppNavigator = createStackNavigator(
@@ -17,11 +18,12 @@ const AppNavigator = createStackNavigator(
     FALAFEL: {
       screen: Main,
       navigationOptions: { title: "FALAFEL" }
-    }
+    },
+    AddFood: {screen: AddFood, navigationOptions: {title: 'Add Food'}}
   },
   {
     defaultNavigationOptions: {
-      headerStyle: {backgroundColor: "#000", height: 80},
+      headerStyle: { backgroundColor: "#000", height: 80 },
       headerTintColor: "#fff"
     }
   }

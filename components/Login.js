@@ -12,6 +12,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
+import {StackActions, NavigationActions} from 'react-navigation';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
@@ -40,7 +41,7 @@ class Login extends Component {
       // let data = JSON.parse(userData);
       console.log(userData);
       if (userData) {
-        this.props.navigation.navigate("FALAFEL", { token: userData });
+        this.props.navigation.replace("FALAFEL", { token: userData });
       }
     } catch (error) {
       console.log("Something went wrong", error);
@@ -56,8 +57,9 @@ class Login extends Component {
   };
 
   handleDone = () => {
-    AsyncStorage.removeItem("userData");
+    
     if (this.state.username && this.state.password) {
+      AsyncStorage.removeItem("userData");
       fetch(
         `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
       )

@@ -1,12 +1,12 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./Models/user.model");
+require("dotenv").config();
 
 // CONNECT TO MONGODB
 mongoose.connect(
-  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
+  process.env.FALAFEL_DB,
   {
     useNewUrlParser: true,
     useCreateIndex: true,

@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
     },
     sport: [[String]],
     udi: {
+      date: String,
       calCount: Number,
       proteinCount: Number,
       fatCount: Number,

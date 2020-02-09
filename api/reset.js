@@ -20,30 +20,15 @@ mongoose.connect(
   }
 );
 
+
+
+
 module.exports = (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  let planArr = req.query.planStr.split(",");
-  let workoutArr = req.query.workoutStr.split(",");
-  let i, j, temp;
-
-  let arr2 = [];
-
-  for (i = 0, j = workoutArr.length; i < j; i += 3) {
-    temp = workoutArr.slice(i, i + 3);
-    arr2.push(temp);
-  }
-
-  User.findOne({ username: planArr[0] })
+  User.findOne({ username: req.query.username })
     .then(user => {
-      user.dailyPlan = {
-        wakeUp: planArr[1],
-        breakfast: planArr[2],
-        lunch: planArr[3],
-        dinner: planArr[4],
-        sleep: planArr[5]
-      };
-      user.sport = arr2;
       user.udi = {
+        date: Date().substring(0, 15),
         calCount: 0,
         proteinCount: 0,
         fatCount: 0,
@@ -53,7 +38,8 @@ module.exports = (req, res) => {
         sugarCount: 0
       };
       user.save();
-      res.json("plan saved");
+      res.send({user: user});
     })
     .catch(err => res.status(400).json("Error: " + err));
-};
+
+}
