@@ -111,17 +111,17 @@ class Main extends Component {
     }
   };
 
-  // componentDidMount() {
-  //   fetch(
-  //     `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
-  //   )
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       this.setState(data.found);
-  //     });
-  //   this.resetUdi();
-  //   this.reminder();
-  // }
+  componentDidMount() {
+    fetch(
+      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.found);
+      });
+    //this.resetUdi();
+   // this.reminder();
+  }
 
   render() {
     return (
@@ -130,135 +130,143 @@ class Main extends Component {
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
-          <Button title='Log out' onPress={()=>this.props.navigation.navigate('Login')} />
-          <View style={style.borderStyleTop}>
-            <View style={style.caloriesContainer}>
-              <View style={style.remainingCaloriesContainer}>
-                <Speedometer
-                  value={this.state.udi.calCount}
-                  totalValue={
-                    this.state.goalCal > this.state.tdee
-                      ? this.state.goalCal
-                      : this.state.tdee
-                  }
-                  size={200}
-                  showText
-                  textStyle={{
-                    color: "white",
-                    borderColor: "white",
-                    borderWidth: 1,
-                    borderRadius: 5,
-                    padding: 3,
-                    width: 50,
-                    textAlign: "center"
-                  }}
-                  text={''+this.state.udi.calCount}
-                  internalColor="#0d7cff"
-                  outerColor="#5b5b5b"
-                  innerColor="black"
-                  innerCircleStyle={{ height: 95, width: 189 }}
-                  outerCircleStyle={{ size: 250 }}
-                />
-              </View>
-            </View>
+          <Button
+            title="Log out"
+            onPress={() => this.props.navigation.navigate("Login")}
+          />
+          {/* <View style={style.borderStyleTop}>
+            <View style={style.caloriesContainer}> */}
+          <View style={style.remainingCaloriesContainer}>
+            <Speedometer
+              value={this.state.udi.calCount}
+              totalValue={
+                this.state.goalCal > this.state.tdee
+                  ? this.state.goalCal
+                  : this.state.tdee
+              }
+              size={200}
+              showText
+              textStyle={{
+                color: "white",
+                borderColor: "white",
+                borderWidth: 1,
+                borderRadius: 5,
+                padding: 3,
+                width: 50,
+                textAlign: "center"
+              }}
+              text={"" + this.state.udi.calCount}
+              internalColor="#0d7cff"
+              outerColor="#5b5b5b"
+              innerColor="black"
+              innerCircleStyle={{ height: 95, width: 189 }}
+              outerCircleStyle={{ size: 250 }}
+            />
           </View>
+          {/* </View>
+          </View> */}
 
-          <View style={style.borderStyleButtom}>
-            <View style={style.remainingCaloriesContainer}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ color: "white", marginRight: 5, width: 55 }}>
-                  Carbs
-                </Text>
-                <TextInput
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    width: 35,
-                    borderWidth: 1,
-                    borderColor: "white",
-                    textAlign: "center",
-                    borderRadius: 5,
-                    padding: 3,
-                    marginRight: 5
-                  }}
-                  value={this.state.udi.carbsCount}
-                />
-                <Text style={{ color: "white", marginRight: 5 }}>g</Text>
-                <View>
-                  <Progress.Bar
-                    progress={0.3}
-                    width={200}
-                    borderColor="black"
-                    unfilledColor="#5b5b5b"
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  margin: 5,
-                  alignItems: "center"
-                }}
-              >
-                <Text style={{ color: "white", marginRight: 5, width: 55 }}>
-                  Protein
-                </Text>
-                <TextInput
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    width: 35,
-                    borderWidth: 1,
-                    borderColor: "white",
-                    width: 35,
-                    textAlign: "center",
-                    borderRadius: 5,
-                    padding: 3,
-                    marginRight: 5
-                  }}
-                  value={this.state.udi.proteinCount}
-                />
-                <Text style={{ color: "white", marginRight: 5 }}>g</Text>
-                <View>
-                  <Progress.Bar
-                    progress={0.3}
-                    width={200}
-                    borderColor="black"
-                    unfilledColor="#5b5b5b"
-                  />
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text style={{ color: "white", marginRight: 5, width: 55 }}>
-                  Fat
-                </Text>
-                <TextInput
-                  style={{
-                    backgroundColor: "black",
-                    color: "white",
-                    width: 35,
-                    borderWidth: 1,
-                    borderColor: "white",
-                    width: 35,
-                    textAlign: "center",
-                    borderRadius: 5,
-                    padding: 3,
-                    marginRight: 5
-                  }}
-                  value={this.state.udi.fatCount}
-                />
-                <Text style={{ color: "white", marginRight: 5 }}>g</Text>
-                <View>
-                  <Progress.Bar
-                    progress={0.3}
-                    width={200}
-                    borderColor="black"
-                    unfilledColor="#5b5b5b"
-                  />
-                </View>
-              </View>
+          {/* <View style={style.borderStyleButtom}>
+            <View style={style.remainingCaloriesContainer}> */}
+          <View
+            style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
+          >
+            <Text style={{ color: "white", marginRight: 5, width: 55 }}>
+              Carbs
+            </Text>
+            <TextInput
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                width: 35,
+                borderWidth: 1,
+                borderColor: "white",
+                textAlign: "center",
+                borderRadius: 5,
+                padding: 3,
+                marginRight: 5
+              }}
+              value={''+this.state.udi.carbsCount}
+            />
+            <Text style={{ color: "white", marginRight: 5 }}>g</Text>
+            <View>
+              <Progress.Bar
+                progress={0.3}
+                width={200}
+                borderColor="black"
+                unfilledColor="#5b5b5b"
+              />
             </View>
           </View>
+          <View
+            style={{
+              flexDirection: "row",
+              margin: 5,
+              alignItems: "center",
+              margin: 15
+            }}
+          >
+            <Text style={{ color: "white", marginRight: 5, width: 55 }}>
+              Protein
+            </Text>
+            <TextInput
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                width: 35,
+                borderWidth: 1,
+                borderColor: "white",
+                width: 35,
+                textAlign: "center",
+                borderRadius: 5,
+                padding: 3,
+                marginRight: 5
+              }}
+              value={''+this.state.udi.proteinCount}
+            />
+            <Text style={{ color: "white", marginRight: 5 }}>g</Text>
+            <View>
+              <Progress.Bar
+                progress={0.3}
+                width={200}
+                borderColor="black"
+                unfilledColor="#5b5b5b"
+              />
+            </View>
+          </View>
+          <View
+            style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
+          >
+            <Text style={{ color: "white", marginRight: 5, width: 55 }}>
+              Fat
+            </Text>
+            <TextInput
+              style={{
+                backgroundColor: "black",
+                color: "white",
+                width: 35,
+                borderWidth: 1,
+                borderColor: "white",
+                width: 35,
+                textAlign: "center",
+                borderRadius: 5,
+                padding: 3,
+                marginRight: 5
+              }}
+              value={''+this.state.udi.fatCount}
+            />
+            <Text style={{ color: "white", marginRight: 5 }}>g</Text>
+            <View>
+              <Progress.Bar
+                progress={0.3}
+                width={200}
+                borderColor="black"
+                unfilledColor="#5b5b5b"
+              />
+            </View>
+          </View>
+          {/* </View>
+          </View> */}
           <Button
             title="Add Food"
             onPress={() => this.props.navigation.navigate("AddFood")}
@@ -274,6 +282,7 @@ const style = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: "center",
+    justifyContent: 'center',
     backgroundColor: "#000"
   },
   borderStyleTop: {
@@ -295,7 +304,7 @@ const style = StyleSheet.create({
     justifyContent: "space-evenly"
   },
   caloriesContainer: {
-    flex: 1,
+    
     flexDirection: "row",
     justifyContent: "space-around"
   },
@@ -317,12 +326,13 @@ const style = StyleSheet.create({
     fontSize: 25
   },
   eachCaloriesContainer: {
-    flex: 1,
+    
     alignItems: "center"
   },
   remainingCaloriesContainer: {
-    flex: 1,
-    alignItems: "center"
+    padding:  30,
+    marginBottom: 20,
+    height: 150
   }
 });
 

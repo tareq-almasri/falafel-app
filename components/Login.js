@@ -66,7 +66,7 @@ class Login extends Component {
         .then(res => res.json())
         .then(data => {
           data.err
-            ? this.setState({ errMsg: data.err })
+            ? this.setState({ errMsg: data.err }) //: console.log(data.token)
             : this.props.navigation.navigate("FALAFEL", { token: data.token })
         });
     }
