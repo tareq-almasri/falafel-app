@@ -97,7 +97,7 @@ class Main extends Component {
     }
   };
 
-  handleAddFood = () => {};
+  // handleAddFood = () => {};
 
   resetUdi = () => {
     if (this.state.udi.date !== Date().substring(0, 15)) {
@@ -117,10 +117,10 @@ class Main extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data.found);
+        this.setState(data.found);
       });
-    //this.resetUdi();
-   // this.reminder();
+    this.resetUdi();
+   this.reminder();
   }
 
   render() {
