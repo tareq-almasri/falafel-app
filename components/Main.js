@@ -42,7 +42,7 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    fetch(`http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam('token')}`).then(res=>res.json()).then(data=>console.log({data}))
+    fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam('token')}`).then(res=>res.json()).then(data=>console.log(data.found))
   
   }
 
