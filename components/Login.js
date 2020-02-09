@@ -26,6 +26,7 @@ class Login extends Component {
   }
 
   async storeToken(user) {
+    console.log(user)
     try {
       await AsyncStorage.setItem("userData", user);
       this.getToken()
