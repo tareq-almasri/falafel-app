@@ -47,7 +47,7 @@ module.exports = (req, res) => {
             );
 
             // return token
-            res.send({token}); // => same as: { "token": token }
+            res.send({token: token}); // => same as: { "token": token }
           }
         });
       }
