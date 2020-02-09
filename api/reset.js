@@ -4,7 +4,7 @@ require("dotenv").config();
 
 // CONNECT TO MONGODB
 mongoose.connect(
-  process.env.FALAFEL_DB,
+  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -38,7 +38,7 @@ module.exports = (req, res) => {
         sugarCount: 0
       };
       user.save();
-      res.json('usi reset Succeeded');
+      res.json('udi reset Succeeded');
     })
     .catch(err => res.status(400).json("Error: " + err));
 
