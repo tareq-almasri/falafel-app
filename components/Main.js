@@ -42,13 +42,12 @@ class Main extends Component {
   // };
 
   gimme=()=> {
-    let token=this.props.navigation.getParam("token");
-    fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${token}`)
+    fetch(`http://${ACCESS_SERVER_URL}/api/main/?token=${this.props.navigation.getParam("token")}`)
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      });
-  }
+  //     .then(data => {
+  //       console.log(data);
+  //     });
+  // }
 
   render() {
     return (
