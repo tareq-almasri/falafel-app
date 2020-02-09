@@ -37,18 +37,18 @@ module.exports = (req, res) => {
             res.status(400).send({ err: "invalid username or password" });
           } else {
             // create JWT token by signing
-            let secret = 'secret';
-            let token = jwt.sign(
-              { username: user.username, aud: "iPhone-App" },
-              secret
-            );
+            // let secret = 'secret';
+            // let token = jwt.sign(
+            //   { username: user.username, aud: "iPhone-App" },
+            //   secret
+            // );
               
               
               // ,{ expiresIn: "1h" }
             
 
             // return token
-            res.send({token: token}); // => same as: { "token": token }
+            res.send({token: user.username}); // => same as: { "token": token }
           }
         });
       }
