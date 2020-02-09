@@ -39,12 +39,13 @@ module.exports = (req, res) => {
             // create JWT token by signing
             let secret = process.env.ACCESS_TOKEN_SECRET;
             let token = jwt.sign(
-              { username: user.username, id: user._id, aud: "iPhone-App" },
+              { username: user.username, aud: "iPhone-App" },
               secret
+            );
               
               
               // ,{ expiresIn: "1h" }
-            );
+            
 
             // return token
             res.send({token: token}); // => same as: { "token": token }
