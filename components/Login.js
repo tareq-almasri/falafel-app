@@ -36,7 +36,7 @@ class Login extends Component {
   async getToken() {
     try {
       let userData = await AsyncStorage.getItem("userData");
-
+      // let data = JSON.parse(userData);
       console.log(userData);
       if (userData) {
         this.props.navigation.navigate("FALAFEL", { token: userData });
