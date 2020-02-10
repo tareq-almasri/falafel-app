@@ -60,9 +60,7 @@ class Login extends Component {
     
     if (this.state.username && this.state.password) {
       AsyncStorage.removeItem("userData");
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
-      )
+      fetch(`http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`)
         .then(res => res.json())
         .then(data => {
           data.err
