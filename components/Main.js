@@ -15,11 +15,11 @@ import { Notifications } from "expo";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import Speedometer from "react-native-speedometer-chart";
 import * as Progress from "react-native-progress";
-import BackgroundTimer from "react-native-background-timer";
+// import BackgroundTimer from "react-native-background-timer";
 
 class Main extends Component {
   state = {
-    _id: '',
+    _id: "",
     username: "",
     password: "",
     tdee: 0,
@@ -102,63 +102,69 @@ class Main extends Component {
   // handleAddFood = () => {};
 
   resetUdi = () => {
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}`
-      )
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-        });
-        this.setState({
-          udi: {
-            date: Date().substring(0, 15),
-            calCount: 0,
-            proteinCount: 0,
-            fatCount: 0,
-            carbsCount: 0,
-            waterCount: 0,
-            caffCount: 0,
-            sugarCount: 0
-          }
-        });
-    
+    fetch(
+      `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam(
+        "token"
+      )}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+    this.setState({
+      udi: {
+        date: Date().substring(0, 15),
+        calCount: 0,
+        proteinCount: 0,
+        fatCount: 0,
+        carbsCount: 0,
+        waterCount: 0,
+        caffCount: 0,
+        sugarCount: 0
+      }
+    });
   };
 
   UNSAFE_componentWillMount() {
-    fetch(`http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
+    fetch(
+      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam(
+        "token"
+      )}`
     )
       .then(res => res.json())
       .then(data => {
         this.setState(data.found);
       });
-  
   }
 
+  componentDidMount() {
+    setInterval(() => {
+      if (this.state.udi.date !== Date().substring(0, 15)) {
+        this.resetUdi();
+      }
 
-  componentDidMount(){
-    BackgroundTimer.setTimeout(() => {
-     if (this.state.udi.date !== Date().substring(0, 15)) {
-       this.resetUdi();
-     }
+      this.reminder();
     }, 60000);
-
-    // this.reminder();
   }
 
   render() {
+    let arr = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    let arr2 = arr
+      .slice(arr.indexOf(Date().substring(0, 4)) + 1)
+      .concat(arr.slice(0, arr.indexOf(Date().substring(0, 4)) + 1));
+    console.log(arr2);
     return (
       <ScrollView>
         <View style={style.container}>
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
-          <Text style={{ color: "#fff" }}>{this.state.udi.date},</Text>
+          <Text style={{ color: "#fff" }}>{Date().substring(0, 4)},</Text>
           <Button
             title="Log out"
             onPress={() => this.props.navigation.navigate("Login")}
           />
-          {/* <View style={style.borderStyleTop}>
-            <View style={style.caloriesContainer}> */}
+
           <View style={style.remainingCaloriesContainer}>
             <Speedometer
               value={this.state.udi.calCount}
@@ -186,11 +192,7 @@ class Main extends Component {
               outerCircleStyle={{ size: 250 }}
             />
           </View>
-          {/* </View>
-          </View> */}
 
-          {/* <View style={style.borderStyleButtom}>
-            <View style={style.remainingCaloriesContainer}> */}
           <View
             style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
           >
@@ -288,12 +290,323 @@ class Main extends Component {
               />
             </View>
           </View>
-          {/* </View>
-          </View> */}
+
           <Button
             title="Add Food"
             onPress={() => this.props.navigation.navigate("AddFood")}
           />
+          <View style={{ position: "relative" }}>
+            <Text style={{ color: "#fff", alignSelf: "center" }}>
+              your plan
+            </Text>
+
+            <Text
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 40,
+                zIndex: 2,
+                backgroundColor: "red",
+                color: "#fff",
+                padding: 1
+              }}
+            >
+              today
+            </Text>
+            {arr2.map(x =>
+              this.state.sport.map(y => {
+                if (y[0] == x) {
+                  return (
+                    <View key={x} style={style.dayBox}>
+                      <Text
+                        style={{
+                          color: "#fff",
+                          alignSelf: "center",
+                          padding: 10
+                        }}
+                      >
+                        {x}
+                      </Text>
+                      <View
+                        style={{
+                          width: "100%",
+                          backgroundColor: "#333",
+                          padding: 10,
+                          borderBottomRightRadius: 10,
+                          borderBottomLeftRadius: 10
+                        }}
+                      >
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            wake up{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.wakeUp}
+                          </Text>
+                        </View>
+                        {y[1].substring(0, 2) + y[1].substring(3) <
+                        this.state.dailyPlan.breakfast.substring(0, 2) +
+                          this.state.dailyPlan.breakfast.substring(3) ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              paddingBottom: 10
+                            }}
+                          >
+                            <Text style={{ color: "#fff", width: 65 }}>
+                              workout
+                            </Text>
+                            <Text style={{ color: "#fff" }}>-from-</Text>
+                            <Text style={{ color: "#fff" }}>{y[1]}</Text>
+                            <Text style={{ color: "#fff" }}>-to-</Text>
+                            <Text style={{ color: "#fff" }}>{y[2]}</Text>
+                          </View>
+                        ) : (
+                          <View></View>
+                        )}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            breakfast{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.breakfast}
+                          </Text>
+                        </View>
+                        {y[1].substring(0, 2) + y[1].substring(3) >
+                          this.state.dailyPlan.breakfast.substring(0, 2) +
+                            this.state.dailyPlan.breakfast.substring(3) &&
+                        y[1].substring(0, 2) + y[1].substring(3) <
+                          this.state.dailyPlan.lunch.substring(0, 2) +
+                            this.state.dailyPlan.lunch.substring(3) ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              paddingBottom: 10
+                            }}
+                          >
+                            <Text style={{ color: "#fff", width: 65 }}>
+                              workout
+                            </Text>
+                            <Text style={{ color: "#fff" }}>-from-</Text>
+                            <Text style={{ color: "#fff" }}>{y[1]}</Text>
+                            <Text style={{ color: "#fff" }}>-to-</Text>
+                            <Text style={{ color: "#fff" }}>{y[2]}</Text>
+                          </View>
+                        ) : (
+                          <View></View>
+                        )}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            lunch{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.lunch}
+                          </Text>
+                        </View>
+                        {y[1].substring(0, 2) + y[1].substring(3) >
+                          this.state.dailyPlan.lunch.substring(0, 2) +
+                            this.state.dailyPlan.lunch.substring(3) &&
+                        y[1].substring(0, 2) + y[1].substring(3) <
+                          this.state.dailyPlan.dinner.substring(0, 2) +
+                            this.state.dailyPlan.dinner.substring(3) ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              paddingBottom: 10
+                            }}
+                          >
+                            <Text style={{ color: "#fff", width: 65 }}>
+                              workout
+                            </Text>
+                            <Text style={{ color: "#fff" }}>-from-</Text>
+                            <Text style={{ color: "#fff" }}>{y[1]}</Text>
+                            <Text style={{ color: "#fff" }}>-to-</Text>
+                            <Text style={{ color: "#fff" }}>{y[2]}</Text>
+                          </View>
+                        ) : (
+                          <View></View>
+                        )}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            dinner{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.dinner}
+                          </Text>
+                        </View>
+                        {y[1].substring(0, 2) + y[1].substring(3) >
+                          this.state.dailyPlan.dinner.substring(0, 2) +
+                            this.state.dailyPlan.dinner.substring(3) &&
+                        y[1].substring(0, 2) + y[1].substring(3) <
+                          this.state.dailyPlan.sleep.substring(0, 2) +
+                            this.state.dailyPlan.sleep.substring(3) ? (
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              paddingBottom: 10
+                            }}
+                          >
+                            <Text style={{ color: "#fff", width: 65 }}>
+                              workout
+                            </Text>
+                            <Text style={{ color: "#fff" }}>-from-</Text>
+                            <Text style={{ color: "#fff" }}>{y[1]}</Text>
+                            <Text style={{ color: "#fff" }}>-to-</Text>
+                            <Text style={{ color: "#fff" }}>{y[2]}</Text>
+                          </View>
+                        ) : (
+                          <View></View>
+                        )}
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                            marginBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            sleep{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.sleep}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  );
+                } else {
+                  return (
+                  <View style={style.dayBox}>
+                    <Text
+                      style={{
+                        color: "#fff",
+                        alignSelf: "center",
+                        padding: 10
+                      }}
+                    >
+                      {x}
+                    </Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#333",
+                        padding: 10,
+                        borderBottomRightRadius: 10,
+                        borderBottomLeftRadius: 10
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          wake up{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.wakeUp}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          breakfast{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.breakfast}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>lunch </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.lunch}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          dinner{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.dinner}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          marginBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>sleep </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.sleep}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>)
+                }
+              })
+            )}
+          </View>
         </View>
       </ScrollView>
     );
@@ -305,55 +618,55 @@ const style = StyleSheet.create({
     flex: 1,
     padding: 20,
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     backgroundColor: "#000"
   },
-  borderStyleTop: {
-    backgroundColor: "black",
-    height: "45%",
-    width: "95%",
-    borderRadius: 10,
-    flexDirection: "row",
-    paddingTop: 20,
-    justifyContent: "space-evenly"
-  },
-  borderStyleButtom: {
-    backgroundColor: "black",
-    height: "45%",
-    width: "95%",
-    borderRadius: 10,
-    flexDirection: "row",
-    paddingTop: 10,
-    justifyContent: "space-evenly"
-  },
-  caloriesContainer: {
-    
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  numberRemaining: {
+  dayBox: {
     color: "#fff",
-    fontSize: 30
+    width: 300,
+    backgroundColor: "#000",
+    borderRadius: 10,
+    margin: 10,
+    shadowColor: "#fff",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 3
   },
-  textRemaining: {
-    color: "#fff",
-    fontSize: 15
-  },
+  // borderStyleTop: {
+  //   backgroundColor: "black",
+  //   height: "45%",
+  //   width: "95%",
+  //   borderRadius: 10,
+  //   flexDirection: "row",
+  //   paddingTop: 20,
+  //   justifyContent: "space-evenly"
+  // },
+  // caloriesContainer: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-around"
+  // },
+  // numberRemaining: {
+  //   color: "#fff",
+  //   fontSize: 30
+  // },
+  // textRemaining: {
+  //   color: "#fff",
+  //   fontSize: 15
+  // },
 
-  textAdiacent: {
-    color: "#fff",
-    fontSize: 15
-  },
-  numberAdiacent: {
-    color: "#fff",
-    fontSize: 25
-  },
-  eachCaloriesContainer: {
-    
-    alignItems: "center"
-  },
+  // textAdiacent: {
+  //   color: "#fff",
+  //   fontSize: 15
+  // },
+  // numberAdiacent: {
+  //   color: "#fff",
+  //   fontSize: 25
+  // },
+  // eachCaloriesContainer: {
+  //   alignItems: "center"
+  // },
   remainingCaloriesContainer: {
-    padding:  30,
+    padding: 30,
     marginBottom: 20,
     height: 150
   }
