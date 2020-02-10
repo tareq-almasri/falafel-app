@@ -123,13 +123,13 @@ class Main extends Component {
     // }
   };
 
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     fetch(
       `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
     )
       .then(res => res.json())
       .then(data => {
-        this.setState(data.found);
+        console.log(data.found);
       });
     // this.resetUdi();
   //  this.reminder();
