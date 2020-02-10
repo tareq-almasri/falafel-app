@@ -102,7 +102,8 @@ class Main extends Component {
   // handleAddFood = () => {};
 
   resetUdi = () => {
-    fetch(`http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}&date=${Date().substring(0,15)}`
+    let date=Date().substring(0,15);
+    fetch(`http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}&date=${date}`
     )
       .then(res => res.json())
       .then(data => {
@@ -110,7 +111,7 @@ class Main extends Component {
       });
     this.setState({
       udi: {
-        date: Date().substring(0, 15),
+        date: date,
         calCount: 0,
         proteinCount: 0,
         fatCount: 0,
@@ -137,7 +138,7 @@ class Main extends Component {
       }
 
       this.reminder();
-    }, 60000);
+    }, 10000);
   }
 
   render() {
@@ -145,7 +146,7 @@ class Main extends Component {
     let arr2 = arr
       .slice(arr.indexOf(Date().substring(0, 4)) + 1)
       .concat(arr.slice(0, arr.indexOf(Date().substring(0, 4)) + 1));
-    console.log(arr2);
+    
     return (
       <ScrollView>
         <View style={style.container}>
