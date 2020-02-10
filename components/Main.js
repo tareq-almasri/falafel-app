@@ -15,9 +15,11 @@ import { Notifications } from "expo";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import Speedometer from "react-native-speedometer-chart";
 import * as Progress from "react-native-progress";
+import BackgroundTimer from "react-native-background-timer";
 
 class Main extends Component {
   state = {
+    _id: '',
     username: "",
     password: "",
     tdee: 0,
@@ -100,7 +102,6 @@ class Main extends Component {
   // handleAddFood = () => {};
 
   resetUdi = () => {
-    // if (this.state.udi.date !== Date().substring(0, 15)) {
       fetch(
         `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}`
       )
@@ -120,19 +121,28 @@ class Main extends Component {
             sugarCount: 0
           }
         });
-    // }
+    
   };
 
   UNSAFE_componentWillMount() {
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
+    fetch(`http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data.found);
+        this.setState(data.found);
       });
-    // this.resetUdi();
-  //  this.reminder();
+  
+  }
+
+
+  componentDidMount(){
+    BackgroundTimer.setTimeout(() => {
+     if (this.state.udi.date !== Date().substring(0, 15)) {
+       this.resetUdi();
+     }
+    }, 60000);
+
+    // this.reminder();
   }
 
   render() {
@@ -142,6 +152,7 @@ class Main extends Component {
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
+          <Text style={{ color: "#fff" }}>{this.state.udi.date},</Text>
           <Button
             title="Log out"
             onPress={() => this.props.navigation.navigate("Login")}
@@ -198,7 +209,7 @@ class Main extends Component {
                 padding: 3,
                 marginRight: 5
               }}
-              value={''+this.state.udi.carbsCount}
+              value={"" + this.state.udi.carbsCount}
             />
             <Text style={{ color: "white", marginRight: 5 }}>g</Text>
             <View>
@@ -234,7 +245,7 @@ class Main extends Component {
                 padding: 3,
                 marginRight: 5
               }}
-              value={''+this.state.udi.proteinCount}
+              value={"" + this.state.udi.proteinCount}
             />
             <Text style={{ color: "white", marginRight: 5 }}>g</Text>
             <View>
@@ -265,7 +276,7 @@ class Main extends Component {
                 padding: 3,
                 marginRight: 5
               }}
-              value={''+this.state.udi.fatCount}
+              value={"" + this.state.udi.fatCount}
             />
             <Text style={{ color: "white", marginRight: 5 }}>g</Text>
             <View>
