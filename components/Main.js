@@ -100,7 +100,7 @@ class Main extends Component {
   // handleAddFood = () => {};
 
   resetUdi = () => {
-    if (this.state.udi.date !== Date().substring(0, 15)) {
+    // if (this.state.udi.date !== Date().substring(0, 15)) {
       fetch(
         `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}`
       )
@@ -120,7 +120,7 @@ class Main extends Component {
             sugarCount: 0
           }
         });
-    }
+    // }
   };
 
   componentDidMount() {
@@ -132,7 +132,7 @@ class Main extends Component {
         this.setState(data.found);
       });
     // this.resetUdi();
-   this.reminder();
+  //  this.reminder();
   }
 
   render() {
