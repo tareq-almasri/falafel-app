@@ -4,7 +4,7 @@ require("dotenv").config();
 
 // CONNECT TO MONGODB
 mongoose.connect(
-  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
+  process.env.FALAFEL_DB,
   {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -28,7 +28,7 @@ module.exports = (req, res) => {
   User.findOne({ username: req.query.username })
     .then(user => {
       user.udi = {
-        date: Date().substring(0, 15),
+        date: req.query.date,
         calCount: 0,
         proteinCount: 0,
         fatCount: 0,

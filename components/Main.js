@@ -102,10 +102,7 @@ class Main extends Component {
   // handleAddFood = () => {};
 
   resetUdi = () => {
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam(
-        "token"
-      )}`
+    fetch(`http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam("token")}&date=${Date().substring(0,15)}`
     )
       .then(res => res.json())
       .then(data => {
@@ -126,11 +123,7 @@ class Main extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam(
-        "token"
-      )}`
-    )
+    fetch(`http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam("token")}`)
       .then(res => res.json())
       .then(data => {
         this.setState(data.found);
@@ -159,7 +152,9 @@ class Main extends Component {
           <Text style={{ color: "#fff" }}>
             Hello {this.props.navigation.getParam("token")},
           </Text>
-          <Text style={{ color: "#fff" }}>{Date().substring(0, 4)},</Text>
+          <Text style={{ color: "#fff" }}>
+            {this.state.udi.date},{Date().substring(0, 15)}
+          </Text>
           <Button
             title="Log out"
             onPress={() => this.props.navigation.navigate("Login")}
@@ -419,7 +414,7 @@ class Main extends Component {
                           }}
                         >
                           <Text style={{ color: "#fff", width: 65 }}>
-                            lunch{" "}
+                            lunch
                           </Text>
                           <Text style={{ color: "#fff" }}>---------------</Text>
                           <Text style={{ color: "#fff" }}>
@@ -458,7 +453,7 @@ class Main extends Component {
                           }}
                         >
                           <Text style={{ color: "#fff", width: 65 }}>
-                            dinner{" "}
+                            dinner
                           </Text>
                           <Text style={{ color: "#fff" }}>---------------</Text>
                           <Text style={{ color: "#fff" }}>
@@ -498,7 +493,7 @@ class Main extends Component {
                           }}
                         >
                           <Text style={{ color: "#fff", width: 65 }}>
-                            sleep{" "}
+                            sleep
                           </Text>
                           <Text style={{ color: "#fff" }}>---------------</Text>
                           <Text style={{ color: "#fff" }}>
@@ -510,99 +505,104 @@ class Main extends Component {
                   );
                 } else {
                   return (
-                  <View style={style.dayBox}>
-                    <Text
-                      style={{
-                        color: "#fff",
-                        alignSelf: "center",
-                        padding: 10
-                      }}
-                    >
-                      {x}
-                    </Text>
-                    <View
-                      style={{
-                        width: "100%",
-                        backgroundColor: "#333",
-                        padding: 10,
-                        borderBottomRightRadius: 10,
-                        borderBottomLeftRadius: 10
-                      }}
-                    >
-                      <View
+                    <View key={x} style={style.dayBox}>
+                      <Text
                         style={{
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                          paddingBottom: 10
+                          color: "#fff",
+                          alignSelf: "center",
+                          padding: 10
                         }}
                       >
-                        <Text style={{ color: "#fff", width: 65 }}>
-                          wake up{" "}
-                        </Text>
-                        <Text style={{ color: "#fff" }}>---------------</Text>
-                        <Text style={{ color: "#fff" }}>
-                          {this.state.dailyPlan.wakeUp}
-                        </Text>
-                      </View>
+                        {x}
+                      </Text>
                       <View
                         style={{
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                          paddingBottom: 10
+                          width: "100%",
+                          backgroundColor: "#333",
+                          padding: 10,
+                          borderBottomRightRadius: 10,
+                          borderBottomLeftRadius: 10
                         }}
                       >
-                        <Text style={{ color: "#fff", width: 65 }}>
-                          breakfast{" "}
-                        </Text>
-                        <Text style={{ color: "#fff" }}>---------------</Text>
-                        <Text style={{ color: "#fff" }}>
-                          {this.state.dailyPlan.breakfast}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                          paddingBottom: 10
-                        }}
-                      >
-                        <Text style={{ color: "#fff", width: 65 }}>lunch </Text>
-                        <Text style={{ color: "#fff" }}>---------------</Text>
-                        <Text style={{ color: "#fff" }}>
-                          {this.state.dailyPlan.lunch}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-evenly",
-                          paddingBottom: 10
-                        }}
-                      >
-                        <Text style={{ color: "#fff", width: 65 }}>
-                          dinner{" "}
-                        </Text>
-                        <Text style={{ color: "#fff" }}>---------------</Text>
-                        <Text style={{ color: "#fff" }}>
-                          {this.state.dailyPlan.dinner}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-evenly",
-                          marginBottom: 10
-                        }}
-                      >
-                        <Text style={{ color: "#fff", width: 65 }}>sleep </Text>
-                        <Text style={{ color: "#fff" }}>---------------</Text>
-                        <Text style={{ color: "#fff" }}>
-                          {this.state.dailyPlan.sleep}
-                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            wake up{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.wakeUp}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            breakfast{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.breakfast}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            lunch{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.lunch}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                            paddingBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            dinner{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.dinner}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                            marginBottom: 10
+                          }}
+                        >
+                          <Text style={{ color: "#fff", width: 65 }}>
+                            sleep{" "}
+                          </Text>
+                          <Text style={{ color: "#fff" }}>---------------</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {this.state.dailyPlan.sleep}
+                          </Text>
+                        </View>
                       </View>
                     </View>
-                  </View>)
+                  );
                 }
               })
             )}
@@ -632,39 +632,39 @@ const style = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 3
   },
-  // borderStyleTop: {
-  //   backgroundColor: "black",
-  //   height: "45%",
-  //   width: "95%",
-  //   borderRadius: 10,
-  //   flexDirection: "row",
-  //   paddingTop: 20,
-  //   justifyContent: "space-evenly"
-  // },
-  // caloriesContainer: {
-  //   flexDirection: "row",
-  //   justifyContent: "space-around"
-  // },
-  // numberRemaining: {
-  //   color: "#fff",
-  //   fontSize: 30
-  // },
-  // textRemaining: {
-  //   color: "#fff",
-  //   fontSize: 15
-  // },
+  borderStyleTop: {
+    backgroundColor: "black",
+    height: "45%",
+    width: "95%",
+    borderRadius: 10,
+    flexDirection: "row",
+    paddingTop: 20,
+    justifyContent: "space-evenly"
+  },
+  caloriesContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around"
+  },
+  numberRemaining: {
+    color: "#fff",
+    fontSize: 30
+  },
+  textRemaining: {
+    color: "#fff",
+    fontSize: 15
+  },
 
-  // textAdiacent: {
-  //   color: "#fff",
-  //   fontSize: 15
-  // },
-  // numberAdiacent: {
-  //   color: "#fff",
-  //   fontSize: 25
-  // },
-  // eachCaloriesContainer: {
-  //   alignItems: "center"
-  // },
+  textAdiacent: {
+    color: "#fff",
+    fontSize: 15
+  },
+  numberAdiacent: {
+    color: "#fff",
+    fontSize: 25
+  },
+  eachCaloriesContainer: {
+    alignItems: "center"
+  },
   remainingCaloriesContainer: {
     padding: 30,
     marginBottom: 20,
