@@ -41,7 +41,7 @@ class Login extends Component {
       // let data = JSON.parse(userData);
       console.log(userData);
       if (userData) {
-        this.props.navigation.navigate("FALAFEL", { token: userData });
+        this.props.navigation.replace("FALAFEL", { token: userData });
       }
     } catch (error) {
       console.log("Something went wrong", error);
@@ -65,7 +65,7 @@ class Login extends Component {
         .then(data => {
           data.err
             ? this.setState({ errMsg: data.err }) //: console.log(data.token)
-            : this.props.navigation.navigate("FALAFEL", { token: data.token })
+            : this.storeToken(data.token)
         });
     }
   };
