@@ -281,7 +281,7 @@ class Main extends Component {
             </View>
           </View>
           <View style={{ justifyContent: "flex-end" }}>
-            <Text Style={{ color: "#fff" }}> {this.state.carbsDL} </Text>
+            <Text Style={{ color: "#fff" }}>la {this.state.carbsDL} </Text>
           </View>
 
           <View
@@ -359,7 +359,7 @@ class Main extends Component {
               style={{
                 color: "white",
                 marginRight: 5,
-                padding: 8,
+                paddingLeft: 8,
                 paddingRight: 8
               }}
             >
@@ -404,7 +404,7 @@ class Main extends Component {
               style={{
                 color: "white",
                 marginRight: 5,
-                padding: 8,
+                paddingLeft: 8,
                 paddingRight: 8
               }}
             >
