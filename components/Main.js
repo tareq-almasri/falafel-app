@@ -19,6 +19,7 @@ import Speedometer from "react-native-speedometer-chart";
 import * as Progress from "react-native-progress";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import TdeeHelp from "./TdeeHelp";
+import AddFood from "./AddFood";
 
 class Main extends Component {
   state = {
@@ -31,6 +32,8 @@ class Main extends Component {
     proteinDL: 0,
     carbsDL: 0,
     fatDL: 0,
+    sugarDL:0,
+    caffDL:0,
     dailyPlan: {
       wakeUp: "",
       breakfast: "",
@@ -47,10 +50,10 @@ class Main extends Component {
       carbsCount: 0,
       waterCount: 0,
       caffCount: 0,
-      sugarCount: 0
+      sugarCount: 0,
     },
     visible: false,
-    water: 0
+    addFoodVisible: false
   };
 
   askPermission = async () => {
@@ -128,7 +131,6 @@ class Main extends Component {
         caffCount: 0,
         sugarCount: 0
       },
-      water: 0
     });
   };
 
@@ -158,11 +160,10 @@ class Main extends Component {
     this.setState({ visible: false });
   };
 
-  handleLogout=()=>{
+  handleLogout = () => {
     AsyncStorage.removeItem("userData");
     this.props.navigation.replace("Login");
-
-  }
+  };
 
   render() {
     let arr = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -174,6 +175,7 @@ class Main extends Component {
     return (
       <ScrollView>
         <View style={style.container}>
+          <AddFood visible={this.state.addFoodVisible} />
           <View
             style={{
               flexDirection: "row",
@@ -244,7 +246,7 @@ class Main extends Component {
                 >
                   <Progress.Bar
                     height={20}
-                    progress={this.state.water}
+                    progress={this.state.udi.waterCount}
                     width={118}
                     borderColor="black"
                     unfilledColor="#5b5b5b"
@@ -278,6 +280,9 @@ class Main extends Component {
               <View style={{ width: 50 }}></View>
             </View>
           </View>
+          <View style={{ justifyContent: "flex-end" }}>
+            <Text Style={{ color: "#fff" }}> {this.state.carbsDL} </Text>
+          </View>
 
           <View
             style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
@@ -300,7 +305,14 @@ class Main extends Component {
               value={"" + this.state.udi.carbsCount}
               editable={false}
             />
-            <Text style={{ color: "white", marginRight: 5, padding: 8 }}>
+            <Text
+              style={{
+                color: "white",
+                marginRight: 5,
+                paddingLeft: 8,
+                paddingRight: 8
+              }}
+            >
               g
             </Text>
             <View>
@@ -343,7 +355,14 @@ class Main extends Component {
               value={"" + this.state.udi.proteinCount}
               editable={false}
             />
-            <Text style={{ color: "white", marginRight: 5, padding: 8 }}>
+            <Text
+              style={{
+                color: "white",
+                marginRight: 5,
+                padding: 8,
+                paddingRight: 8
+              }}
+            >
               g
             </Text>
             <View>
@@ -381,7 +400,14 @@ class Main extends Component {
               value={"" + this.state.udi.fatCount}
               editable={false}
             />
-            <Text style={{ color: "white", marginRight: 5, padding: 8 }}>
+            <Text
+              style={{
+                color: "white",
+                marginRight: 5,
+                padding: 8,
+                paddingRight: 8
+              }}
+            >
               g
             </Text>
             <View>
@@ -409,7 +435,7 @@ class Main extends Component {
               <Button
                 title="+1 Cup of Water"
                 onPress={() =>
-                  this.setState({ water: this.state.water + 0.11 })
+                  this.setState({ water: this.state.udi.waterCount + 0.11 })
                 }
               />
             </View>
@@ -464,28 +490,47 @@ class Main extends Component {
               Today
             </Text>
             {arr2.map(x => {
-              let workoutDay=this.state.sport.find(y => y[0]==x); 
-              if(workoutDay){
-                  return (
-                    <View key={x} style={style.dayBox}>
-                      <Text
-                        style={{
-                          color: "#fff",
-                          alignSelf: "center",
-                          padding: 10
-                        }}
-                      >
-                        {x}
-                      </Text>
+              let workoutDay = this.state.sport.find(y => y[0] == x);
+              if (workoutDay) {
+                return (
+                  <View key={x} style={style.dayBox}>
+                    <Text
+                      style={{
+                        color: "#fff",
+                        alignSelf: "center",
+                        padding: 10
+                      }}
+                    >
+                      {x}
+                    </Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#333",
+                        padding: 10,
+                        borderBottomRightRadius: 10,
+                        borderBottomLeftRadius: 10
+                      }}
+                    >
                       <View
                         style={{
-                          width: "100%",
-                          backgroundColor: "#333",
-                          padding: 10,
-                          borderBottomRightRadius: 10,
-                          borderBottomLeftRadius: 10
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
                         }}
                       >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          Wake Up{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.wakeUp}
+                        </Text>
+                      </View>
+                      {workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) <
+                      this.state.dailyPlan.breakfast.substring(0, 2) +
+                        this.state.dailyPlan.breakfast.substring(3) ? (
                         <View
                           style={{
                             flexDirection: "row",
@@ -493,239 +538,95 @@ class Main extends Component {
                             paddingBottom: 10
                           }}
                         >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Wake Up{" "}
+                          <Text
+                            style={{
+                              color: "#fff",
+                              width: 85,
+                              paddingLeft: 12
+                            }}
+                          >
+                            Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.wakeUp}
+                          <Text style={{ color: "#fff" }}>-from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>-to-</Text>
+                          <Text style={{ color: "#fff", paddingRight: 12 }}>
+                            {workoutDay[2]}
                           </Text>
                         </View>
-                        {workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) <
+                      ) : (
+                        <View></View>
+                      )}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          Breakfast{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.breakfast}
+                        </Text>
+                      </View>
+                      {workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) >
                         this.state.dailyPlan.breakfast.substring(0, 2) +
-                          this.state.dailyPlan.breakfast.substring(3) ? (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              justifyContent: "space-evenly",
-                              paddingBottom: 10
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: "#fff",
-                                width: 85,
-                                paddingLeft: 12
-                              }}
-                            >
-                              Workout
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-from-</Text>
-                            <Text style={{ color: "#fff" }}>
-                              {workoutDay[1]}
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-to-</Text>
-                            <Text style={{ color: "#fff", paddingRight: 12 }}>
-                              {workoutDay[2]}
-                            </Text>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
+                          this.state.dailyPlan.breakfast.substring(3) &&
+                      workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) <
+                        this.state.dailyPlan.lunch.substring(0, 2) +
+                          this.state.dailyPlan.lunch.substring(3) ? (
                         <View
                           style={{
                             flexDirection: "row",
-                            justifyContent: "space-evenly",
+                            width: "100%",
                             paddingBottom: 10
                           }}
                         >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Breakfast{" "}
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.breakfast}
-                          </Text>
-                        </View>
-                        {workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) >
-                          this.state.dailyPlan.breakfast.substring(0, 2) +
-                            this.state.dailyPlan.breakfast.substring(3) &&
-                        workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) <
-                          this.state.dailyPlan.lunch.substring(0, 2) +
-                            this.state.dailyPlan.lunch.substring(3) ? (
-                          <View
+                          <Text
                             style={{
-                              flexDirection: "row",
-                              width: "100%",
-                              paddingBottom: 10
+                              color: "#fff",
+                              width: 85,
+                              paddingLeft: 12
                             }}
                           >
-                            <Text
-                              style={{
-                                color: "#fff",
-                                width: 85,
-                                paddingLeft: 12
-                              }}
-                            >
-                              Workout
-                            </Text>
-                            <Text style={{ color: "#fff" }}>--from--</Text>
-                            <Text style={{ color: "#fff" }}>
-                              {workoutDay[1]}
-                            </Text>
-                            <Text style={{ color: "#fff" }}>--to--</Text>
-                            <Text style={{ color: "#fff", paddingRight: 12 }}>
-                              {workoutDay[2]}
-                            </Text>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-evenly",
-                            paddingBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Lunch
+                            Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.lunch}
+                          <Text style={{ color: "#fff" }}>--from--</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>--to--</Text>
+                          <Text style={{ color: "#fff", paddingRight: 12 }}>
+                            {workoutDay[2]}
                           </Text>
                         </View>
-                        {workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) >
-                          this.state.dailyPlan.lunch.substring(0, 2) +
-                            this.state.dailyPlan.lunch.substring(3) &&
-                        workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) <
-                          this.state.dailyPlan.dinner.substring(0, 2) +
-                            this.state.dailyPlan.dinner.substring(3) ? (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              justifyContent: "space-evenly",
-                              paddingBottom: 10
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: "#fff",
-                                width: 85,
-                                paddingLeft: 12
-                              }}
-                            >
-                              Workout
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-from-</Text>
-                            <Text style={{ color: "#fff" }}>
-                              {workoutDay[1]}
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-to-</Text>
-                            <Text style={{ color: "#fff", paddingRight: 12 }}>
-                              {workoutDay[2]}
-                            </Text>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-evenly",
-                            paddingBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Dinner
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.dinner}
-                          </Text>
-                        </View>
-                        {workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) >
-                          this.state.dailyPlan.dinner.substring(0, 2) +
-                            this.state.dailyPlan.dinner.substring(3) &&
-                        workoutDay[1].substring(0, 2) +
-                          workoutDay[1].substring(3) <
-                          this.state.dailyPlan.sleep.substring(0, 2) +
-                            this.state.dailyPlan.sleep.substring(3) ? (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              justifyContent: "space-evenly",
-                              paddingBottom: 10
-                            }}
-                          >
-                            <Text
-                              style={{
-                                color: "#fff",
-                                width: 85,
-                                paddingLeft: 12
-                              }}
-                            >
-                              Workout
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-from-</Text>
-                            <Text style={{ color: "#fff" }}>
-                              {workoutDay[1]}
-                            </Text>
-                            <Text style={{ color: "#fff" }}>-to-</Text>
-                            <Text style={{ color: "#fff", paddingRight: 12 }}>
-                              {workoutDay[2]}
-                            </Text>
-                          </View>
-                        ) : (
-                          <View></View>
-                        )}
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            marginBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Sleep
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.sleep}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  );
-                } else {
-                  return (
-                    <View key={x} style={style.dayBox}>
-                      <Text
-                        style={{
-                          color: "#fff",
-                          alignSelf: "center",
-                          padding: 10
-                        }}
-                      >
-                        {x}
-                      </Text>
+                      ) : (
+                        <View></View>
+                      )}
                       <View
                         style={{
-                          width: "100%",
-                          backgroundColor: "#333",
-                          padding: 10,
-                          borderBottomRightRadius: 10,
-                          borderBottomLeftRadius: 10
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
                         }}
                       >
+                        <Text style={{ color: "#fff", width: 65 }}>Lunch</Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.lunch}
+                        </Text>
+                      </View>
+                      {workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) >
+                        this.state.dailyPlan.lunch.substring(0, 2) +
+                          this.state.dailyPlan.lunch.substring(3) &&
+                      workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) <
+                        this.state.dailyPlan.dinner.substring(0, 2) +
+                          this.state.dailyPlan.dinner.substring(3) ? (
                         <View
                           style={{
                             flexDirection: "row",
@@ -733,14 +634,46 @@ class Main extends Component {
                             paddingBottom: 10
                           }}
                         >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Wake Up{" "}
+                          <Text
+                            style={{
+                              color: "#fff",
+                              width: 85,
+                              paddingLeft: 12
+                            }}
+                          >
+                            Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.wakeUp}
+                          <Text style={{ color: "#fff" }}>-from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>-to-</Text>
+                          <Text style={{ color: "#fff", paddingRight: 12 }}>
+                            {workoutDay[2]}
                           </Text>
                         </View>
+                      ) : (
+                        <View></View>
+                      )}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>Dinner</Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.dinner}
+                        </Text>
+                      </View>
+                      {workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) >
+                        this.state.dailyPlan.dinner.substring(0, 2) +
+                          this.state.dailyPlan.dinner.substring(3) &&
+                      workoutDay[1].substring(0, 2) +
+                        workoutDay[1].substring(3) <
+                        this.state.dailyPlan.sleep.substring(0, 2) +
+                          this.state.dailyPlan.sleep.substring(3) ? (
                         <View
                           style={{
                             flexDirection: "row",
@@ -748,66 +681,140 @@ class Main extends Component {
                             paddingBottom: 10
                           }}
                         >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Breakfast{" "}
+                          <Text
+                            style={{
+                              color: "#fff",
+                              width: 85,
+                              paddingLeft: 12
+                            }}
+                          >
+                            Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.breakfast}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-evenly",
-                            paddingBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Lunch{" "}
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.lunch}
+                          <Text style={{ color: "#fff" }}>-from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>-to-</Text>
+                          <Text style={{ color: "#fff", paddingRight: 12 }}>
+                            {workoutDay[2]}
                           </Text>
                         </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-evenly",
-                            paddingBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Dinner{" "}
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.dinner}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            marginBottom: 10
-                          }}
-                        >
-                          <Text style={{ color: "#fff", width: 65 }}>
-                            Sleep{" "}
-                          </Text>
-                          <Text style={{ color: "#fff" }}>---------------</Text>
-                          <Text style={{ color: "#fff" }}>
-                            {this.state.dailyPlan.sleep}
-                          </Text>
-                        </View>
+                      ) : (
+                        <View></View>
+                      )}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          marginBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>Sleep</Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.sleep}
+                        </Text>
                       </View>
                     </View>
-                  );
-                }
-              })
-            }
+                  </View>
+                );
+              } else {
+                return (
+                  <View key={x} style={style.dayBox}>
+                    <Text
+                      style={{
+                        color: "#fff",
+                        alignSelf: "center",
+                        padding: 10
+                      }}
+                    >
+                      {x}
+                    </Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        backgroundColor: "#333",
+                        padding: 10,
+                        borderBottomRightRadius: 10,
+                        borderBottomLeftRadius: 10
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          Wake Up{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.wakeUp}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          Breakfast{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.breakfast}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>Lunch </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.lunch}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-evenly",
+                          paddingBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>
+                          Dinner{" "}
+                        </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.dinner}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-evenly",
+                          marginBottom: 10
+                        }}
+                      >
+                        <Text style={{ color: "#fff", width: 65 }}>Sleep </Text>
+                        <Text style={{ color: "#fff" }}>---------------</Text>
+                        <Text style={{ color: "#fff" }}>
+                          {this.state.dailyPlan.sleep}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              }
+            })}
           </View>
         </View>
       </ScrollView>

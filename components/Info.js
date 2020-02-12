@@ -84,8 +84,9 @@ console.log(total);
       this.props.navigation.getParam("username"),
       this.state.diet
     ].join();
-
-    let infoStrNumbers = [TDEE, goal, protein, carbs, fat].join();
+    let sugar;
+    this.state.sex=='male'?sugar=37.5:sugar=25;
+    let infoStrNumbers = [TDEE, goal, protein, carbs, fat, sugar].join();
     
     if (TDEE && this.state.diet) {
       fetch(

@@ -10,16 +10,27 @@ import {
   FlatList,
   Modal
 } from "react-native";
-import { ACCESS_SERVER_URL } from "react-native-dotenv";
+
 
 class AddFood extends Component {
+    state={
+
+    }
+    
+    handleCalculate=()=>{
+        fetch('', {})
+    }
+
     render() {
         return (
-            <View>
-             <Text>add a fuckin meal yo</Text>
-       
-            </View>
-        )
+          <Modal visible={this.props.visible} animationType="slide">
+            <Text>add a fuckin meal yo</Text>
+            <TextInput />
+            <Button title="Calculate Food" onPress={this.handleCalculate} />
+            <Button title="Add" />
+            <Button title="cancel" onPress={this.props.cancel} />
+          </Modal>
+        );
     }
 }
 

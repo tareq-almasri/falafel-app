@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema(
     proteinDL: Number,
     carbsDL: Number,
     fatDL: Number,
+    sugarDL: Number,
+    caffDL: Number,
     dailyPlan: {
       wakeUp: String,
       breakfast: String,

@@ -32,6 +32,8 @@ module.exports = (req, res) => {
       user.proteinDL = infoArrNumbers[2];
       user.carbsDL = infoArrNumbers[3];
       user.fatDL = infoArrNumbers[4];
+      user.sugarDL=infoArrNumbers[5];
+      user.caffDL = 400;
       user.save();
       res.json('info saved')
     })
