@@ -370,7 +370,7 @@ const style = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 3
-    //elevation: 1
+    
   },
   textStyle: {
     color: "#5b5b5b",

@@ -255,7 +255,7 @@ class Main extends Component {
               </View>
 
               <Speedometer
-                value={this.state.udi.calCount}
+                value={2195}
                 totalValue={this.state.goalCal}
                 size={200}
                 showText
@@ -274,18 +274,159 @@ class Main extends Component {
                 internalColor="#0d7cff"
                 outerColor="#5b5b5b"
                 innerColor="black"
-                innerCircleStyle={{ height: 95, width: 189 }}
-                outerCircleStyle={{ size: 250 }}
+                innerCircleStyle={{ height: 86, width: 175 }}
               />
               <View style={{ width: 50 }}></View>
             </View>
           </View>
-          <View style={{ justifyContent: "flex-end" }}>
-            <Text Style={{ color: "#fff" }}>la {this.state.carbsDL} </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              width: "100%",
+              paddingBottom: 20
+            }}
+          >
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "#F7C736",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                alignItems: "center",
+                width: 138
+              }}
+            >
+              <Text
+                style={{
+                  color: "#F7C736",
+                  borderColor: "#F7C736",
+                  borderWidth: 1,
+                  padding: 3,
+                  width: "100%",
+                  textAlign: "center"
+                }}
+              >
+                Sugar
+              </Text>
+              <Text
+                style={{
+                  color: "#F7C736",
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  padding: 10
+                }}
+              >
+                Limit: {this.state.sugarDL}g/day{" "}
+              </Text>
+              <Speedometer
+                value={this.state.udi.sugarCount}
+                totalValue={this.state.sugarDL}
+                size={100}
+                text={"" + this.state.udi.sugarCount}
+                internalColor="#F7C736"
+                outerColor="#5b5b5b"
+                innerColor="#000"
+                innerCircleStyle={{ height: 38, width: 77 }}
+                showIndicator
+                indicatorColor="#5b0300"
+              />
+              <Text
+                style={{
+                  color: "#F7C736",
+                  padding: 10
+                }}
+              >
+                {" "}
+                {this.state.udi.sugarCount}{" "}
+              </Text>
+            </View>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "#F7C736",
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+                alignItems: "center",
+                width: 138
+              }}
+            >
+              <Text
+                style={{
+                  color: "#F7C736",
+                  borderColor: "#F7C736",
+                  borderWidth: 1,
+                  padding: 3,
+                  width: "100%",
+                  textAlign: "center"
+                }}
+              >
+                Caffein
+              </Text>
+              <Text
+                style={{
+                  color: "#F7C736",
+
+                  padding: 10
+                }}
+              >
+                Limit: {this.state.caffDL}mg/day{" "}
+              </Text>
+              <Speedometer
+                value={this.state.udi.caffCount}
+                totalValue={400}
+                size={100}
+                text={"" + this.state.udi.sugarCount}
+                internalColor="#F7C736"
+                outerColor="#5b5b5b"
+                innerColor="#000"
+                innerCircleStyle={{ height: 38, width: 77 }}
+                showIndicator
+                indicatorColor="#5b0300"
+              />
+              <Text
+                style={{
+                  color: "#F7C736",
+                  padding: 10
+                }}
+              >
+                {" "}
+                {this.state.udi.sugarCount}{" "}
+              </Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", marginBottom: 6 }}>
+            <View style={{ paddingRight: 20 }}>
+              <Button
+                title="+ Add Food"
+                onPress={() => this.props.navigation.navigate("AddFood")}
+              />
+            </View>
+
+            <View style={{ paddingLeft: 20 }}>
+              <Button
+                title="+1 Cup of Water"
+                onPress={() =>
+                  this.setState(prev => {
+                    let udi = { ...prev.udi };
+                    udi.waterCount = prev.udi.waterCount + 0.11;
+                    return { udi };
+                  })
+                }
+              />
+            </View>
+          </View>
+          <View style={{ alignItems: "flex-end", width: "100%" }}>
+            <Text style={{ color: "#fff" }}> {this.state.carbsDL}g </Text>
           </View>
 
           <View
-            style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginLeft: 15,
+              marginRight: 15
+            }}
           >
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
               Carbs
@@ -323,17 +464,23 @@ class Main extends Component {
                     : this.state.udi.carbsCount / this.state.carbsDL
                 }
                 width={185}
+                height={10}
                 borderColor="black"
                 unfilledColor="#5b5b5b"
               />
             </View>
           </View>
           <View
+            style={{ alignItems: "flex-end", width: "100%", marginTop: 10 }}
+          >
+            <Text style={{ color: "#fff" }}> {this.state.proteinDL}g </Text>
+          </View>
+          <View
             style={{
               flexDirection: "row",
-              margin: 5,
               alignItems: "center",
-              margin: 15
+              marginLeft: 15,
+              marginRight: 15
             }}
           >
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
@@ -373,13 +520,24 @@ class Main extends Component {
                     : this.state.udi.proteinCount / this.state.proteinDL
                 }
                 width={185}
+                height={10}
                 borderColor="black"
                 unfilledColor="#5b5b5b"
               />
             </View>
           </View>
           <View
-            style={{ flexDirection: "row", alignItems: "center", margin: 15 }}
+            style={{ alignItems: "flex-end", width: "100%", marginTop: 10 }}
+          >
+            <Text style={{ color: "#fff" }}> {this.state.fatDL}g </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginLeft: 15,
+              marginRight: 15
+            }}
           >
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
               Fat
@@ -418,25 +576,9 @@ class Main extends Component {
                     : this.state.udi.fatCount / this.state.fatDL
                 }
                 width={185}
+                height={10}
                 borderColor="black"
                 unfilledColor="#5b5b5b"
-              />
-            </View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ paddingRight: 20 }}>
-              <Button
-                title="+ Add Food"
-                onPress={() => this.props.navigation.navigate("AddFood")}
-              />
-            </View>
-
-            <View style={{ paddingLeft: 20 }}>
-              <Button
-                title="+1 Cup of Water"
-                onPress={() =>
-                  this.setState({ water: this.state.udi.waterCount + 0.11 })
-                }
               />
             </View>
           </View>
