@@ -20,6 +20,14 @@ import * as Progress from "react-native-progress";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import TdeeHelp from "./TdeeHelp";
 import AddFood from "./AddFood";
+import {
+  NormalSugar,
+  NormalCaff,
+  AttentionSugar,
+  AttentionCaff,
+  WarningSugar,
+  WarningCaff
+} from "./SugarCaffein";
 
 class Main extends Component {
   state = {
@@ -32,8 +40,8 @@ class Main extends Component {
     proteinDL: 0,
     carbsDL: 0,
     fatDL: 0,
-    sugarDL:0,
-    caffDL:0,
+    sugarDL: 0,
+    caffDL: 0,
     dailyPlan: {
       wakeUp: "",
       breakfast: "",
@@ -50,7 +58,7 @@ class Main extends Component {
       carbsCount: 0,
       waterCount: 0,
       caffCount: 0,
-      sugarCount: 0,
+      sugarCount: 0
     },
     visible: false,
     addFoodVisible: false
@@ -107,8 +115,6 @@ class Main extends Component {
     }
   };
 
-  // handleAddFood = () => {};
-
   resetUdi = () => {
     let date = Date().substring(0, 15);
     fetch(
@@ -130,7 +136,7 @@ class Main extends Component {
         waterCount: 0,
         caffCount: 0,
         sugarCount: 0
-      },
+      }
     });
   };
 
@@ -165,6 +171,30 @@ class Main extends Component {
     this.props.navigation.replace("Login");
   };
 
+  handleCancel = () => {
+    this.setState({ addFoodVisible: false });
+  };
+
+  handleAddFood = obj => {
+    this.setState(prev => {
+      let udi = { ...prev.udi };
+      udi.calCount= prev.udi.calCount+obj.calCount;
+      udi.proteinCount = prev.udi.proteinCount + obj.proteinCount;
+      udi.carbsCount = prev.udi.carbsCount + obj.carbsCount;
+      udi.fatCount = prev.udi.fatCount + obj.fatCount;
+      udi.sugarCount = prev.udi.sugarCount + obj.sugarCount;
+      udi.caffCount = prev.udi.caffCount + obj.caffCount;
+      return { udi };
+    });
+    let udi=JSON.stringify(this.state.udi);
+    fetch(`http://${ACCESS_SERVER_URL}/api/add/?username=${this.state.username}&udi=${udi}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  };
+
   render() {
     let arr = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     let date = Date().substring(0, 3);
@@ -175,7 +205,12 @@ class Main extends Component {
     return (
       <ScrollView>
         <View style={style.container}>
-          <AddFood visible={this.state.addFoodVisible} />
+          <AddFood
+            visible={this.state.addFoodVisible}
+            cancel={this.handleCancel}
+            add={this.handleAddFood}
+            TDEE={this.state.tdee}
+          />
           <View
             style={{
               flexDirection: "row",
@@ -255,7 +290,7 @@ class Main extends Component {
               </View>
 
               <Speedometer
-                value={2195}
+                value={this.state.udi.calCount}
                 totalValue={this.state.goalCal}
                 size={200}
                 showText
@@ -287,119 +322,44 @@ class Main extends Component {
               paddingBottom: 20
             }}
           >
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: "#F7C736",
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                alignItems: "center",
-                width: 138
-              }}
-            >
-              <Text
-                style={{
-                  color: "#F7C736",
-                  borderColor: "#F7C736",
-                  borderWidth: 1,
-                  padding: 3,
-                  width: "100%",
-                  textAlign: "center"
-                }}
-              >
-                Sugar
-              </Text>
-              <Text
-                style={{
-                  color: "#F7C736",
-                  paddingLeft: 20,
-                  paddingRight: 20,
-                  padding: 10
-                }}
-              >
-                Limit: {this.state.sugarDL}g/day{" "}
-              </Text>
-              <Speedometer
-                value={this.state.udi.sugarCount}
-                totalValue={this.state.sugarDL}
-                size={100}
-                text={"" + this.state.udi.sugarCount}
-                internalColor="#F7C736"
-                outerColor="#5b5b5b"
-                innerColor="#000"
-                innerCircleStyle={{ height: 38, width: 77 }}
-                showIndicator
-                indicatorColor="#5b0300"
+            {this.state.sugarDL == this.state.udi.sugarCount ? (
+              <AttentionSugar
+                sugarDL={this.state.sugarDL}
+                sugarCount={this.state.udi.sugarCount}
               />
-              <Text
-                style={{
-                  color: "#F7C736",
-                  padding: 10
-                }}
-              >
-                {" "}
-                {this.state.udi.sugarCount}{" "}
-              </Text>
-            </View>
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: "#F7C736",
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-                alignItems: "center",
-                width: 138
-              }}
-            >
-              <Text
-                style={{
-                  color: "#F7C736",
-                  borderColor: "#F7C736",
-                  borderWidth: 1,
-                  padding: 3,
-                  width: "100%",
-                  textAlign: "center"
-                }}
-              >
-                Caffein
-              </Text>
-              <Text
-                style={{
-                  color: "#F7C736",
-
-                  padding: 10
-                }}
-              >
-                Limit: {this.state.caffDL}mg/day{" "}
-              </Text>
-              <Speedometer
-                value={this.state.udi.caffCount}
-                totalValue={400}
-                size={100}
-                text={"" + this.state.udi.sugarCount}
-                internalColor="#F7C736"
-                outerColor="#5b5b5b"
-                innerColor="#000"
-                innerCircleStyle={{ height: 38, width: 77 }}
-                showIndicator
-                indicatorColor="#5b0300"
+            ) : this.state.sugarDL < this.state.udi.sugarCount ? (
+              <WarningSugar
+                sugarDL={this.state.sugarDL}
+                sugarCount={this.state.udi.sugarCount}
               />
-              <Text
-                style={{
-                  color: "#F7C736",
-                  padding: 10
-                }}
-              >
-                {" "}
-                {this.state.udi.sugarCount}{" "}
-              </Text>
-            </View>
+            ) : (
+              <NormalSugar
+                sugarDL={this.state.sugarDL}
+                sugarCount={this.state.udi.sugarCount}
+              />
+            )}
+            {this.state.caffDL == this.state.udi.caffCount ? (
+              <AttentionCaff
+                caffDL={this.state.caffDL}
+                caffCount={this.state.udi.caffCount}
+              />
+            ) : this.state.caffDL < this.state.udi.caffCount ? (
+              <WarningCaff
+                caffDL={this.state.caffDL}
+                caffCount={this.state.udi.caffCount}
+              />
+            ) : (
+              <NormalCaff
+                caffDL={this.state.caffDL}
+                caffCount={this.state.udi.caffCount}
+              />
+            )}
           </View>
           <View style={{ flexDirection: "row", marginBottom: 6 }}>
             <View style={{ paddingRight: 20 }}>
               <Button
                 title="+ Add Food"
-                onPress={() => this.props.navigation.navigate("AddFood")}
+                onPress={() => this.setState({ addFoodVisible: true })}
               />
             </View>
 
@@ -983,39 +943,7 @@ const style = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 3
   },
-  borderStyleTop: {
-    backgroundColor: "black",
-    height: "45%",
-    width: "95%",
-    borderRadius: 10,
-    flexDirection: "row",
-    paddingTop: 20,
-    justifyContent: "space-evenly"
-  },
-  caloriesContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  numberRemaining: {
-    color: "#fff",
-    fontSize: 30
-  },
-  textRemaining: {
-    color: "#fff",
-    fontSize: 15
-  },
 
-  textAdiacent: {
-    color: "#fff",
-    fontSize: 15
-  },
-  numberAdiacent: {
-    color: "#fff",
-    fontSize: 25
-  },
-  eachCaloriesContainer: {
-    alignItems: "center"
-  },
   remainingCaloriesContainer: {
     padding: 10,
     marginBottom: 20,
