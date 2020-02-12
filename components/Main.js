@@ -184,15 +184,20 @@ class Main extends Component {
       udi.fatCount = prev.udi.fatCount + obj.fatCount;
       udi.sugarCount = prev.udi.sugarCount + obj.sugarCount;
       udi.caffCount = prev.udi.caffCount + obj.caffCount;
+      fetch(
+        `http://${ACCESS_SERVER_URL}/api/add/?username=${
+          this.state.username
+        }&udi=${JSON.stringify(udi)}`
+      )
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        });
       return { udi };
     });
-    let udi=JSON.stringify(this.state.udi);
-    fetch(`http://${ACCESS_SERVER_URL}/api/add/?username=${this.state.username}&udi=${udi}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      });
+    
+    this.setState({addFoodVisible: false})
+    
   };
 
   render() {
@@ -201,7 +206,7 @@ class Main extends Component {
     let arr2 = arr
       .slice(arr.indexOf(Date().substring(0, 3)))
       .concat(arr.slice(0, arr.indexOf(Date().substring(0, 3))));
-    console.log(arr2);
+    
     return (
       <ScrollView>
         <View style={style.container}>
@@ -300,7 +305,7 @@ class Main extends Component {
                   borderWidth: 1,
                   borderRadius: 5,
                   padding: 3,
-                  width: 50,
+                  width: 100,
                   textAlign: "center"
                 }}
                 showLabels

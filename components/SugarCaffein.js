@@ -414,7 +414,7 @@ export function WarningCaff(props) {
                innerCircleStyle={{ height: 38, width: 77 }}
                indicatorColor="#5b0300"
              />
-             <View style={{ position: "absolute", left: 20, bottom: 50 }}>
+             <View style={{ position: "absolute", left: 60, bottom: 35 }}>
                <FontAwesome5
                  name={"skull-crossbones"}
                  color="#c6352c"

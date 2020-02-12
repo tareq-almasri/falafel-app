@@ -57,7 +57,7 @@ class AddFood extends Component {
             proteinCount: data.foods[0].nf_protein,
             fatCount: data.foods[0].nf_total_fat,
             carbsCount: data.foods[0].nf_total_carbohydrate,
-            caffCount: data.foods[0].full_nutrients[12].value,
+            caffCount: data.foods[0].full_nutrients[13].value,
             sugarCount: data.foods[0].nf_sugars
           }
         })
