@@ -10,7 +10,7 @@ require("dotenv").config();
 
 // CONNECT TO MONGODB
 mongoose.connect(
-  process.env.FALAFEL_DB,
+  "mongodb+srv://alef:hello123@cluster0-2yq8x.mongodb.net/test?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useCreateIndex: true,
