@@ -1,21 +1,14 @@
 import React, { Component } from "react";
-import {
-  StyleSheet,
-  Input,
-  TextInputProps,
-  View,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
-  Picker,
-  Modal
-} from "react-native";
+import { StyleSheet, View, Text, Button, Modal } from "react-native";
 
 class TdeeHelp extends Component {
   render() {
     return (
-      <Modal visible={this.props.visible} animationType="slide" transparent={true} >
+      <Modal
+        visible={this.props.visible}
+        animationType="slide"
+        transparent={true}
+      >
         <View style={style.container}>
           <Text style={{ color: "#fff", margin: 4 }}>
             TDEE (Total Daily Energy Expenditure) is the amount of calories you

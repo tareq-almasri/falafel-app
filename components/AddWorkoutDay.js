@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Input,
-  TextInputProps,
   View,
   Text,
-  TextInput,
   Button,
   ScrollView,
   Picker,
@@ -110,7 +107,7 @@ class AddWorkoutDay extends Component {
           <View style={{ flexDirection: "row" }}>
             <View style={{ margin: 30 }}>
               <Button
-                disabled={this.state.day=='choose a day' ? true : false}
+                disabled={this.state.day == "choose a day" ? true : false}
                 title="Add"
                 onPress={this.props.addDay.bind(this, this.state)}
               />
@@ -137,7 +134,6 @@ const style = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 3
-    //elevation: 1
   },
   textStyle: {
     color: "#5b5b5b",

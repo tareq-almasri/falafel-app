@@ -4,15 +4,12 @@ import {
   Text,
   View,
   Button,
-  Image,
   TextInput,
   ScrollView,
-  FlatList,
   AsyncStorage,
   TouchableOpacity
 } from "react-native";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
-import {StackActions, NavigationActions} from 'react-navigation';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
@@ -27,10 +24,10 @@ class Login extends Component {
   }
 
   async storeToken(user) {
-    console.log(user)
+    console.log(user);
     try {
       await AsyncStorage.setItem("userData", user);
-      this.getToken()
+      this.getToken();
     } catch (error) {
       console.log("Something went wrong", error);
     }
@@ -57,15 +54,16 @@ class Login extends Component {
   };
 
   handleDone = () => {
-    
     if (this.state.username && this.state.password) {
       AsyncStorage.removeItem("userData");
-      fetch(`http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`)
+      fetch(
+        `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
+      )
         .then(res => res.json())
         .then(data => {
           data.err
             ? this.setState({ errMsg: data.err }) //: console.log(data.token)
-            : this.storeToken(data.token)
+            : this.storeToken(data.token);
         });
     }
   };

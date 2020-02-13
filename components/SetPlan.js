@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Input,
-  TextInputProps,
   View,
   Text,
-  TextInput,
   Button,
   ScrollView,
-  Picker,
   TouchableOpacity
 } from "react-native";
 import { ACCESS_SERVER_URL } from "react-native-dotenv";
@@ -38,7 +34,7 @@ class SetPlan extends Component {
       this.setState(prev => {
         prev.workoutDays = [
           ...prev.workoutDays.filter(x => x[0] !== day.day),
-           [day.day, day.finalFrom, day.finalTo] 
+          [day.day, day.finalFrom, day.finalTo]
         ];
       });
     } else {
@@ -68,23 +64,23 @@ class SetPlan extends Component {
       this.state.finalDinner,
       this.state.finalSleep
     ].join();
-    console.log(planStr)
+    console.log(planStr);
     let workoutStr = this.state.workoutDays.flat(1).join();
-    console.log(workoutStr)
+    console.log(workoutStr);
     fetch(
       `http://${ACCESS_SERVER_URL}/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
     )
       .then(response => response.json())
       .then(data => console.log(data));
-     
-    if(this.props.navigation.getParam("fromHome")){
-      this.props.navigation.replace('FALAFEL')
+
+    if (this.props.navigation.getParam("fromHome")) {
+      this.props.navigation.replace("FALAFEL");
+    } else {
+      this.props.navigation.navigate("Login", {
+        username: this.props.navigation.getParam("username"),
+        password: this.props.navigation.getParam("password")
+      });
     }
-    else {
-    this.props.navigation.navigate("Login", {
-      username: this.props.navigation.getParam("username"),
-      password: this.props.navigation.getParam("password")
-    });}
   };
 
   render() {
@@ -370,7 +366,6 @@ const style = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 3
-    
   },
   textStyle: {
     color: "#5b5b5b",

@@ -4,10 +4,8 @@ import {
   Text,
   View,
   Button,
-  Image,
   TextInput,
   ScrollView,
-  FlatList,
   Modal,
   TouchableOpacity
 } from "react-native";
@@ -35,33 +33,35 @@ class AddFood extends Component {
   };
 
   handleCalculate = () => {
-    if(this.state.content.length!==0){
-    fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-app-id": "e087d3e2",
-        "x-app-key": "fb68da048702897ad8f051a108c055b5"
-      },
+    if (this.state.content.length !== 0) {
+      fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-app-id": "e087d3e2",
+          "x-app-key": "fb68da048702897ad8f051a108c055b5"
+        },
 
-      body: JSON.stringify({
-        query: this.state.content,
-        timezone: "US/Eastern"
-      })
-    })
-      .then(res => res.json())
-      .then(data =>
-        this.setState({
-          udi: {
-            calCount: data.foods[0].nf_calories,
-            proteinCount: data.foods[0].nf_protein,
-            fatCount: data.foods[0].nf_total_fat,
-            carbsCount: data.foods[0].nf_total_carbohydrate,
-            caffCount: data.foods[0].full_nutrients[13].value,
-            sugarCount: data.foods[0].nf_sugars
-          }
+        body: JSON.stringify({
+          query: this.state.content,
+          timezone: "US/Eastern"
         })
-      );
+      })
+        .then(res => res.json())
+        .then(data =>
+          this.setState({
+            udi: {
+              calCount: data.foods[0].nf_calories,
+              proteinCount: data.foods[0].nf_protein,
+              fatCount: data.foods[0].nf_total_fat,
+              carbsCount: data.foods[0].nf_total_carbohydrate,
+              caffCount: data.foods[0].full_nutrients[13].value,
+              sugarCount: data.foods[0].nf_sugars
+            },
+            content: ''
+          })
+        );
+
     }
   };
 
@@ -186,7 +186,13 @@ class AddFood extends Component {
             Recommended Amount of Calories for This Meal is:{" "}
             {this.calculateRecommend()}{" "}
           </Text>
-          <View style={{ flexDirection: "row", width: '100%', justifyContent: 'center' }}>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "100%",
+              justifyContent: "center"
+            }}
+          >
             <TextInput
               multiline={true}
               textAlignVertical="top"
@@ -194,12 +200,12 @@ class AddFood extends Component {
               placeholderTextColor="#5b5b5b"
               autoCapitalize="none"
               autoCorrect={false}
-              placeholder="e.g. 120 g mashed potatoes, 2 tbsp gravy, 1 cup of rice and 2 eggs (quantity is required and can be using any type of measurements, food can be anything including brand food)"
+              placeholder="e.g. 120 g mashed potatoes, 2 tbsp gravy, 1 cup of rice, and 2 eggs. (quantity is required and can be using any type of measurements, food can be anything including brand food)"
               value={this.state.content}
               onChangeText={content => this.setState({ content })}
               style={style.input}
             />
-            <View style={{ marginTop: 15, marginLeft: 10, width: '20%' }}>
+            <View style={{ marginTop: 15, marginLeft: 10, width: "20%" }}>
               <Text style={{ color: "#fff" }}>Carbs:</Text>
               <Text style={{ color: "#fff" }}>
                 {" "}
@@ -219,11 +225,21 @@ class AddFood extends Component {
               </Text>
             </View>
           </View>
-          <View style={{flexDirection: 'row', margin: 15}}>
+          <View style={{ flexDirection: "row", margin: 15 }}>
             <Text style={{ color: "#fff", padding: 5, fontSize: 20 }}>
               Total:{" "}
             </Text>
-            <Text style={{ borderWidth: 1, borderColor: "#fff", padding: 10, color: '#fff', borderRadius: 10, width: 100, textAlign: 'center' }}>
+            <Text
+              style={{
+                borderWidth: 1,
+                borderColor: "#fff",
+                padding: 10,
+                color: "#fff",
+                borderRadius: 10,
+                width: 100,
+                textAlign: "center"
+              }}
+            >
               {this.state.udi.calCount}
             </Text>
             <Text style={{ color: "#fff", padding: 5, fontSize: 20 }}>

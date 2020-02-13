@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Input,
-  TextInputProps,
   View,
   Text,
   TextInput,
@@ -50,14 +48,14 @@ class Info extends Component {
       6.25 * parseFloat(this.state.height) -
       4.92 * parseFloat(this.state.age);
 
-      console.log(result)
+    console.log(result);
 
     let BMR = Math.floor(this.state.sex == "male" ? result + 5 : result - 161);
-console.log(BMR);
+    console.log(BMR);
     let percentOfBMR = Math.floor((7 * BMR) / 100);
-    
+
     let EPOC = parseFloat(this.state.numberOfWorkout) * percentOfBMR;
-console.log(EPOC);
+    console.log(EPOC);
     let TEA = Math.floor(
       (parseFloat(this.state.numberOfWorkout) *
         parseFloat(this.state.durationOfWorkout) *
@@ -65,9 +63,9 @@ console.log(EPOC);
         EPOC) /
         7
     );
-console.log(TEA);
+    console.log(TEA);
     let total = BMR + TEA + this.state.NEAT;
-console.log(total);
+    console.log(total);
     let TEF = Math.floor(total / 10);
 
     let TDEE = total + TEF;
@@ -85,16 +83,16 @@ console.log(total);
       this.state.diet
     ].join();
     let sugar;
-    this.state.sex=='male'?sugar=37.5:sugar=25;
+    this.state.sex == "male" ? (sugar = 37.5) : (sugar = 25);
     let infoStrNumbers = [TDEE, goal, protein, carbs, fat, sugar].join();
-    
+
     if (TDEE && this.state.diet) {
       fetch(
         `http://${ACCESS_SERVER_URL}/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
       )
         .then(response => response.json())
         .then(data => console.log(data));
-        
+
       this.props.navigation.navigate("SetPlan", {
         username: this.props.navigation.getParam("username"),
         password: this.props.navigation.getParam("password")
