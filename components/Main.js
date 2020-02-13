@@ -921,6 +921,7 @@ class Main extends Component {
               }
             })}
           </View>
+          <Button title='dev-tool force reset' onPress={this.resetUdi} color='#333'/>
           <Image
             style={{ width: "100%", height: 60 }}
             source={require("../assets/NutritionixAPI_hires_flat.png")}
