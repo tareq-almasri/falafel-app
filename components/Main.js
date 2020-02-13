@@ -5,7 +5,6 @@ import {
   View,
   Button,
   Image,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   AsyncStorage
@@ -176,7 +175,7 @@ class Main extends Component {
   handleAddFood = obj => {
     this.setState(prev => {
       let udi = { ...prev.udi };
-      udi.calCount= prev.udi.calCount+obj.calCount;
+      udi.calCount = prev.udi.calCount + obj.calCount;
       udi.proteinCount = prev.udi.proteinCount + obj.proteinCount;
       udi.carbsCount = prev.udi.carbsCount + obj.carbsCount;
       udi.fatCount = prev.udi.fatCount + obj.fatCount;
@@ -193,18 +192,16 @@ class Main extends Component {
         });
       return { udi };
     });
-    
-    this.setState({addFoodVisible: false})
-    
+
+    this.setState({ addFoodVisible: false });
   };
 
   render() {
     let arr = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    let date = Date().substring(0, 3);
     let arr2 = arr
       .slice(arr.indexOf(Date().substring(0, 3)))
       .concat(arr.slice(0, arr.indexOf(Date().substring(0, 3))));
-    
+
     return (
       <ScrollView>
         <View style={style.container}>
@@ -214,14 +211,7 @@ class Main extends Component {
             add={this.handleAddFood}
             TDEE={this.state.tdee}
           />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%"
-            }}
-          >
+          <View style={style.rowContainer}>
             <Text style={{ color: "#fff" }}>
               Hello {this.props.navigation.getParam("token")}!
             </Text>
@@ -232,13 +222,8 @@ class Main extends Component {
             />
           </View>
           <TdeeHelp visible={this.state.visible} ok={this.handleOk} />
-          <View style={style.remainingCaloriesContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between"
-              }}
-            >
+          <View style={style.calCounter}>
+            <View style={{ flexDirection: "row" }}>
               <Text style={{ color: "#fff" }}>
                 Your TDEE: {this.state.tdee}
               </Text>
@@ -257,13 +242,7 @@ class Main extends Component {
             <Text style={{ color: "#fff", marginTop: 10, marginBottom: 20 }}>
               Your Goal-Calories: {this.state.goalCal}
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                width: "100%"
-              }}
-            >
+            <View style={style.rowContainer}>
               <View style={{ position: "relative", marginRight: 40 }}>
                 <Image
                   style={{ width: 20, height: 60 }}
@@ -297,15 +276,7 @@ class Main extends Component {
                 totalValue={this.state.goalCal}
                 size={200}
                 showText
-                textStyle={{
-                  color: "white",
-                  borderColor: "white",
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  padding: 3,
-                  width: 100,
-                  textAlign: "center"
-                }}
+                textStyle={style.speedometerText}
                 showLabels
                 labelStyle={{ color: "#fff" }}
                 text={"" + this.state.udi.calCount}
@@ -317,14 +288,7 @@ class Main extends Component {
               <View style={{ width: 50 }}></View>
             </View>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-around",
-              width: "100%",
-              paddingBottom: 20
-            }}
-          >
+          <View style={style.rowContainer}>
             {this.state.sugarDL == this.state.udi.sugarCount ? (
               <AttentionSugar
                 sugarDL={this.state.sugarDL}
@@ -383,42 +347,14 @@ class Main extends Component {
             <Text style={{ color: "#fff" }}> {this.state.carbsDL}g </Text>
           </View>
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginLeft: 15,
-              marginRight: 15
-            }}
-          >
+          <View style={style.nutrientContainer}>
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
               Carbs
             </Text>
-            <TextInput
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                width: 35,
-                borderWidth: 1,
-                borderColor: "white",
-                textAlign: "center",
-                borderRadius: 5,
-                padding: 3,
-                marginRight: 5
-              }}
-              value={"" + this.state.udi.carbsCount}
-              editable={false}
-            />
-            <Text
-              style={{
-                color: "white",
-                marginRight: 5,
-                paddingLeft: 8,
-                paddingRight: 8
-              }}
-            >
-              g
+            <Text style={style.nutrientCountBox}>
+              {Math.ceil(this.state.udi.carbsCount)}
             </Text>
+            <Text style={style.gram}>g</Text>
             <View>
               <Progress.Bar
                 progress={
@@ -438,43 +374,14 @@ class Main extends Component {
           >
             <Text style={{ color: "#fff" }}> {this.state.proteinDL}g </Text>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginLeft: 15,
-              marginRight: 15
-            }}
-          >
+          <View style={style.nutrientContainer}>
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
               Protein
             </Text>
-            <TextInput
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                width: 35,
-                borderWidth: 1,
-                borderColor: "white",
-                width: 35,
-                textAlign: "center",
-                borderRadius: 5,
-                padding: 3,
-                marginRight: 5
-              }}
-              value={"" + this.state.udi.proteinCount}
-              editable={false}
-            />
-            <Text
-              style={{
-                color: "white",
-                marginRight: 5,
-                paddingLeft: 8,
-                paddingRight: 8
-              }}
-            >
-              g
+            <Text style={style.nutrientCountBox}>
+              {Math.ceil(this.state.udi.proteinCount)}
             </Text>
+            <Text style={style.gram}>g</Text>
             <View>
               <Progress.Bar
                 progress={
@@ -494,43 +401,14 @@ class Main extends Component {
           >
             <Text style={{ color: "#fff" }}> {this.state.fatDL}g </Text>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginLeft: 15,
-              marginRight: 15
-            }}
-          >
+          <View style={style.nutrientContainer}>
             <Text style={{ color: "white", marginRight: 5, width: 55 }}>
               Fat
             </Text>
-            <TextInput
-              style={{
-                backgroundColor: "black",
-                color: "white",
-                width: 35,
-                borderWidth: 1,
-                borderColor: "white",
-                width: 35,
-                textAlign: "center",
-                borderRadius: 5,
-                padding: 3,
-                marginRight: 5
-              }}
-              value={"" + this.state.udi.fatCount}
-              editable={false}
-            />
-            <Text
-              style={{
-                color: "white",
-                marginRight: 5,
-                paddingLeft: 8,
-                paddingRight: 8
-              }}
-            >
-              g
+            <Text style={style.nutrientCountBox}>
+              {Math.ceil(this.state.udi.fatCount)}
             </Text>
+            <Text style={style.gram}>g</Text>
             <View>
               <Progress.Bar
                 progress={
@@ -561,7 +439,6 @@ class Main extends Component {
               <Text
                 style={{
                   color: "#fff",
-
                   padding: 10,
                   fontSize: 25
                 }}
@@ -582,15 +459,7 @@ class Main extends Component {
             </View>
 
             <Text
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 70,
-                zIndex: 2,
-                backgroundColor: "red",
-                color: "#fff",
-                padding: 1
-              }}
+              style={style.today}
             >
               Today
             </Text>
@@ -921,7 +790,11 @@ class Main extends Component {
               }
             })}
           </View>
-          <Button title='dev-tool force reset' onPress={this.resetUdi} color='#333'/>
+          <Button
+            title="dev-tool force reset"
+            onPress={this.resetUdi}
+            color="#333"
+          />
           <Image
             style={{ width: "100%", height: 60 }}
             source={require("../assets/NutritionixAPI_hires_flat.png")}
@@ -952,11 +825,56 @@ const style = StyleSheet.create({
     shadowRadius: 3
   },
 
-  remainingCaloriesContainer: {
+  calCounter: {
     padding: 10,
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center"
+  },
+  nutrientCountBox: {
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 6,
+    padding: 3,
+    width: 45,
+    color: "#fff",
+    textAlign: "center"
+  },
+  nutrientContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginLeft: 15,
+    marginRight: 15
+  },
+  gram: {
+    color: "white",
+    marginRight: 5,
+    paddingLeft: 8,
+    paddingRight: 8
+  },
+  rowContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%"
+  },
+  speedometerText: {
+    color: "white",
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 3,
+    width: 100,
+    textAlign: "center"
+  },
+  today: {
+    position: "absolute",
+    left: 0,
+    top: 70,
+    zIndex: 2,
+    backgroundColor: "red",
+    color: "#fff",
+    padding: 1
   }
 });
 
