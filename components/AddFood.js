@@ -51,14 +51,31 @@ class AddFood extends Component {
         .then(data =>
           this.setState({
             udi: {
-              calCount: data.foods[0].nf_calories,
-              proteinCount: data.foods[0].nf_protein,
-              fatCount: data.foods[0].nf_total_fat,
-              carbsCount: data.foods[0].nf_total_carbohydrate,
-              caffCount: data.foods[0].full_nutrients.find(
-                x => x.attr_id == 262
-              ).value,
-              sugarCount: data.foods[0].nf_sugars
+              calCount: data.foods.reduce((sum, x) => {
+                sum += x.nf_calories;
+                return sum;
+              }, 0),
+              proteinCount: data.foods.reduce((sum, x) => {
+                sum += x.nf_protein;
+                return sum;
+              }, 0),
+              fatCount: data.foods.reduce((sum, x) => {
+                sum += x.nf_total_fat;
+                return sum;
+              }, 0),
+              carbsCount: data.foods.reduce((sum, x) => {
+                sum += x.nf_total_carbohydrate;
+                return sum;
+              }, 0),
+              caffCount: data.foods.reduce((sum, x) => {
+                let caff = x.full_nutrients.find(y => y.attr_id == 262).value;
+                sum += caff;
+                return sum;
+              }, 0),
+              sugarCount: data.foods.reduce((sum, x) => {
+                sum += x.nf_sugars;
+                return sum;
+              }, 0)
             },
             content: ""
           })
@@ -275,11 +292,7 @@ class AddFood extends Component {
               <Button
                 title="Add"
                 color="green"
-                onPress={
-                  this.props.add.bind(this, this.state.udi)
-                  
-                
-                }
+                onPress={this.props.add.bind(this, this.state.udi)}
               />
             </View>
             <View>

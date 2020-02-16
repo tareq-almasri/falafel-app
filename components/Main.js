@@ -45,7 +45,7 @@ class Main extends Component {
       dinner: "",
       sleep: ""
     },
-    sport: [["", "", ""]],
+    sport: [{ day: "", from: "", to: "" }],
     udi: {
       date: "",
       calCount: 0,
@@ -468,7 +468,7 @@ class Main extends Component {
 
             <Text style={style.today}>Today</Text>
             {arr2.map(x => {
-              let workoutDay = this.state.sport.find(y => y[0] == x);
+              let workoutDay = this.state.sport.find(y => y.day == x);
               if (workoutDay) {
                 return (
                   <View key={x} style={style.dayBox}>
@@ -505,8 +505,8 @@ class Main extends Component {
                           {this.state.dailyPlan.wakeUp}
                         </Text>
                       </View>
-                      {workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) <
+                      {workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) <
                       this.state.dailyPlan.breakfast.substring(0, 2) +
                         this.state.dailyPlan.breakfast.substring(3) ? (
                         <View
@@ -525,11 +525,11 @@ class Main extends Component {
                           >
                             Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>-from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>--from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
-                            {workoutDay[2]}
+                            {workoutDay.to}
                           </Text>
                         </View>
                       ) : (
@@ -550,12 +550,12 @@ class Main extends Component {
                           {this.state.dailyPlan.breakfast}
                         </Text>
                       </View>
-                      {workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) >
+                      {workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) >
                         this.state.dailyPlan.breakfast.substring(0, 2) +
                           this.state.dailyPlan.breakfast.substring(3) &&
-                      workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) <
+                      workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) <
                         this.state.dailyPlan.lunch.substring(0, 2) +
                           this.state.dailyPlan.lunch.substring(3) ? (
                         <View
@@ -575,10 +575,10 @@ class Main extends Component {
                             Workout
                           </Text>
                           <Text style={{ color: "#fff" }}>--from--</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
                           <Text style={{ color: "#fff" }}>--to--</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
-                            {workoutDay[2]}
+                            {workoutDay.to}
                           </Text>
                         </View>
                       ) : (
@@ -597,12 +597,12 @@ class Main extends Component {
                           {this.state.dailyPlan.lunch}
                         </Text>
                       </View>
-                      {workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) >
+                      {workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) >
                         this.state.dailyPlan.lunch.substring(0, 2) +
                           this.state.dailyPlan.lunch.substring(3) &&
-                      workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) <
+                      workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) <
                         this.state.dailyPlan.dinner.substring(0, 2) +
                           this.state.dailyPlan.dinner.substring(3) ? (
                         <View
@@ -621,11 +621,11 @@ class Main extends Component {
                           >
                             Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>-from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>--from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
-                            {workoutDay[2]}
+                            {workoutDay.to}
                           </Text>
                         </View>
                       ) : (
@@ -644,12 +644,12 @@ class Main extends Component {
                           {this.state.dailyPlan.dinner}
                         </Text>
                       </View>
-                      {workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) >
+                      {workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) >
                         this.state.dailyPlan.dinner.substring(0, 2) +
                           this.state.dailyPlan.dinner.substring(3) &&
-                      workoutDay[1].substring(0, 2) +
-                        workoutDay[1].substring(3) <
+                      workoutDay.from.substring(0, 2) +
+                        workoutDay.from.substring(3) <
                         this.state.dailyPlan.sleep.substring(0, 2) +
                           this.state.dailyPlan.sleep.substring(3) ? (
                         <View
@@ -668,11 +668,11 @@ class Main extends Component {
                           >
                             Workout
                           </Text>
-                          <Text style={{ color: "#fff" }}>-from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay[1]}</Text>
+                          <Text style={{ color: "#fff" }}>--from-</Text>
+                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
-                            {workoutDay[2]}
+                            {workoutDay.to}
                           </Text>
                         </View>
                       ) : (
