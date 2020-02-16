@@ -9,13 +9,14 @@ import {
   Picker,
   TouchableOpacity
 } from "react-native";
-import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import CheckBox from "react-native-check-box";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import ChooseDietHelp from "./ChooseDietHelp";
 
 class Info extends Component {
   state = {
+    username: this.props.navigation.getParam("username"),
+    password: this.props.navigation.getParam("password"),
     weight: "",
     height: "",
     age: "",
@@ -77,26 +78,33 @@ class Info extends Component {
     );
     let carbs = Math.floor((TDEE * ratios[this.state.index].carbs) / 100 / 4);
     let fat = Math.floor((TDEE * ratios[this.state.index].fat) / 100 / 9);
-
-    let infoStrStrings = [
-      this.props.navigation.getParam("username"),
-      this.state.diet
-    ].join();
     let sugar;
     this.state.sex == "male" ? (sugar = 37.5) : (sugar = 25);
-    let infoStrNumbers = [TDEE, goal, protein, carbs, fat, sugar].join();
+    
 
     if (TDEE && this.state.diet) {
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/info/?infoStrStrings=${infoStrStrings}&infoStrNumbers=${infoStrNumbers}`
-      )
-        .then(response => response.json())
-        .then(data => console.log(data));
 
-      this.props.navigation.navigate("SetPlan", {
-        username: this.props.navigation.getParam("username"),
-        password: this.props.navigation.getParam("password")
-      });
+     fetch(`https://api.onigiri.now.sh/info`, {
+       method: "POST",
+       body: JSON.stringify({
+         username: this.state.username,
+         diet: this.state.diet,
+         tdee: TDEE,
+         goal: goal,
+         protein: protein,
+         carbs: carbs,
+         fat: fat,
+         sugar: sugar
+       }),
+       headers: { "Content-Type": "application/json" }
+     })
+       .then(response => response.json())
+       .then(data => console.log(data));
+
+     this.props.navigation.navigate("SetPlan", {
+       username: this.state.username,
+       password: this.state.password
+     });
     }
   };
 

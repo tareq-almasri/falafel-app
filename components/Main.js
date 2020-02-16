@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import * as Permissions from "expo-permissions";
 import { Notifications } from "expo";
-import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import Speedometer from "react-native-speedometer-chart";
 import * as Progress from "react-native-progress";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -114,15 +113,19 @@ class Main extends Component {
 
   resetUdi = () => {
     let date = Date().substring(0, 15);
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/reset/?username=${this.props.navigation.getParam(
-        "token"
-      )}&date=${date}`
-    )
+    fetch(`https://api.onigiri.now.sh/reset`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: this.state.username,
+        date: date
+      }),
+      headers: { "Content-Type": "application/json" }
+    })
       .then(res => res.json())
       .then(data => {
         console.log(data);
       });
+
     this.setState({
       udi: {
         date: date,
@@ -138,11 +141,13 @@ class Main extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/home/?username=${this.props.navigation.getParam(
-        "token"
-      )}`
-    )
+    fetch(`https://api.onigiri.now.sh/home`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: this.props.navigation.getParam("token")
+      }),
+      headers: { "Content-Type": "application/json" }
+    })
       .then(res => res.json())
       .then(data => {
         this.setState(data.found);
@@ -181,11 +186,14 @@ class Main extends Component {
       udi.fatCount = prev.udi.fatCount + obj.fatCount;
       udi.sugarCount = prev.udi.sugarCount + obj.sugarCount;
       udi.caffCount = prev.udi.caffCount + obj.caffCount;
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/add/?username=${
-          this.state.username
-        }&udi=${JSON.stringify(udi)}`
-      )
+      fetch(`https://api.onigiri.now.sh/add`, {
+        method: "POST",
+        body: JSON.stringify({
+          username: this.state.username,
+          udi: udi
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
         .then(res => res.json())
         .then(data => {
           console.log(data);
@@ -458,11 +466,7 @@ class Main extends Component {
               </TouchableOpacity>
             </View>
 
-            <Text
-              style={style.today}
-            >
-              Today
-            </Text>
+            <Text style={style.today}>Today</Text>
             {arr2.map(x => {
               let workoutDay = this.state.sport.find(y => y[0] == x);
               if (workoutDay) {

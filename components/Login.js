@@ -9,7 +9,6 @@ import {
   AsyncStorage,
   TouchableOpacity
 } from "react-native";
-import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class Login extends Component {
@@ -45,6 +44,15 @@ class Login extends Component {
     }
   }
 
+  UNSAFE_componentWillMount(){
+    if(this.props.navigation.getParam('username')){
+      this.setState({
+        username: this.props.navigation.getParam("username"),
+        password: this.props.navigation.getParam("password")
+      });
+    }
+  }
+
   componentDidMount() {
     this.getToken();
   }
@@ -56,13 +64,18 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       AsyncStorage.removeItem("userData");
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/login/?username=${this.state.username}&password=${this.state.password}`
-      )
+      fetch(`https://api.onigiri.now.sh/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
         .then(res => res.json())
         .then(data => {
           data.err
-            ? this.setState({ errMsg: data.err }) //: console.log(data.token)
+            ? this.setState({ errMsg: data.err })
             : this.storeToken(data.token);
         });
     }
@@ -114,10 +127,6 @@ class Login extends Component {
             </TouchableOpacity>
           </View>
 
-          {/* <Text style={{ color: "#5b5b5b" }}>
-            * you will need it to login later
-          </Text>
-          <Text style={{ color: "#5b5b5b" }}> min 6 characters</Text> */}
           <Button title="Done" onPress={this.handleDone} />
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text style={{ color: "#5b5b5b" }}>

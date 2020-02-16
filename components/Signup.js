@@ -8,7 +8,6 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import {ACCESS_SERVER_URL} from 'react-native-dotenv';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default class Signup extends Component {
@@ -25,9 +24,14 @@ export default class Signup extends Component {
 
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
-      fetch(
-        `http://${ACCESS_SERVER_URL}/api/signup/?username=${this.state.username}&password=${this.state.password}`
-      )
+      fetch(`https://api.onigiri.now.sh/sign-up`, {
+        method: "POST",
+        body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password
+        }),
+        headers: { "Content-Type": "application/json" }
+      })
         .then(response => response.json())
         .then(data => {
           data.error
@@ -38,7 +42,6 @@ export default class Signup extends Component {
               });
         });
     }
-    
   };
 
   render() {
@@ -51,7 +54,13 @@ export default class Signup extends Component {
         }}
       >
         <View style={style.container}>
-          <Text style={{ color: "white", marginBottom: 40, fontSize: 20 }}>
+          <Text
+            style={{
+              color: "white",
+              marginBottom: 40,
+              fontSize: 20
+            }}
+          >
             Account Setup
           </Text>
 

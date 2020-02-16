@@ -55,13 +55,14 @@ class AddFood extends Component {
               proteinCount: data.foods[0].nf_protein,
               fatCount: data.foods[0].nf_total_fat,
               carbsCount: data.foods[0].nf_total_carbohydrate,
-              caffCount: data.foods[0].full_nutrients.find(x => x.attr_id==262).value,
+              caffCount: data.foods[0].full_nutrients.find(
+                x => x.attr_id == 262
+              ).value,
               sugarCount: data.foods[0].nf_sugars
             },
             content: ""
           })
         );
-
     }
   };
 
@@ -79,6 +80,20 @@ class AddFood extends Component {
 
   handleOk = () => {
     this.setState({ visible: false });
+  };
+
+  handleAdd = () => {
+    this.props.add.bind(this.state.udi);
+    this.setState({
+      udi: {
+        calCount: 0,
+        proteinCount: 0,
+        fatCount: 0,
+        carbsCount: 0,
+        caffCount: 0,
+        sugarCount: 0
+      }
+    });
   };
 
   render() {
@@ -260,7 +275,11 @@ class AddFood extends Component {
               <Button
                 title="Add"
                 color="green"
-                onPress={this.props.add.bind(this, this.state.udi)}
+                onPress={
+                  this.props.add.bind(this, this.state.udi)
+                  
+                
+                }
               />
             </View>
             <View>

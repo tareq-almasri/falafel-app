@@ -19,7 +19,8 @@ const userSchema = new mongoose.Schema(
       dinner: String,
       sleep: String
     },
-    sport: [[String]],
+    sport: [{day: String, from: String, to: String}],
+    
     udi: {
       date: String,
       calCount: Number,

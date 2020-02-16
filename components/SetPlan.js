@@ -7,13 +7,14 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
-import { ACCESS_SERVER_URL } from "react-native-dotenv";
 import TimePicker from "react-native-simple-time-picker";
 import AddWorkoutDay from "./AddWorkoutDay";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 class SetPlan extends Component {
   state = {
+    username: this.props.navigation.getParam("username"),
+    password: this.props.navigation.getParam("password"),
     visible: false,
     wakeUp: { selectedHours: 0, selectedMinutes: 0 },
     finalWakeUp: "00:00",
@@ -33,13 +34,13 @@ class SetPlan extends Component {
     if (this.state.workoutDays.length > 0) {
       this.setState(prev => {
         prev.workoutDays = [
-          ...prev.workoutDays.filter(x => x[0] !== day.day),
-          [day.day, day.finalFrom, day.finalTo]
+          ...prev.workoutDays.filter(x => x.day !== day.day),
+          { day: day.day, from: day.finalFrom, to: day.finalTo }
         ];
       });
     } else {
       this.setState({
-        workoutDays: [[day.day, day.finalFrom, day.finalTo]]
+        workoutDays: [{ day: day.day, from: day.finalFrom, to: day.finalTo }]
       });
     }
 
@@ -56,29 +57,30 @@ class SetPlan extends Component {
   };
 
   handleFinish = () => {
-    let planStr = [
-      this.props.navigation.getParam("username"),
-      this.state.finalWakeUp,
-      this.state.finalBreakfast,
-      this.state.finalLunch,
-      this.state.finalDinner,
-      this.state.finalSleep
-    ].join();
-    console.log(planStr);
-    let workoutStr = this.state.workoutDays.flat(1).join();
-    console.log(workoutStr);
-    fetch(
-      `http://${ACCESS_SERVER_URL}/api/setplan/?planStr=${planStr}&workoutStr=${workoutStr}`
-    )
+    fetch(`https://api.onigiri.now.sh/set-plan`, {
+      method: "POST",
+      body: JSON.stringify({
+        username: this.state.username,
+        dailyPlan: {
+          wakeUp: this.state.finalWakeUp,
+          breakfast: this.state.finalBreakfast,
+          lunch: this.state.finalLunch,
+          dinner: this.state.finalDinner,
+          sleep: this.state.finalSleep
+        },
+        sport: this.state.workoutDays
+      }),
+      headers: { "Content-Type": "application/json" }
+    })
       .then(response => response.json())
       .then(data => console.log(data));
 
     if (this.props.navigation.getParam("fromHome")) {
       this.props.navigation.replace("FALAFEL");
     } else {
-      this.props.navigation.navigate("Login", {
-        username: this.props.navigation.getParam("username"),
-        password: this.props.navigation.getParam("password")
+      this.props.navigation.replace("Login", {
+        username: this.state.username,
+        password: this.state.password
       });
     }
   };
@@ -308,16 +310,16 @@ class SetPlan extends Component {
                     paddingBottom: 3,
                     marginTop: 6
                   }}
-                  key={x[0]}
+                  key={x.day}
                 >
-                  <Text style={{ width: 30, color: "#fff" }}>{x[0]}</Text>
+                  <Text style={{ width: 30, color: "#fff" }}>{x.day}</Text>
                   <View>
                     <Text style={style.textStyle}>from</Text>
-                    <Text style={style.textStyle}>{x[1]}</Text>
+                    <Text style={style.textStyle}>{x.from}</Text>
                   </View>
                   <View>
                     <Text style={style.textStyle}>to</Text>
-                    <Text style={style.textStyle}>{x[2]}</Text>
+                    <Text style={style.textStyle}>{x.to}</Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => this.setState({ visible: true })}
