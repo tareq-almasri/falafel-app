@@ -526,7 +526,9 @@ class Main extends Component {
                             Workout
                           </Text>
                           <Text style={{ color: "#fff" }}>--from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {workoutDay.from}
+                          </Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
                             {workoutDay.to}
@@ -575,7 +577,9 @@ class Main extends Component {
                             Workout
                           </Text>
                           <Text style={{ color: "#fff" }}>--from--</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {workoutDay.from}
+                          </Text>
                           <Text style={{ color: "#fff" }}>--to--</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
                             {workoutDay.to}
@@ -622,7 +626,9 @@ class Main extends Component {
                             Workout
                           </Text>
                           <Text style={{ color: "#fff" }}>--from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {workoutDay.from}
+                          </Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
                             {workoutDay.to}
@@ -669,7 +675,9 @@ class Main extends Component {
                             Workout
                           </Text>
                           <Text style={{ color: "#fff" }}>--from-</Text>
-                          <Text style={{ color: "#fff" }}>{workoutDay.from}</Text>
+                          <Text style={{ color: "#fff" }}>
+                            {workoutDay.from}
+                          </Text>
                           <Text style={{ color: "#fff" }}>-to-</Text>
                           <Text style={{ color: "#fff", paddingRight: 12 }}>
                             {workoutDay.to}

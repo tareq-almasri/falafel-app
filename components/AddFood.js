@@ -100,7 +100,7 @@ class AddFood extends Component {
   };
 
   handleAdd = () => {
-    this.props.add.bind(this.state.udi);
+    this.props.add(this.state.udi);
     this.setState({
       udi: {
         calCount: 0,
@@ -292,7 +292,7 @@ class AddFood extends Component {
               <Button
                 title="Add"
                 color="green"
-                onPress={this.props.add.bind(this, this.state.udi)}
+                onPress={this.handleAdd}
               />
             </View>
             <View>
