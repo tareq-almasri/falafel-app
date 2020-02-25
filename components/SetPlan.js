@@ -75,14 +75,12 @@ class SetPlan extends Component {
       .then(response => response.json())
       .then(data => console.log(data));
 
-    if (this.props.navigation.getParam("fromHome")) {
-      this.props.navigation.replace("FALAFEL");
-    } else {
+    
       this.props.navigation.replace("Login", {
         username: this.state.username,
         password: this.state.password
       });
-    }
+    
   };
 
   render() {
