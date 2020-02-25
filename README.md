@@ -1,1 +1,2 @@
-# falafel-server
+# falafel-app
+server
