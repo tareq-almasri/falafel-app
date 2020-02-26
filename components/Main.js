@@ -113,7 +113,7 @@ class Main extends Component {
 
   resetUdi = () => {
     let date = Date().substring(0, 15);
-    fetch(`https://api.onigiri.now.sh/reset`, {
+    fetch(`https://falafel-server.onigiri.now.sh/reset`, {
       method: "POST",
       body: JSON.stringify({
         username: this.state.username,
@@ -141,7 +141,7 @@ class Main extends Component {
   };
 
   UNSAFE_componentWillMount() {
-    fetch(`https://api.onigiri.now.sh/home`, {
+    fetch(`https://falafel-server.onigiri.now.sh/home`, {
       method: "POST",
       body: JSON.stringify({
         username: this.props.navigation.getParam("token")
@@ -186,7 +186,7 @@ class Main extends Component {
       udi.fatCount = prev.udi.fatCount + obj.fatCount;
       udi.sugarCount = prev.udi.sugarCount + obj.sugarCount;
       udi.caffCount = prev.udi.caffCount + obj.caffCount;
-      fetch(`https://api.onigiri.now.sh/add`, {
+      fetch(`https://falafel-server.onigiri.now.sh/add`, {
         method: "POST",
         body: JSON.stringify({
           username: this.state.username,

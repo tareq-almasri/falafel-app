@@ -12,6 +12,7 @@ import {
 import MealHelp from "./MealHelp";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CheckBox from "react-native-check-box";
+import {API_ID, API_KEY} from 'react-native-dotenv';
 
 class AddFood extends Component {
   state = {
@@ -38,8 +39,8 @@ class AddFood extends Component {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-app-id": "e087d3e2",
-          "x-app-key": "fb68da048702897ad8f051a108c055b5"
+          "x-app-id": API_ID,
+          "x-app-key": API_KEY
         },
 
         body: JSON.stringify({

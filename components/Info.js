@@ -84,7 +84,7 @@ class Info extends Component {
 
     if (TDEE && this.state.diet) {
 
-     fetch(`https://api.onigiri.now.sh/info`, {
+     fetch(`https://falafel-server.onigiri.now.sh/info`, {
        method: "POST",
        body: JSON.stringify({
          username: this.state.username,

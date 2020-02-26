@@ -57,7 +57,7 @@ class SetPlan extends Component {
   };
 
   handleFinish = () => {
-    fetch(`https://api.onigiri.now.sh/set-plan`, {
+    fetch(`https://falafel-server.onigiri.now.sh/set-plan`, {
       method: "POST",
       body: JSON.stringify({
         username: this.state.username,

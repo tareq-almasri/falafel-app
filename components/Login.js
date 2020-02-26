@@ -64,7 +64,7 @@ class Login extends Component {
   handleDone = () => {
     if (this.state.username && this.state.password) {
       AsyncStorage.removeItem("userData");
-      fetch(`https://api.onigiri.now.sh/login`, {
+      fetch(`https://falafel-server.onigiri.now.sh/login`, {
         method: "POST",
         body: JSON.stringify({
           username: this.state.username,

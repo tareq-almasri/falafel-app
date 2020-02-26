@@ -24,7 +24,7 @@ export default class Signup extends Component {
 
   handleNext = () => {
     if (this.state.username && this.state.password.length > 5) {
-      fetch(`https://api.onigiri.now.sh/sign-up`, {
+      fetch(`https://falafel-server.onigiri.now.sh/sign-up`, {
         method: "POST",
         body: JSON.stringify({
           username: this.state.username,
