@@ -88,6 +88,7 @@ class Info extends Component {
        method: "POST",
        body: JSON.stringify({
          username: this.state.username,
+         password: this.state.password,
          diet: this.state.diet,
          tdee: TDEE,
          goal: goal,
@@ -101,7 +102,7 @@ class Info extends Component {
        .then(response => response.json())
        .then(data => console.log(data));
 
-     this.props.navigation.navigate("SetPlan", {
+     this.props.navigation.replace("SetPlan", {
        username: this.state.username,
        password: this.state.password
      });

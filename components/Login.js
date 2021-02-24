@@ -22,16 +22,16 @@ class Login extends Component {
     };
   }
 
-  async storeToken(user) {
+  async storeData(user) {
     console.log(user);
     try {
       await AsyncStorage.setItem("userData", user);
-      this.getToken();
+      this.getData();
     } catch (error) {
       console.log("Something went wrong", error);
     }
   }
-  async getToken() {
+  async getData() {
     try {
       let userData = await AsyncStorage.getItem("userData");
       // let data = JSON.parse(userData);
@@ -54,7 +54,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    this.getToken();
+    this.getData();
   }
 
   onEyePressed = () => {
@@ -76,7 +76,7 @@ class Login extends Component {
         .then(data => {
           data.err
             ? this.setState({ errMsg: data.err })
-            : this.storeToken(data.token);
+            : this.storeData(data.usernameB);
         });
     }
   };

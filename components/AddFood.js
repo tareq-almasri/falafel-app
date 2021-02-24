@@ -22,7 +22,7 @@ class AddFood extends Component {
       fatCount: 0,
       carbsCount: 0,
       caffCount: 0,
-      sugarCount: 0
+      sugarCount: 0,
     },
     content: "",
     checkBreakfast: true,
@@ -30,7 +30,7 @@ class AddFood extends Component {
     checkDinner: false,
     checkSnack: false,
     meal: "breakfast",
-    visible: false
+    visible: false,
   };
 
   handleCalculate = () => {
@@ -40,45 +40,50 @@ class AddFood extends Component {
         headers: {
           "Content-Type": "application/json",
           "x-app-id": API_ID,
-          "x-app-key": API_KEY
+          "x-app-key": API_KEY,
         },
 
         body: JSON.stringify({
           query: this.state.content,
-          timezone: "US/Eastern"
-        })
+          timezone: "US/Eastern",
+        }),
       })
-        .then(res => res.json())
-        .then(data =>
+        .then((res) => res.json())
+        .then((data) =>
           this.setState({
             udi: {
               calCount: data.foods.reduce((sum, x) => {
                 sum += x.nf_calories;
+                sum=Math.round(sum);
                 return sum;
               }, 0),
               proteinCount: data.foods.reduce((sum, x) => {
                 sum += x.nf_protein;
+                sum = Math.round(sum);
                 return sum;
               }, 0),
               fatCount: data.foods.reduce((sum, x) => {
                 sum += x.nf_total_fat;
+                sum = Math.round(sum);
                 return sum;
               }, 0),
               carbsCount: data.foods.reduce((sum, x) => {
                 sum += x.nf_total_carbohydrate;
+                sum = Math.round(sum);
                 return sum;
               }, 0),
               caffCount: data.foods.reduce((sum, x) => {
-                let caff = x.full_nutrients.find(y => y.attr_id == 262).value;
+                let caff = x.full_nutrients.find((y) => y.attr_id == 262).value;
                 sum += caff;
+                sum = Math.round(sum);
                 return sum;
               }, 0),
               sugarCount: data.foods.reduce((sum, x) => {
                 sum += x.nf_sugars;
+                sum=Math.round(sum);
                 return sum;
-              }, 0)
-            },
-            content: ""
+              }, 0),
+            }
           })
         );
     }
@@ -109,9 +114,25 @@ class AddFood extends Component {
         fatCount: 0,
         carbsCount: 0,
         caffCount: 0,
-        sugarCount: 0
-      }
+        sugarCount: 0,
+      },
+      content: "",
     });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      udi: {
+        calCount: 0,
+        proteinCount: 0,
+        fatCount: 0,
+        carbsCount: 0,
+        caffCount: 0,
+        sugarCount: 0,
+      },
+      content: "",
+    });
+    this.props.cancel();
   };
 
   render() {
@@ -122,7 +143,7 @@ class AddFood extends Component {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#000"
+            backgroundColor: "#000",
           }}
         >
           <MealHelp visible={this.state.visible} ok={this.handleOk} />
@@ -132,7 +153,7 @@ class AddFood extends Component {
               padding: 10,
               marginTop: 20,
               justifyContent: "center",
-              width: "100%"
+              width: "100%",
             }}
           >
             <TouchableOpacity
@@ -156,7 +177,7 @@ class AddFood extends Component {
                     checkLunch: false,
                     checkDinner: false,
                     checkSnack: false,
-                    meal: "breakfast"
+                    meal: "breakfast",
                   })
                 }
                 isChecked={this.state.checkBreakfast}
@@ -172,7 +193,7 @@ class AddFood extends Component {
                     checkBreakfast: false,
                     checkDinner: false,
                     checkSnack: false,
-                    meal: "lunch"
+                    meal: "lunch",
                   })
                 }
                 isChecked={this.state.checkLunch}
@@ -190,7 +211,7 @@ class AddFood extends Component {
                     checkBreakfast: false,
                     checkLunch: false,
                     checkSnack: false,
-                    meal: "dinner"
+                    meal: "dinner",
                   })
                 }
                 isChecked={this.state.checkDinner}
@@ -206,7 +227,7 @@ class AddFood extends Component {
                     checkBreakfast: false,
                     checkLunch: false,
                     checkDinner: false,
-                    meal: "snack"
+                    meal: "snack",
                   })
                 }
                 isChecked={this.state.checkSnack}
@@ -223,7 +244,7 @@ class AddFood extends Component {
             style={{
               flexDirection: "row",
               width: "100%",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <TextInput
@@ -235,7 +256,7 @@ class AddFood extends Component {
               autoCorrect={false}
               placeholder="e.g. 120 g mashed potatoes, 2 tbsp gravy, 1 cup of rice, and 2 eggs. (quantity is required and can be using any type of measurements, food can be anything including brand food)"
               value={this.state.content}
-              onChangeText={content => this.setState({ content })}
+              onChangeText={(content) => this.setState({ content })}
               style={style.input}
             />
             <View style={{ marginTop: 15, marginLeft: 10, width: "20%" }}>
@@ -270,7 +291,7 @@ class AddFood extends Component {
                 color: "#fff",
                 borderRadius: 10,
                 width: 100,
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               {this.state.udi.calCount}
@@ -286,21 +307,17 @@ class AddFood extends Component {
               flexDirection: "row",
               justifyContent: "space-evenly",
               width: "100%",
-              marginTop: 5
+              marginTop: 5,
             }}
           >
             <View>
-              <Button
-                title="Add"
-                color="green"
-                onPress={this.handleAdd}
-              />
+              <Button title="Add" color="green" onPress={this.handleAdd} />
             </View>
             <View>
               <Button
-                title="cancel"
+                title="Cancel"
                 color="#c6352c"
-                onPress={this.props.cancel}
+                onPress={this.handleCancel}
               />
             </View>
           </View>

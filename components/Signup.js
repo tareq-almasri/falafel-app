@@ -27,8 +27,7 @@ export default class Signup extends Component {
       fetch(`https://falafel-server.onigiri.now.sh/sign-up`, {
         method: "POST",
         body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
+          username: this.state.username
         }),
         headers: { "Content-Type": "application/json" }
       })

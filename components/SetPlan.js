@@ -89,7 +89,7 @@ class SetPlan extends Component {
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#000"
+          backgroundColor: "#000",
         }}
       >
         <View>
@@ -98,10 +98,13 @@ class SetPlan extends Component {
               color: "white",
               margin: 25,
               fontSize: 20,
-              alignSelf: "center"
+              alignSelf: "center",
             }}
           >
             set a plan for you:
+          </Text>
+          <Text style={style.textStyle}>
+            {"(you can set/change it at any time)"}
           </Text>
           <Text style={style.textStyle}>
             * you will receive a reminder notification for:{" "}
@@ -111,7 +114,7 @@ class SetPlan extends Component {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <Text style={style.textStyle}>wake up time:</Text>
@@ -121,7 +124,7 @@ class SetPlan extends Component {
               style={{
                 backgroundColor: "#5b5b5b",
                 borderRadius: 10,
-                marginTop: 7
+                marginTop: 7,
               }}
             >
               <TimePicker
@@ -131,12 +134,12 @@ class SetPlan extends Component {
                   this.setState({
                     wakeUp: {
                       selectedHours: hours,
-                      selectedMinutes: minutes
+                      selectedMinutes: minutes,
                     },
                     finalWakeUp:
                       (hours < 10 ? "0" + hours : hours) +
                       ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
+                      (minutes < 10 ? "0" + minutes : minutes),
                   })
                 }
               />
@@ -146,7 +149,7 @@ class SetPlan extends Component {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <Text style={style.textStyle}>breakfast time:</Text>
@@ -156,7 +159,7 @@ class SetPlan extends Component {
               style={{
                 backgroundColor: "#5b5b5b",
                 borderRadius: 10,
-                marginTop: 7
+                marginTop: 7,
               }}
             >
               <TimePicker
@@ -167,12 +170,12 @@ class SetPlan extends Component {
                   this.setState({
                     breakfast: {
                       selectedHours: hours,
-                      selectedMinutes: minutes
+                      selectedMinutes: minutes,
                     },
                     finalBreakfast:
                       (hours < 10 ? "0" + hours : hours) +
                       ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
+                      (minutes < 10 ? "0" + minutes : minutes),
                   })
                 }
               />
@@ -182,7 +185,7 @@ class SetPlan extends Component {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <Text style={style.textStyle}>lunch time:</Text>
@@ -192,7 +195,7 @@ class SetPlan extends Component {
               style={{
                 backgroundColor: "#5b5b5b",
                 borderRadius: 10,
-                marginTop: 7
+                marginTop: 7,
               }}
             >
               <TimePicker
@@ -203,12 +206,12 @@ class SetPlan extends Component {
                   this.setState({
                     lunch: {
                       selectedHours: hours,
-                      selectedMinutes: minutes
+                      selectedMinutes: minutes,
                     },
                     finalLunch:
                       (hours < 10 ? "0" + hours : hours) +
                       ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
+                      (minutes < 10 ? "0" + minutes : minutes),
                   })
                 }
               />
@@ -218,7 +221,7 @@ class SetPlan extends Component {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <Text style={style.textStyle}>dinner time:</Text>
@@ -228,7 +231,7 @@ class SetPlan extends Component {
               style={{
                 backgroundColor: "#5b5b5b",
                 borderRadius: 10,
-                marginTop: 7
+                marginTop: 7,
               }}
             >
               <TimePicker
@@ -239,12 +242,12 @@ class SetPlan extends Component {
                   this.setState({
                     dinner: {
                       selectedHours: hours,
-                      selectedMinutes: minutes
+                      selectedMinutes: minutes,
                     },
                     finalDinner:
                       (hours < 10 ? "0" + hours : hours) +
                       ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
+                      (minutes < 10 ? "0" + minutes : minutes),
                   })
                 }
               />
@@ -254,7 +257,7 @@ class SetPlan extends Component {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-around"
+                justifyContent: "space-around",
               }}
             >
               <Text style={style.textStyle}>sleep time:</Text>
@@ -264,7 +267,7 @@ class SetPlan extends Component {
               style={{
                 backgroundColor: "#5b5b5b",
                 borderRadius: 10,
-                marginTop: 7
+                marginTop: 7,
               }}
             >
               <TimePicker
@@ -274,12 +277,12 @@ class SetPlan extends Component {
                   this.setState({
                     sleep: {
                       selectedHours: hours,
-                      selectedMinutes: minutes
+                      selectedMinutes: minutes,
                     },
                     finalSleep:
                       (hours < 10 ? "0" + hours : hours) +
                       ":" +
-                      (minutes < 10 ? "0" + minutes : minutes)
+                      (minutes < 10 ? "0" + minutes : minutes),
                   })
                 }
               />
@@ -295,7 +298,7 @@ class SetPlan extends Component {
         <View style={style.container}>
           <Text style={style.textStyle}>workout days:</Text>
           {this.state.workoutDays.length > 0 ? (
-            this.state.workoutDays.map(x => {
+            this.state.workoutDays.map((x) => {
               return (
                 <View
                   style={{
@@ -306,7 +309,7 @@ class SetPlan extends Component {
                     borderBottomColor: "#5b5b5b",
                     paddingTop: 3,
                     paddingBottom: 3,
-                    marginTop: 6
+                    marginTop: 6,
                   }}
                   key={x.day}
                 >
